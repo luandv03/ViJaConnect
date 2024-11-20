@@ -14,3 +14,8 @@
 -   Run server
 
     > npm run dev
+
+## Lưu ý
+
+-   Chỉ tạo Pull request vào nhánh _develop_ (**Not Main**)
+-   Nhánh Main dùng để trỏ đến server sẽ deploy
