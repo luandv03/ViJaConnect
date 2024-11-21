@@ -1,17 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-
-import LayoutApp from "./pages/layout.page";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// import routes from "./routes"; // fixing
+import { LayoutApp, Home, NotFound } from "./pages";
 
 function App() {
-    return (
-        <>
-            <Routes>
-                <Route path="/" element={<LayoutApp />}>
-                    {/* <Route path="/" element={<PostDetail />} /> */}
-                </Route>
-            </Routes>
-        </>
-    );
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <LayoutApp />,
+            errorElement: <NotFound />,
+            children: [
+                {
+                    path: "home",
+                    element: <Home />,
+                },
+            ],
+        },
+    ]);
+
+    return <RouterProvider router={router} />;
 }
 
 export default App;
