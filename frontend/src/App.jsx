@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import routes from "./routes"; // fixing
-import { LayoutApp, Home, NotFound } from "./pages";
+
+import routes from "./routes";
+import { LayoutApp, NotFound } from "./pages";
 
 function App() {
     const router = createBrowserRouter([
@@ -8,12 +9,7 @@ function App() {
             path: "/",
             element: <LayoutApp />,
             errorElement: <NotFound />,
-            children: [
-                {
-                    path: "home",
-                    element: <Home />,
-                },
-            ],
+            children: routes,
         },
     ]);
 
