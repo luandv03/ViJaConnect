@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { LayoutApp, Home, NotFound, CreatePostTest } from "./pages";
 import routes from "./routes";
-import { LayoutApp, NotFound } from "./pages";
 
 function App() {
     const router = createBrowserRouter([
