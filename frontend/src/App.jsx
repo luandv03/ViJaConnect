@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import routes from "./routes"; // fixing
+
 import { LayoutApp, Home, NotFound, CreatePostTest } from "./pages";
+import routes from "./routes";
 
 function App() {
     const router = createBrowserRouter([
@@ -8,14 +9,7 @@ function App() {
             path: "/",
             element: <LayoutApp />,
             errorElement: <NotFound />,
-            children: [
-                {
-                    path: "home",
-                    element: <Home />,
-                    path: "test",
-                    element: <CreatePostTest />,
-                },
-            ],
+            children: routes,
         },
     ]);
 
