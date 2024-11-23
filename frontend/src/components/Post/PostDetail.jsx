@@ -35,8 +35,6 @@ function PostDetail() {
         });
     };
 
-    console.log(actionPost);
-
     return (
         <div className="space-y-4">
             <div className="flex items-center space-x-2 rounded-full">
