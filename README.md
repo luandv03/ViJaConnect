@@ -19,3 +19,7 @@
 
 -   Chỉ tạo Pull request vào nhánh _develop_ (**Not Main**)
 -   Nhánh Main dùng để trỏ đến server sẽ deploy
+
+## References
+
+-   React router dom: https://www.dhiwise.com/post/the-power-of-createbrowserrouter-optimizing-your-react-app
