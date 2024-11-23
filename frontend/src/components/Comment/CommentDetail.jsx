@@ -2,9 +2,39 @@ import {
     IconThumbUp,
     IconMessageCircle,
     IconShare3,
+    IconThumbUpFilled,
 } from "@tabler/icons-react";
+import { useState } from "react";
 
 function CommentCreate() {
+    const [actionComment, setActionComment] = useState({
+        like: {
+            active: false,
+        },
+        comment: {
+            active: false,
+            commentList: [],
+        },
+        share: {
+            active: false,
+        },
+    });
+
+    const handleLikeComment = () => {
+        setActionComment({
+            like: {
+                active: !actionComment.like.active,
+            },
+            comment: {
+                active: false,
+                commentList: [],
+            },
+            share: {
+                active: false,
+            },
+        });
+    };
+
     return (
         <div className="space-y-2">
             <div className="flex items-center space-x-2 rounded-full ">
@@ -36,10 +66,19 @@ function CommentCreate() {
                     </p>
                 </div>
                 <div className="flex space-x-8 text-sm">
-                    <div className="flex hover:text-blue-400 cursor-pointer items-center">
-                        <div>
-                            <IconThumbUp />
-                        </div>
+                    <div
+                        className="flex hover:text-blue-400 cursor-pointer items-center"
+                        onClick={() => handleLikeComment()}
+                    >
+                        {!actionComment.like.active ? (
+                            <div>
+                                <IconThumbUp />
+                            </div>
+                        ) : (
+                            <div className="text-blue-400">
+                                <IconThumbUpFilled />
+                            </div>
+                        )}
                         <div>
                             <span>ライク</span>
                         </div>
