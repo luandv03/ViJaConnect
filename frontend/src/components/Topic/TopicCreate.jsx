@@ -16,14 +16,15 @@ function TopicCreate({ closeTopicCreatedModal }) {
                     </div>
 
                     <div className="w-full p-2">
-                        <button className="flex w-full justify-center min-h-8 bg-gray-400 rounded-md items-center hover:opacity-70 space-x-2">
-                            <div>
-                                <span>写真/ビデオを追加する</span>
-                            </div>
-                            <div>
-                                <IconPhotoFilled />
-                            </div>
-                        </button>
+                        <label className="flex w-full justify-center min-h-8 bg-gray-400 rounded-md items-center hover:opacity-70 space-x-2 cursor-pointer">
+                            <span>写真/ビデオを追加する</span>
+                            <IconPhotoFilled />
+                            <input
+                                type="file"
+                                className="hidden"
+                                // onChange={(e) => handleFileUpload(e)}
+                            />
+                        </label>
                     </div>
                 </div>
 
