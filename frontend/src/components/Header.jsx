@@ -14,7 +14,7 @@ const Header = () => {
             ViJaConnect
           </Link>
           <div className="w-1/2 h-full border-b border-gray-200">
-            <SearchBar />
+            <SearchBar position="justify-center" placeholder="検索" />
           </div>
           <div className="flex-1 h-full border-b border-gray-200 flex items-center justify-end pr-12">
             <ActionMenu />
