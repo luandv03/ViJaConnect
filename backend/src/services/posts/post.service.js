@@ -10,6 +10,11 @@ class PostService {
             return error;
         }
     }
+
+    async createPost(postData) {
+        const newPost = new Post(postData);
+        return await newPost.save();
+    }
 }
 
 export const postService = new PostService();
