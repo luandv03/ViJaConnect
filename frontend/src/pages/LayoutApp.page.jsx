@@ -9,12 +9,12 @@ export default function LayoutApp() {
             {/* <div className="w-full bg-red-400 h-20">Header</div> */}
             <Header />
             <div className="flex">
-                <div className="min-w-96 border-r border-gray-200 max-h-screen">
+                <div className="fixed min-w-96 border-r border-gray-200 max-h-screen top-16">
                     <Sidebar />
                 </div>
 
                 {/* Content Body */}
-                <div className="flex-1">
+                <div className="flex-1 overflow-y-auto ml-96 mt-16">
                     <Suspense fallback={<div>Loading...</div>}>
                         <Outlet />
                     </Suspense>
