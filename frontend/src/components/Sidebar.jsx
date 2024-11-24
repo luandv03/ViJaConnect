@@ -1,18 +1,29 @@
-import { IconPlus, IconReload } from "@tabler/icons-react";
+import { IconPlus, IconReload, IconX } from "@tabler/icons-react";
 import TopicItem from "./Topic/TopicItem";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import SearchBar from "./SearchBar";
+import TopicTab from "./Topic/TopicTab";
 
 const Sidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === '/';
   const eventActive = location.pathname === '/event';
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="sidebar">
       <Link to="/">
         <div className="px-4 py-3 border-b border-red-600">
           <div className={`rounded-xl flex justify-between items-center px-3 py-2 ${isActive ? 'bg-alice-blue' : ''}`}>
             <h2>ホーム</h2>
-            <IconReload stroke={2} size={20} />
+            <IconReload stroke={2} size={20} onClick={() => showModal()} />
           </div>
         </div>
       </Link>
@@ -40,6 +51,27 @@ const Sidebar = () => {
           </div>
         </Link>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-alice-blue p-6 rounded-md shadow-md relative w-1/2">
+            <SearchBar placeholder="もっとトピックを見つける" />
+            <div className="mt-5 flex flex-wrap gap-4">
+              {Array.from({ length: 20 }, (_, i) => (
+                <TopicTab title={`エグザンプル トピック ${i + 1}`} id={i + 1} key={i} />
+              ))}
+            </div>
+            <button
+              className="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 absolute top-2 right-2"
+              onClick={closeModal}
+            >
+              <IconX stroke={2} size={16} />
+            </button>
+          </div>
+        </div>
+      )}
+      
     </div>
   );
 }

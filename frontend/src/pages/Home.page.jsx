@@ -1,6 +1,5 @@
 import { IconCirclePlus } from "@tabler/icons-react";
 import PostItem from "../components/Post/PostItem";
-import { Link } from "react-router-dom";
 
 function Home() {
     return (
@@ -13,9 +12,7 @@ function Home() {
                     </div>
                     <div>
                         {Array.from({ length: 5 }, (_, i) => (
-                            <Link to='/post/123' key={i}>
-                                <PostItem />
-                            </Link>
+                            <PostItem key={i} />
                         ))}
                     </div>
                 </div>
