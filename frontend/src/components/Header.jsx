@@ -9,7 +9,7 @@ const Header = () => {
         <div className="flex items-center justify-center h-16 w-full">
           <Link
             to="/"
-            className="h-full min-w-96 flex justify-center items-center font-bold text-3xl border-r border-gray-200"
+            className="h-full min-w-96 flex justify-center items-center font-bold text-3xl border-b border-r border-gray-200"
           >
             ViJaConnect
           </Link>

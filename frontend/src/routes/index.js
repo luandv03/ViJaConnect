@@ -17,6 +17,14 @@ const routes = [
         path: "post/:postId",
         element: <PostDetailPage />,
     },
+    {
+        path: "topic/:topicId",
+        element: <Home />,
+    },
+    {
+        path: "event",
+        element: <Home />,
+    }
 ];
 
 export default routes;
