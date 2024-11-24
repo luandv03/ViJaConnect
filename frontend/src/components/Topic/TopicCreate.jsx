@@ -1,6 +1,7 @@
 import { IconPhotoFilled } from "@tabler/icons-react";
 
-function TopicCreate() {
+// eslint-disable-next-line react/prop-types
+function TopicCreate({ closeTopicCreatedModal }) {
     return (
         <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-over-layer mt-0">
             <div className="min-w-96 bg-white p-2 rounded-md space-y-2">
@@ -27,10 +28,16 @@ function TopicCreate() {
                 </div>
 
                 <div className="flex justify-between space-x-4">
-                    <button className="w-1/2 rounded-md min-h-8 bg-alice-blue hover:opacity-70">
+                    <button
+                        className="w-1/2 rounded-md min-h-8 bg-alice-blue hover:opacity-70"
+                        onClick={() => closeTopicCreatedModal()}
+                    >
                         <span>キャンセル</span>
                     </button>
-                    <button className="w-1/2 rounded-md min-h-8 bg-gray-400 hover:opacity-70">
+                    <button
+                        className="w-1/2 rounded-md min-h-8 bg-gray-400 hover:opacity-70"
+                        onClick={() => closeTopicCreatedModal()}
+                    >
                         <span>ポスト</span>
                     </button>
                 </div>
