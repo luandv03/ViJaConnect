@@ -1,4 +1,4 @@
-import { IoMdSearch } from "react-icons/io";
+import { IconSearch } from "@tabler/icons-react";
 const SearchBar = () => {
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -7,7 +7,7 @@ const SearchBar = () => {
           type="button"
           className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"
         >
-          <IoMdSearch />
+          <IconSearch stroke={2} size={20} />
         </button>
         <input
           type="text"
