@@ -4,6 +4,7 @@ import cors from "cors";
 
 import router from "./routes/index.route.js";
 import mongooseConnection from "./db/connect.db.js";
+import initModels from "./db/initModel.db.js";
 
 const app = express();
 
@@ -24,6 +25,10 @@ app.use(
 app.use(cors());
 
 mongooseConnection();
+
+// 🛠️ Tự động load models
+const models = initModels();
+console.log("📦 Models loaded:", Object.keys(models));
 
 app.use("/", router);
 
