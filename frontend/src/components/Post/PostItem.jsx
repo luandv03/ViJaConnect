@@ -1,4 +1,5 @@
 import { IconMessageCircle, IconShare3, IconThumbUp } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 const PostItem = () => {
   return (
     <>
@@ -20,13 +21,15 @@ const PostItem = () => {
             </div>
           </div>
         </div>
-        <div className='mb-5'>
-          <img
-            src="https://pds.exblog.jp/pds/1/flash/top/image/e715a6283c881b09c58c1f1157ea0dcb.jpg"
-            alt="Post avatar"
-            className='w-full object-cover'
-          />
-        </div>
+        <Link to='/post/123'>
+          <div className='mb-5'>
+            <img
+              src="https://pds.exblog.jp/pds/1/flash/top/image/e715a6283c881b09c58c1f1157ea0dcb.jpg"
+              alt="Post avatar"
+              className='w-full object-cover'
+            />
+          </div>
+        </Link>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <IconThumbUp stroke={2} />
