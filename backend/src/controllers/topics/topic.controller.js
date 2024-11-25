@@ -18,4 +18,17 @@ export class TopicController {
             });
         }
     }
+
+    async getTopics(req, res) {
+        try {
+            const topics = await topicService.getTopics();
+            return res.json({
+                status: 200,
+                message: "get topics successfully",
+                data: topics,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
 }
