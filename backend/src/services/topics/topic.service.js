@@ -9,6 +9,16 @@ class TopicService {
             throw new Error("Error creating topic: " + error.message);
         }
     }
+
+    async getTopics() {
+        try {
+            const topics = await Topic.find({});
+
+            return topics;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export const topicService = new TopicService();
