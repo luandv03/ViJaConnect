@@ -1,6 +1,8 @@
-import { IconMessageCircle, IconShare3, IconThumbUp } from '@tabler/icons-react';
+import { IconMessageCircle, IconShare3, IconThumbUp, IconThumbUpFilled } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 const PostItem = () => {
+  const [liked, setLiked] = useState(false);
   return (
     <>
       <div className='bg-alice-blue p-5 rounded-lg mb-5'>
@@ -31,14 +33,16 @@ const PostItem = () => {
           </div>
         </Link>
         <div className='flex items-center justify-between'>
-          <div className='flex items-center'>
-            <IconThumbUp stroke={2} />
+          <div className={`flex items-center cursor-pointer ${ liked ? 'text-blue-400' : 'hover:text-blue-400'}`} onClick={() => setLiked(!liked)}>
+            {liked ? <IconThumbUpFilled /> : <IconThumbUp stroke={2} />}
             <span className='ml-2'>ライク</span>
           </div>
-          <div className='flex items-center'>
-            <IconMessageCircle stroke={2} />
-            <span className='ml-2'>コメント</span>
-          </div>
+          <Link to='/post/123'>
+            <div className='flex items-center cursor-pointer'>
+              <IconMessageCircle stroke={2} />
+              <span className='ml-2'>コメント</span>
+            </div>
+          </Link>
           <div className='flex items-center'>
             <IconShare3 stroke={2} />
             <span className='ml-2'>共有</span>
