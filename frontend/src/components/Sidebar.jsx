@@ -1,4 +1,4 @@
-import { IconPlus, IconReload, IconX } from "@tabler/icons-react";
+import { IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
@@ -13,6 +13,33 @@ const Sidebar = () => {
     const eventActive = location.pathname === "/event";
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTopicCreatedModal, setIsTopicCreated] = useState(false);
+    const topicItems = [
+        {
+            id: 1,
+            title: "文化交流: ベトナムと日本の文化を学ぶ",
+        },
+        {
+            id: 2,
+            title: "日越料理体験: 食で繋がる",
+        },
+        {
+            id: 3,
+            title: "日本語とベトナム語の学び合い",
+        },
+        {
+            id: 4,
+            title: "留学生のリアルな体験談",
+        },
+        {
+            id: 5,
+            title: "日越ビジネスの架け橋",
+        },
+        {
+            id: 6,
+            title: "日越共同プロジェクトの成功事例",
+        }
+    ];
+    
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -40,7 +67,7 @@ const Sidebar = () => {
                         }`}
                     >
                         <h2>ホーム</h2>
-                        <IconReload
+                        <IconSearch
                             stroke={2}
                             size={20}
                             onClick={() => showModal()}
@@ -59,12 +86,8 @@ const Sidebar = () => {
                 </div>
                 <div className="overflow-y-auto 2xl:max-h-[675px] max-h-[530px] relative">
                     <div className="flex flex-col justify-center pl-5 pr-3">
-                        {Array.from({ length: 20 }, (_, i) => (
-                            <TopicItem
-                                title={`React ${i + 1}`}
-                                id={i + 1}
-                                key={i}
-                            />
+                        {topicItems.map((topic) => (
+                            <TopicItem key={topic.id} title={topic.title} id={topic.id} />
                         ))}
                     </div>
                 </div>
