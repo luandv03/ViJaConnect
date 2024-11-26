@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { IconMessageCircle, IconShare3, IconThumbUp, IconThumbUpFilled } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-const PostItem = () => {
+const PostItem = ({post}) => {
   const [liked, setLiked] = useState(false);
   return (
     <>
@@ -10,23 +11,23 @@ const PostItem = () => {
           <div className='h-12 w-12 rounded-full bg-white'>
             <img
               className="w-12 rounded-full"
-              src="https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-1/428297162_1760349381143905_2080811858875395246_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=z1fkJuv8C58Q7kNvgHBpSro&_nc_zt=24&_nc_ht=scontent.fhan15-2.fna&_nc_gid=AEqaVRD01ihiFdEqLyH_zHe&oh=00_AYBTEdAskxOmG1Oo8jkm_vYn79OQ6hC7XR-rFFq1-DbqHg&oe=67473A49"
+              src={post.avatar}
               alt="Anh luan dep trai"
             />
           </div>
           <div className='flex flex-col justify-center'>
             <div>
-              <span>ディン・ヴァン・ルアン</span>
+              <span>{post.name}</span>
             </div>
             <div>
-              <span>2024-12-20</span>
+              <span>{post.date}</span>
             </div>
           </div>
         </div>
         <Link to='/post/123'>
           <div className='mb-5'>
             <img
-              src="https://pds.exblog.jp/pds/1/flash/top/image/e715a6283c881b09c58c1f1157ea0dcb.jpg"
+              src={post.img}
               alt="Post avatar"
               className='w-full object-cover'
             />
