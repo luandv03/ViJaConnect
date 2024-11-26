@@ -6,7 +6,8 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 
-function PostDetail() {
+// eslint-disable-next-line react/prop-types
+function PostDetail({ inputRef }) {
     const [actionPost, setActionPost] = useState({
         like: {
             active: false,
@@ -33,6 +34,11 @@ function PostDetail() {
                 active: false,
             },
         });
+    };
+
+    const handleCommentPost = () => {
+        // eslint-disable-next-line react/prop-types
+        inputRef.current.focus();
     };
 
     return (
@@ -91,7 +97,10 @@ function PostDetail() {
                         <span>ライク</span>
                     </div>
                 </div>
-                <div className="flex hover:text-blue-400 cursor-pointer">
+                <div
+                    className="flex hover:text-blue-400 cursor-pointer"
+                    onClick={() => handleCommentPost()}
+                >
                     <div>
                         <IconMessageCircle />
                     </div>
