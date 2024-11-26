@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   chat_group_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "chat_group" }], // Array of group IDs
+  shared_posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }], // Array of shared post IDs
+  liked_posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }], // Array of liked post IDs
   settings: {
     notification: { type: Boolean, default: true },
     dark_mode: { type: Boolean, default: false },
