@@ -15,13 +15,13 @@ const userSchema = new mongoose.Schema({
     ref: "role",
     required: true,
   },
-  chat_group_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "chat_group" }], // Array of group IDs
-  shared_posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }], // Array of shared post IDs
-  liked_posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }], // Array of liked post IDs
+  chat_group_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "chat_group" }],
+  shared_posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
+  liked_posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
   settings: {
     notification: { type: Boolean, default: true },
     dark_mode: { type: Boolean, default: false },
-    language: { type: String, default: "en" },
+    language: { type: String, default: "jap" },
   },
 });
 
