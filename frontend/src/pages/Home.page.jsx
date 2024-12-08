@@ -1,7 +1,7 @@
 import { IconCirclePlus } from "@tabler/icons-react";
 
 import PostItem from "../components/Post/PostItem";
-import { Link } from "react-router-dom";
+import PostCreate from "../components/Post/PostCreate";
 
 function Home() {
     const postItem = [
@@ -31,13 +31,7 @@ function Home() {
         <>
             <div>
                 <div className="px-8 py-4">
-                    <Link
-                        to="/test"
-                        className="p-4 flex items-center space-x-10 bg-alice-blue rounded-lg mb-4 hover:text-gray-400"
-                    >
-                        <IconCirclePlus stroke={2} />
-                        <div>新しいポストを作成する</div>
-                    </Link>
+                    <PostCreate />
                     <div>
                         {postItem.map((item) => (
                             <PostItem key={item.id} post={item} />
