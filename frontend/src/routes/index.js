@@ -23,6 +23,10 @@ const routes = [
         element: <Event />,
     },
     {
+        path: "admin/event",
+        element: <Event />,
+    },
+    {
         path: "profile",
         element: <Profile />,
     },
