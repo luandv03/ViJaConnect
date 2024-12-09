@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     dark_mode: { type: Boolean, default: false },
     language: { type: String, default: "jap" },
   },
+  contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "contact" }],
 });
 
 export const User = mongoose.model("user", userSchema);
