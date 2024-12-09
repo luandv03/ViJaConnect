@@ -1,10 +1,10 @@
 import React from "react";
-import Chat from "../pages/Chat.page";
 
 const Home = React.lazy(() => import("../pages/Home.page"));
 const PostDetailPage = React.lazy(() => import("../pages/PostDetailPage.page"));
 const Profile = React.lazy(() => import("../pages/Profile.page"));
 const Event = React.lazy(() => import("../pages/Event.page"));
+const Chat = React.lazy(() => import("../pages/Chat.page"));
 
 const routes = [
     {
@@ -34,7 +34,7 @@ const routes = [
     {
         path: "chat",
         element: <Chat />,
-    }
+    },
 ];
 
 export default routes;
