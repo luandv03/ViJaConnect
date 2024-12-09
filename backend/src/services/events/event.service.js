@@ -22,6 +22,40 @@ class EventService {
       throw new Error("Error fetching event: " + error.message);
     }
   }
+
+  async createEvent(eventData) {
+    try {
+      const newEvent = new Event(eventData);
+      await newEvent.save();
+      return newEvent;
+    } catch (error) {
+      throw new Error("Error creating event: " + error.message);
+    }
+  }
+
+  async updateEvent(eventId, eventData) {
+    try {
+      const updatedEvent = await Event.findByIdAndUpdate(eventId, eventData, { new: true });
+      if (!updatedEvent) {
+        throw new Error("Event not found or failed to update");
+      }
+      return updatedEvent;
+    } catch (error) {
+      throw new Error("Error updating event: " + error.message);
+    }
+  }
+
+  async deleteEvent(eventId) {
+    try {
+      const deletedEvent = await Event.findByIdAndDelete(eventId);
+      if (!deletedEvent) {
+        throw new Error("Event not found or failed to delete");
+      }
+      return deletedEvent;
+    } catch (error) {
+      throw new Error("Error deleting event: " + error.message);
+    }
+  }
 }
 
 export const eventService = new EventService();
