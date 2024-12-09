@@ -1,5 +1,3 @@
-import { IconCirclePlus } from "@tabler/icons-react";
-
 import PostItem from "../components/Post/PostItem";
 import PostCreate from "../components/Post/PostCreate";
 
