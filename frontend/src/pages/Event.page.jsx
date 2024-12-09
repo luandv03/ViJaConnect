@@ -1,6 +1,10 @@
-import { EventItem } from "../components/Event";
+import { useLocation } from "react-router-dom";
+import { EventItem, EventCreate } from "../components/Event";
 
 const Event = () => {
+  const location = useLocation();
+  const isAdmin = location.pathname.includes("admin");
+
   const eventItem = [
     {
       id: 1,
@@ -32,11 +36,12 @@ const Event = () => {
       date: "2024-09-20",
       banner: "https://www.oaff.jp/2018/img/report/15_c12_1.jpg",
     },
-  ];  
+  ];
   return (
     <>
       <div>
         <div className="px-8 py-4">
+          {isAdmin && <EventCreate />}
           <div>
             {eventItem.map((item) => (
               <EventItem key={item.id} event={item} />
