@@ -29,6 +29,7 @@ const PostItem = ({ post }) => {
                         </div>
                     </div>
                 </div>
+                <div className="mb-5">{post.description}</div>
                 <Link to="/post/123">
                     <div className="mb-5">
                         <img

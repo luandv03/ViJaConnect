@@ -9,6 +9,7 @@ function Home() {
             img: "https://pds.exblog.jp/pds/1/flash/top/image/e715a6283c881b09c58c1f1157ea0dcb.jpg",
             name: "ディン・ヴァン・ルアン",
             date: "2024-12-20",
+            description: "これは、文化交流についてのトピックです。ベトナムと日本の間の文化的な違いを探ります。",
         },
         {
             id: 2,
@@ -16,6 +17,7 @@ function Home() {
             img: "https://www.xserver.ne.jp/blog/wp-content/uploads/2020/05/how-to-write-blog-for-beginner-eyecatch.png",
             name: "グエン・ザ・トゥン・ゾオン",
             date: "2024-12-20",
+            description: "日本語学習の方法についてのトピックです。初級者向けの学習方法を共有します。",
         },
         {
             id: 3,
@@ -23,8 +25,10 @@ function Home() {
             img: "https://www.xserver.ne.jp/blog/wp-content/uploads/2024/09/wordpress-xwrite-post-eyecatch.png",
             name: "グエン・ドゥック・フ",
             date: "2024-12-20",
+            description: "料理体験のワークショップについてのトピックです。日越の料理を試して学びます。",
         },
     ];
+
     return (
         <>
             <div>

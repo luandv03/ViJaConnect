@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import MainSidebar from "./MainSidebar";
 import ChatSidebar from "./ChatSidebar";
+import EventSidebar from "./EventSidebar";
 
 const Sidebar = () => {
     const location = useLocation();
@@ -8,6 +9,8 @@ const Sidebar = () => {
     // Hiển thị Sidebar phù hợp dựa trên URL
     if (location.pathname === "/chat") {
         return <ChatSidebar />;
+    } else if(location.pathname.includes("/event/")) {
+        return <EventSidebar />;
     }
 
     return <MainSidebar />;
