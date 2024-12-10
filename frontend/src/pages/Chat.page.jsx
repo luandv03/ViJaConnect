@@ -207,7 +207,7 @@ function ChatPage() {
 
             {/* body chat */}
             <div
-                className="p-4 bg-alice-blue rounded-t-md flex-grow relative"
+                className="p-4 bg-alice-blue rounded-t-md flex-grow"
                 style={{
                     height: "calc(100vh - 278px)",
                     overflowY: "auto",
