@@ -1,4 +1,5 @@
 import React from "react";
+import EventDetail from "../components/Event/EventDetail";
 
 const Home = React.lazy(() => import("../pages/Home.page"));
 const PostDetailPage = React.lazy(() => import("../pages/PostDetailPage.page"));
@@ -35,6 +36,18 @@ const routes = [
         path: "chat",
         element: <Chat />,
     },
+    {
+        path: "admin/event/:eventId",
+        element: <EventDetail />,
+    },
+    {
+        path: "manager/event/:eventId",
+        element: <EventDetail />,
+    },
+    {
+        path: "event/:eventId",
+        element: <EventDetail />,
+    }
 ];
 
 export default routes;

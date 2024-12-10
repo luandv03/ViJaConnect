@@ -80,7 +80,7 @@ const MainSidebar = () => {
       <div className="p-4">
         <Link to="/event">
           <div className={`flex items-center p-4 rounded-lg ${eventActive ? "bg-alice-blue" : ""}`}>
-            <h2 className="mr-1">エベント</h2>
+            <h2 className="mr-1">イベント</h2>
             <IconPlus stroke={2} size={20} />
           </div>
         </Link>
