@@ -6,7 +6,7 @@ function BackPage() {
 
     return (
         <button className="hover:bg-alice-blue" onClick={() => navigate(-1)}>
-            <IconArrowNarrowLeft />
+            <IconArrowNarrowLeft size={40} />
         </button>
     );
 }
