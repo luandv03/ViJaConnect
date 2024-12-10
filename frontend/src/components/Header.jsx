@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
-import ActionMenu from './ActionMenu';
+import ActionMenu from './Sidebar/ActionMenu';
 
 const Header = () => {
   return (

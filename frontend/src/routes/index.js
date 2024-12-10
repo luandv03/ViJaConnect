@@ -1,9 +1,11 @@
 import React from "react";
+import EventDetail from "../components/Event/EventDetail";
 
 const Home = React.lazy(() => import("../pages/Home.page"));
 const PostDetailPage = React.lazy(() => import("../pages/PostDetailPage.page"));
 const Profile = React.lazy(() => import("../pages/Profile.page"));
 const Event = React.lazy(() => import("../pages/Event.page"));
+const Chat = React.lazy(() => import("../pages/Chat.page"));
 
 const routes = [
     {
@@ -30,6 +32,22 @@ const routes = [
         path: "profile",
         element: <Profile />,
     },
+    {
+        path: "chat",
+        element: <Chat />,
+    },
+    {
+        path: "admin/event/:eventId",
+        element: <EventDetail />,
+    },
+    {
+        path: "manager/event/:eventId",
+        element: <EventDetail />,
+    },
+    {
+        path: "event/:eventId",
+        element: <EventDetail />,
+    }
 ];
 
 export default routes;
