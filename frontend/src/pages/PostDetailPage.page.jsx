@@ -1,8 +1,9 @@
 import { IconSearch } from "@tabler/icons-react";
+import { useState, useRef } from "react";
 
 import { PostDetail } from "../components/Post";
 import { CommentCreate, CommentDetail } from "../components/Comment";
-import { useState, useRef } from "react";
+import { BackPage } from "../components/BackPage";
 
 const COMMENT_LISTS = [
     {
@@ -40,6 +41,7 @@ function PostDetailPage() {
 
     return (
         <div className="p-4 space-y-4">
+            <BackPage />
             <PostDetail inputRef={inputRef} />
 
             <CommentCreate

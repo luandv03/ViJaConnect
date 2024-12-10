@@ -6,8 +6,6 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 
-import { BackPage } from "../BackPage";
-
 // eslint-disable-next-line react/prop-types
 function PostDetail({ inputRef }) {
     const [actionPost, setActionPost] = useState({
@@ -63,8 +61,6 @@ function PostDetail({ inputRef }) {
                         </div>
                     </div>
                 </div>
-
-                <BackPage />
             </div>
 
             <div>
