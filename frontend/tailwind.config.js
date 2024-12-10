@@ -7,6 +7,7 @@ export default {
             colors: {
                 "alice-blue": "#f0f2f5",
                 "over-layer": "#00000080",
+                "border-1": "1px",
             },
         },
     },
