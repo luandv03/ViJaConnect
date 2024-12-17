@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
     language: { type: String, default: "jap" },
   },
   contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: "contact" }],
+  point: { type: Number, default: 0 },
 });
 
 export const User = mongoose.model("user", userSchema);
