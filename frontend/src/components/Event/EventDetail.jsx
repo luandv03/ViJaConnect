@@ -50,7 +50,7 @@ const EventDetail = () => {
                         <IconArrowNarrowLeft stroke={2} size={60} width={150} />
                     </Link>
                     {isAdminOrManager && (
-                        <div className="rounded-lg bg-alice-blue mb-2 py-2 px-4 text-xl text-center ">
+                        <div className="rounded-lg bg-alice-blue mb-2 py-2 px-4 text-xl text-center hover:bg-gray-400 cursor-pointer">
                             <span>エディット</span>
                         </div>
                     )}
