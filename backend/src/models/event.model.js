@@ -6,6 +6,7 @@ const eventSchema = new mongoose.Schema({
   location: { type: String },
   date: { type: Date, required: true },
   banner_link: { type: String },
+  joined_users: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }], // Thêm thuộc tính joined_users
 });
 
 export const Event = mongoose.model("event", eventSchema);

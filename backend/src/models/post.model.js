@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   date: { type: Date, default: Date.now },
-  topic_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "topic" }], // Array of topics
+  topic_id: { type: mongoose.Schema.Types.ObjectId, ref: "topic" }, // Array of topics
   likes: { type: Number, default: 0 },
   image_link: { type: String },
   desc: {
