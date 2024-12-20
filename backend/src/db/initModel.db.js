@@ -1,7 +1,30 @@
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
+
+const DB_URL = process.env.DB_URL;
+
+const options = { useNewUrlParser: true, useUnifiedTopology: true };
+
 import fs from "fs/promises";
 import path from "path";
+async function initModels() {
+    // Connect to db
+    mongoose
+        .connect(DB_URL, options)
+        .then(() => {
+            console.log("Mongoose is connected");
+        })
+        .catch((error) => {
+            console.error("Error connecting to MongoDB:", error);
+        });
 
-export default async function initModels() {
+    const dbConnection = mongoose.connection;
+    dbConnection.on("error", (err) => console.log(`Connection error ${err}`));
+    dbConnection.once("open", () => console.log("Connected to DB!"));
+
+    console.log("🔍 Loading models...");
+
     const models = {};
     const modelsDir = path.resolve("./src/models");
 
@@ -18,5 +41,22 @@ export default async function initModels() {
         }
     }
 
-    return models;
+    dbConnection.on("disconnected", () => {
+        console.log("Disconnected from MongoDB");
+    });
+
+    dbConnection.on("SIGINT", () => {
+        mongoose.connection.close(() => {
+            console.log(
+                "Mongoose connection is disconnected" +
+                    " due to application termination"
+            );
+            process.exit(0);
+        });
+    }); // Gracefully close the connection when the application exits
+
+    console.log("📦 Models loaded:", Object.keys(models));
 }
+
+// 🛠️ Tự động load models
+initModels();
