@@ -1,4 +1,5 @@
 import { IconPhotoFilled } from "@tabler/icons-react";
+import { Button } from "../ui/Button";
 
 // eslint-disable-next-line react/prop-types
 function TopicCreate({ closeTopicCreatedModal }) {
@@ -16,31 +17,34 @@ function TopicCreate({ closeTopicCreatedModal }) {
                     </div>
 
                     <div className="w-full p-2">
-                        <label className="flex w-full justify-center min-h-8 bg-gray-400 rounded-md items-center hover:opacity-70 space-x-2 cursor-pointer">
-                            <span>写真/ビデオを追加する</span>
-                            <IconPhotoFilled />
-                            <input
-                                type="file"
-                                className="hidden"
-                                // onChange={(e) => handleFileUpload(e)}
-                            />
+                        <label className="flex w-full justify-center min-h-8 items-center space-x-2 cursor-pointer">
+                            <Button className="w-full" variant="outline">
+                                <span>写真/ビデオを追加する</span>
+                                <IconPhotoFilled />
+                                <input
+                                    type="file"
+                                    className="hidden"
+                                    // onChange={(e) => handleFileUpload(e)}
+                                />
+                            </Button>
                         </label>
                     </div>
                 </div>
 
                 <div className="flex justify-between space-x-4">
-                    <button
-                        className="w-1/2 rounded-md min-h-8 bg-alice-blue hover:opacity-70"
+                <Button
+                        className="w-1/2"
+                        variant="destructive"
                         onClick={() => closeTopicCreatedModal()}
                     >
-                        <span>キャンセル</span>
-                    </button>
-                    <button
-                        className="w-1/2 rounded-md min-h-8 bg-gray-400 hover:opacity-70"
+                        キャンセル
+                    </Button>
+                    <Button
+                        className="w-1/2"
                         onClick={() => closeTopicCreatedModal()}
                     >
-                        <span>ポスト</span>
-                    </button>
+                        ポスト
+                    </Button>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
 import { ChevronLeft, PlusIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "../ui/Button";
 
 const ChatSidebar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -119,18 +120,19 @@ const ChatSidebar = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none mb-4"
             />
             <div className="flex justify-end space-x-3">
-              <button
+            <Button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-red-500 rounded-lg hover:bg-gray-400 transition"
+                className="w-full"
+                variant="destructive"
               >
                 キャンセル
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleCreateGroup}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                className="w-full"
               >
                 作成
-              </button>
+              </Button>
             </div>
           </div>
         </div>
