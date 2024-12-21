@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IconCirclePlus, IconCloudUpload } from "@tabler/icons-react";
+import { Button } from "../ui/Button";
 
 const EventCreate = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,18 +90,21 @@ const EventCreate = () => {
                         </div>
 
                         <div className="flex w-full space-x-2 mt-10">
-                            <button
-                                className="w-full min-h-8 bg-red-400 hover:opacity-70 p-2 rounded-md"
-                                onClick={() => closeModal()}
+                        <Button
+                                type="button"
+                                className="w-full"
+                                variant="destructive"
+                                onClick={closeModal}
                             >
-                                <span>キャンセル</span>
-                            </button>
-                            <button
-                                className="w-full min-h-8 bg-gray-400 hover:opacity-70 p-2 rounded-md"
-                                onClick={() => closeModal()}
+                                キャンセル
+                            </Button>
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                onClick={closeModal}
                             >
-                                <span>ポスト</span>
-                            </button>
+                                ポスト
+                            </Button>
                         </div>
                     </div>
                 </div>
