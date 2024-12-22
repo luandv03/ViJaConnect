@@ -5,5 +5,6 @@ const userRoutes = Router();
 const userController = new UserController();
 
 userRoutes.post("/user/create", userController.createUser);
+userRoutes.post("/user/increase-points", userController.increaseUserPoints);
 
 export default userRoutes;
