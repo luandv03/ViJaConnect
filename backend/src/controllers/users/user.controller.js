@@ -42,4 +42,33 @@ export class UserController {
       });
     }
   }
+
+  async updateUserByAdmin(req, res) {
+    try {
+      const { userId, updatedData } = req.body;
+
+      // Check admin role
+      if (req.user.role !== "admin") {
+        return res.status(403).json({
+          status: 403,
+          message: "Access denied. Admin role is required.",
+        });
+      }
+
+      // Update information
+      const updatedUser = await userService.updateUser(userId, updatedData);
+
+      return res.json({
+        status: 200,
+        message: "User information updated successfully.",
+        data: updatedUser,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        message: "Failed to update user information.",
+        error: error.message,
+      });
+    }
+  }
 }
