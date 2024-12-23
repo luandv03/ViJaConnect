@@ -23,6 +23,19 @@ class TopicService {
       throw new Error("Error increasing user points: " + error.message);
     }
   }
+
+  async updateUser(userId, updatedData) {
+    try {
+      const user = await User.findByIdAndUpdate(userId, updatedData, {
+        new: true, // Return user after update
+      });
+
+      if (!user) throw new Error("User not found");
+      return user;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 export const userService = new TopicService();
