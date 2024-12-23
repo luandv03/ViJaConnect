@@ -36,4 +36,58 @@ export class AuthController {
       });
     }
   }
+
+  async assignRoleToUser(req, res) {
+    try {
+      const {userId, roleName} = req.body;
+
+      // Check role admin
+      if (req.user.role !== "admin") {
+        return res.status(403).json({
+          status: 403,
+          message: "Access denied. Admin role is required.",
+        });
+      }
+
+      const updatedUser = await authService.assignRole(userId, roleName);
+      return res.json({
+        status: 200,
+        message: "Role assigned successfully.",
+        data: updatedUser,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        message: "Failed to assign role.",
+        error: error.message,
+      });
+    }
+  }
+
+  async removeRoleFromUser(req, res) {
+    try {
+      const { userId } = req.body;
+
+      // Check role admin
+      if (req.user.role !== "admin") {
+        return res.status(403).json({
+          status: 403,
+          message: "Access denied. Admin role is required.",
+        });
+      }
+
+      const updatedUser = await authService.removeRole(userId);
+      return res.json({
+        status: 200,
+        message: "Role removed successfully.",
+        data: updatedUser,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        message: "Failed to remove role.",
+        error: error.message,
+      });
+    }
+  }
 }

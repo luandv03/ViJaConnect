@@ -27,6 +27,33 @@ class AuthService {
     user.password = new_password; // Store the new password directly
     await user.save();
   }
+
+  async assignRole(userId, roleName) {
+    const role = await Role.findOne({ name: roleName });
+    if (!role) {
+      throw new Error("Role not found");
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.role_id = role._id;
+    await user.save();
+    return user;
+  }
+
+  async removeRole(userId) {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.role_id = null; // Xóa quyền bằng cách đặt role_id thành null
+    await user.save();
+    return user;
+  }
 }
 
 export const authService = new AuthService();
