@@ -7,5 +7,7 @@ const authController = new AuthController();
 
 authRoutes.post("/login", authController.login); // Route for login
 authRoutes.post("/change-password", authController.changePassword); // Route for changing password
+authRoutes.post("/assign-role", authController.assignRoleToUser); // Route for assign role
+authRoutes.post("/remove-role", authController.removeRoleFromUser); // Route for remove role
 
 export default authRoutes;
