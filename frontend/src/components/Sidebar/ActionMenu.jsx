@@ -1,22 +1,47 @@
 import {
     IconBell,
+    IconBellFilled,
     IconBrandMessenger,
     IconPlus,
     IconSettings,
 } from "@tabler/icons-react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Notification from "../Notification";
 
 const ActionMenu = () => {
     const location = useLocation();
     const isChat = location.pathname === "/chat";
+    const [showNotification, setShowNotification] = useState(false);
     return (
         <div className="flex justify-between items-center space-x-6">
-            <Link to="/chat" className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${isChat ? 'text-blue-500': ''}`}>
+            <Link to="/chat" className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${isChat ? 'text-blue-500' : ''}`}>
                 <IconBrandMessenger stroke={2} />
             </Link>
             <IconPlus stroke={2} />
-            <IconBell stroke={2} />
-            <IconSettings stroke={2} />
+            <div className="relative">
+                <button
+                    onClick={() => setShowNotification(!showNotification)}
+                    className="relative"
+                >
+                    {showNotification ? (
+                        <IconBellFilled stroke={2} className="text-blue-500" />
+                    ) : (
+                        <IconBell stroke={2} />
+                    )}
+                    {/* Badge thông báo */}
+                    <span className="absolute bottom-3 left-3 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                        3
+                    </span>
+                </button>
+                {/* Modal thông báo */}
+                {showNotification && (
+                    <Notification />
+                )}
+            </div>
+            <Link to = "/setting">
+                <IconSettings stroke={2} />
+            </Link>
             <Link
                 to="/profile"
                 className="rounded-full bg-slate-400 h-10 w-10"
