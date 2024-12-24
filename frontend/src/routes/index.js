@@ -1,5 +1,6 @@
 import React from "react";
 import EventDetail from "../components/Event/EventDetail";
+import Setting from "../components/Setting";
 
 const Home = React.lazy(() => import("../pages/Home.page"));
 const PostDetailPage = React.lazy(() => import("../pages/PostDetailPage.page"));
@@ -15,6 +16,10 @@ const routes = [
     {
         path: "post/:postId",
         element: <PostDetailPage />,
+    },
+    {
+        path: "topic",
+        element: <Home />,
     },
     {
         path: "topic/:topicId",
@@ -47,6 +52,10 @@ const routes = [
     {
         path: "event/:eventId",
         element: <EventDetail />,
+    },
+    {
+        path: "setting",
+        element: <Setting />
     }
 ];
 

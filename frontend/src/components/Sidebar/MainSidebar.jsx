@@ -20,6 +20,7 @@ const MainSidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === "/";
   const eventActive = location.pathname === "/event";
+  const topicActive = location.pathname === "/topic";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTopicCreatedModal, setIsTopicCreatedModal] = useState(false);
 
@@ -50,11 +51,12 @@ const MainSidebar = () => {
 
       <div className="py-4 pl-4 border-b border-red-600">
         <div
-          className="flex items-center mb-3 hover:bg-alice-blue hover:rounded-md cursor-pointer"
-          onClick={openTopicCreateModal}
+          className={`flex items-center mb-3 hover:bg-alice-blue hover:rounded-md cursor-pointer justify-between mr-4 p-4 ${topicActive ? "bg-alice-blue" : ""}`}
         >
-          <h2 className="mr-1">トピック</h2>
-          <IconPlus stroke={2} size={20} />
+          <Link to="/topic">
+            <h2>トピック</h2>
+          </Link>
+          <IconPlus stroke={2} size={20} onClick={openTopicCreateModal} />
         </div>
 
         <div className="flex items-center ml-5 border-b mb-2 mr-5">
@@ -79,7 +81,7 @@ const MainSidebar = () => {
 
       <div className="p-4">
         <Link to="/event">
-          <div className={`flex items-center p-4 rounded-lg ${eventActive ? "bg-alice-blue" : ""}`}>
+          <div className={`flex items-center justify-between p-4 rounded-lg ${eventActive ? "bg-alice-blue" : ""}`}>
             <h2 className="mr-1">イベント</h2>
             <IconPlus stroke={2} size={20} />
           </div>
