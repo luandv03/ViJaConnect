@@ -304,12 +304,16 @@ function ChatPage() {
                         >
                             <IconX />
                         </div>
-                        <div className="bg-alice-blue rounded-3xl">
+                        <div className="bg-none rounded-3xl flex items-center">
+                            <div className="bg-alice-blue h-8 p-1 rounded-3xl space-x-2 flex items-center">
+                                <span>Luan Dinh</span>
+
+                                <span className="cursor-pointer bg-black rounded-full text-white">
+                                    <IconX size={16} />
+                                </span>
+                            </div>
                             <div className="p-2">
-                                <input
-                                    className="w-full bg-alice-blue rounded-3xl p-x-8 outline-none resize-none"
-                                    placeholder="検索したいユーザーの名前を入力してください"
-                                ></input>
+                                <input className="bg-none p-x-8 outline-none resize-none"></input>
                             </div>
                         </div>
                         <div>
@@ -321,25 +325,16 @@ function ChatPage() {
                                 <button className="w-full min-h-8 bg-alice-blue  p-2 rounded-3xl ">
                                     <span>Dinh Van Luan</span>
                                 </button>
-                                <span className="cursor-pointer">
-                                    <IconX />
-                                </span>
                             </div>
                             <div className="flex w-full ">
                                 <button className="w-full min-h-8 bg-alice-blue  p-2 rounded-3xl">
                                     <span>Chu Dinh Hien</span>
                                 </button>
-                                <span className="cursor-pointer">
-                                    <IconX />
-                                </span>
                             </div>
                             <div className="flex w-full ">
                                 <button className="w-full min-h-8 bg-alice-blue  p-2 rounded-3xl">
                                     <span>Nguyen Duc Phu</span>
                                 </button>
-                                <span className="cursor-pointer">
-                                    <IconX />
-                                </span>
                             </div>
                         </div>
 
