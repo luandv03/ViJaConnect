@@ -46,6 +46,10 @@ const routes = [
         element: <EventDetail />,
     },
     {
+        path: "admin/user",
+        element: <div>Admin User</div>,
+    },
+    {
         path: "manager/event/:eventId",
         element: <EventDetail />,
     },
@@ -55,8 +59,8 @@ const routes = [
     },
     {
         path: "setting",
-        element: <Setting />
-    }
+        element: <Setting />,
+    },
 ];
 
 export default routes;

@@ -6,6 +6,8 @@
     > npm run dev
 -   Setup MongoDB
     > Create database in MongoDB local with db name as ViJaConectDB
+-   Seeding data
+    > npm run seed
 
 ## Frontend
 
