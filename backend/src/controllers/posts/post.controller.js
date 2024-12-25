@@ -14,6 +14,34 @@ export class PostController {
         }
     }
 
+    async getPostById(req, res) {
+        try {
+            const { postId } = req.params;
+            const post = await postService.getPostById(postId);
+            return res.json({
+                status: 200,
+                message: "get post by id successfully",
+                data: post,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
+
+    async getPostByTopicId(req, res) {
+        try {
+            const { topicId } = req.params;
+            const posts = await postService.getPostByTopicId(topicId);
+            return res.json({
+                status: 200,
+                message: "get post by topic id successfully",
+                data: posts,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
+
     async createPost(req, res) {
         try {
             const { title, author_id, topic_ids, image_link, desc } = req.body;
