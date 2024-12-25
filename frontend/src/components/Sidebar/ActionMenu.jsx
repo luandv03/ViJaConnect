@@ -5,17 +5,35 @@ import {
     IconPlus,
     IconSettings,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+
 import Notification from "../Notification";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const ActionMenu = () => {
     const location = useLocation();
     const isChat = location.pathname === "/chat";
     const [showNotification, setShowNotification] = useState(false);
+    const { isAuthenticated, profile, setIsAuthenticated, setProfile } =
+        useContext(AuthContext);
+
+    const handleLogout = () => {
+        localStorage.removeItem("profile");
+        localStorage.removeItem("isAuthenticated");
+
+        setIsAuthenticated(false);
+        setProfile({});
+    };
+
     return (
         <div className="flex justify-between items-center space-x-6">
-            <Link to="/chat" className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${isChat ? 'text-blue-500' : ''}`}>
+            <Link
+                to="/chat"
+                className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${
+                    isChat ? "text-blue-500" : ""
+                }`}
+            >
                 <IconBrandMessenger stroke={2} />
             </Link>
             <IconPlus stroke={2} />
@@ -35,17 +53,34 @@ const ActionMenu = () => {
                     </span>
                 </button>
                 {/* Modal thông báo */}
-                {showNotification && (
-                    <Notification />
-                )}
+                {showNotification && <Notification />}
             </div>
-            <Link to = "/setting">
+            <Link to="/setting">
                 <IconSettings stroke={2} />
             </Link>
-            <Link
-                to="/profile"
-                className="rounded-full bg-slate-400 h-10 w-10"
-            ></Link>
+            {isAuthenticated ? (
+                <>
+                    <Link
+                        to="/profile"
+                        className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden"
+                    >
+                        <img
+                            src={profile.avatar_link}
+                            className="w-full h-full object-cover"
+                        />
+                    </Link>
+                    <button
+                        onClick={() => handleLogout()}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-full"
+                    >
+                        Logout
+                    </button>
+                </>
+            ) : (
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-full">
+                    Sign In
+                </button>
+            )}
         </div>
     );
 };
