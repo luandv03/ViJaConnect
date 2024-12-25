@@ -1,9 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useContext } from "react";
+
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
+import SignIn from "./SignIn.page";
+import { AuthContext } from "../providers/AuthProvider";
 
 export default function LayoutApp() {
+    const { isAuthenticated } = useContext(AuthContext);
+
     return (
         <div>
             {/* <div className="w-full bg-red-400 h-20">Header</div> */}
@@ -19,6 +24,13 @@ export default function LayoutApp() {
                         <Outlet />
                     </Suspense>
                 </div>
+
+                {/* Modal login */}
+                {isAuthenticated ? null : (
+                    <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-over-layer mt-0">
+                        <SignIn />
+                    </div>
+                )}
             </div>
         </div>
     );
