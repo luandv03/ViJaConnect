@@ -6,145 +6,153 @@ const MESSAGES = [
         id: 1,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
         sender: "hien",
-        content: "Content message 1",
+        content:
+            "みなさん、もうすぐ年末ですね。今年の忘年会について話し合いませんか？",
     },
     {
         id: 2,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content:
+            "そうですね。今年もたくさん頑張りましたし、みんなで楽しい時間を過ごしたいですね。",
     },
     {
         id: 200,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content:
+            "はい！場所はどうしますか？去年は居酒屋でしたが、今年はちょっと変えてみませんか？",
     },
     {
         id: 3,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
         sender: "kien",
-        content: "Content message 3",
+        content:
+            "いいですね。ホテルのバンケットルームとかどうでしょう？少しフォーマルな感じで。",
     },
     {
         id: 4,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
         sender: "duong",
-        content: "Content message 4",
+        content:
+            "フォーマルもいいですが、コストが気になりますね。会社の予算を確認しないといけませんね。",
     },
     {
         id: 5,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
         sender: "luan",
-        content: "Content message 5",
+        content:
+            "それなら、オフィスでカジュアルなパーティーをするのはどうですか？ケータリングを頼んで。",
     },
     {
         id: 1,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
         sender: "hien",
-        content: "Content message 1",
+        content:
+            "それもいいですね！みんなが参加しやすくなりますし、準備も簡単です。",
     },
     {
         id: 2,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content:
+            "じゃあ、まずアンケートを取って、どちらがいいかみんなに聞いてみましょう。",
     },
     {
         id: 3,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
         sender: "kien",
-        content: "Content message 3",
+        content: "了解です！アンケートフォームは私が作りますね。",
     },
     {
         id: 4,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
         sender: "duong",
-        content: "Content message 4",
+        content: "よろしくお願いします！では、来週までに結果をまとめましょう。",
     },
     {
         id: 5,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
         sender: "luan",
-        content: "Content message 5",
+        content: "了解です！",
     },
     {
         id: 2,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content:
+            "アンケートは食事についても聞いたほうがいいですね。みんなが好きなものを提供できればいいと思います。",
     },
     {
         id: 1,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
         sender: "hien",
-        content: "Content message 1",
+        content:
+            "そうですね！和食だけじゃなくて、洋食や中華も候補に入れたらどうですか？",
     },
     {
         id: 2,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content:
+            "いいアイデアですね！飲み物も重要なので、アルコールの有無についても確認したほうがいいですね。",
     },
     {
         id: 200,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content: "確かに。最近はお酒を飲まない人も増えていますからね。",
     },
     {
         id: 3,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
         sender: "kien",
-        content: "Content message 3",
+        content:
+            "それと、ゲームやプレゼント交換など、何かアクティビティを入れたほうがいいと思います！",
     },
     {
         id: 4,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
         sender: "duong",
-        content: "Content message 4",
+        content: "プレゼント交換は面白いですね。でも、予算はどうしますか？",
     },
     {
         id: 5,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
         sender: "luan",
-        content: "Content message 5",
+        content: "一人千円くらいでどうですか？負担にならない程度に。",
     },
     {
         id: 1,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
         sender: "hien",
-        content: "Content message 1",
+        content: "それなら良さそうですね！企画リストに追加しましょう。",
     },
     {
         id: 2,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
         sender: "phu",
-        content: "Content message 2",
+        content:
+            "あと、日時についてもアンケートで確認しましょう。忙しい時期なので全員の都合を考えたいですね。",
     },
     {
         id: 3,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
         sender: "kien",
-        content: "Content message 3",
+        content: "了解です。フォームに質問を追加しておきます。",
     },
     {
         id: 4,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
         sender: "duong",
-        content: "Content message 4",
+        content:
+            "みなさん、いいアイデアありがとうございました！良い忘年会になりそうですね。",
     },
     {
         id: 5,
         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
         sender: "luan",
-        content: "Content message 5",
-    },
-    {
-        id: 2,
-        avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content: "Content message 2",
+        content: "こちらこそ、楽しみですね！",
     },
 ];
 

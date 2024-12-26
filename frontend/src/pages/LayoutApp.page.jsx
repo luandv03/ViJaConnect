@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Suspense, useContext } from "react";
+import { ToastContainer } from "react-toastify";
 
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -32,6 +33,7 @@ export default function LayoutApp() {
                     </div>
                 )}
             </div>
+            <ToastContainer />
         </div>
     );
 }

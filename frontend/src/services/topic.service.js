@@ -1,13 +1,28 @@
-import axios from "axios";
+import { BaseService } from "./base.service";
 
-const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
+class TopicService extends BaseService {
+    async createTopic({ title, desc }) {
+        try {
+            const res = await this.httpClientPublic.post("/topic/create", {
+                title: title,
+                desc: desc,
+            });
 
-export const fetchTopics = async () => {
-  try {
-    const { data } = await axios.get(`http://${SERVER_DOMAIN}/api/v1/topic/get`);
-    return data.data;
-  } catch (error) {
-    console.error("Failed to fetch topics", error);
-    throw error;
-  }
-};
+            return res.data;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async fetchTopics() {
+        try {
+            const res = await this.httpClientPublic.get("/topic/get");
+
+            return res.data;
+        } catch (error) {
+            return error;
+        }
+    }
+}
+
+export const topicService = new TopicService();
