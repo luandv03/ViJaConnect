@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { Button } from "../ui/Button";
-import EditorJS from "@editorjs/editorjs";
+// import EditorJS from "@editorjs/editorjs";
 import {
     Select,
     SelectTrigger,
@@ -29,6 +29,7 @@ const PostValidator = z.object({
     desc: z.any(),
 });
 
+// eslint-disable-next-line react/prop-types
 const Editor = ({ closeModal }) => {
     const editorRef = useRef(null);
     const titleInputRef = useRef(null);
@@ -227,14 +228,15 @@ const Editor = ({ closeModal }) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>トピック</SelectLabel>
-                                {topics.map((topic) => (
-                                    <SelectItem
-                                        key={topic._id}
-                                        value={topic._id}
-                                    >
-                                        {topic.title}
-                                    </SelectItem>
-                                ))}
+                                {topics.length > 0 &&
+                                    topics?.map((topic) => (
+                                        <SelectItem
+                                            key={topic._id}
+                                            value={topic._id}
+                                        >
+                                            {topic.title}
+                                        </SelectItem>
+                                    ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>

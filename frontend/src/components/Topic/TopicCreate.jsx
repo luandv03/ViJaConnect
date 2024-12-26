@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { useState, useContext } from "react";
+import { toast } from "react-toastify";
 
 import { Button } from "../ui/Button";
 import { topicService } from "../../services/topic.service";
+import { AuthContext } from "../../providers/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
 function TopicCreate({ closeTopicCreatedModal }) {
-    const [topic, setTopic] = useState({ title: "", desc: "" });
+    const [topic, setTopic] = useState({ title: "", desc: "", author_id: "" });
+    const { profile } = useContext(AuthContext);
 
     const handleChangeTopic = (e) => {
-        setTopic({ title: e.target.value, desc: e.target.value });
+        setTopic({
+            title: e.target.value,
+            desc: e.target.value,
+            author_id: profile._id,
+        });
     };
 
     const handleCreateTopic = async () => {
@@ -17,7 +23,6 @@ function TopicCreate({ closeTopicCreatedModal }) {
             if (topic.title === "" || topic.desc === "") return;
 
             const res = await topicService.createTopic(topic);
-            console.log(res);
             if (res.status === 201) {
                 closeTopicCreatedModal();
                 toast("トピックが作成されました");
@@ -59,7 +64,6 @@ function TopicCreate({ closeTopicCreatedModal }) {
                     </Button>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }

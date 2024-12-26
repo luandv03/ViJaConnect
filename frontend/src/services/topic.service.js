@@ -1,11 +1,12 @@
 import { BaseService } from "./base.service";
 
 class TopicService extends BaseService {
-    async createTopic({ title, desc }) {
+    async createTopic({ title, desc, author_id }) {
         try {
             const res = await this.httpClientPublic.post("/topic/create", {
                 title: title,
                 desc: desc,
+                author_id: author_id,
             });
 
             return res.data;
