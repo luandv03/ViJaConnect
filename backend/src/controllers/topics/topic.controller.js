@@ -31,4 +31,18 @@ export class TopicController {
             return res.json(error).status(500);
         }
     }
+
+    async getTopicByTitle(req, res) {
+        try {
+            const { title } = req.query;
+            const topic = await topicService.getTopicByTitle(title);
+            return res.json({
+                status: 200,
+                message: "get topic by title successfully",
+                data: topic,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
 }
