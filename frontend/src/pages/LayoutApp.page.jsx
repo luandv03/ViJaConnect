@@ -14,7 +14,7 @@ export default function LayoutApp() {
             {/* <div className="w-full bg-red-400 h-20">Header</div> */}
             <Header />
             <div className="flex">
-                <div className="fixed min-w-96 border-r border-gray-200 max-h-screen top-16">
+                <div className="fixed min-w-96 border-r border-gray-200 top-16">
                     <Sidebar />
                 </div>
 

@@ -1,11 +1,12 @@
 import { IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import { TopicCreate } from "../Topic";
 import TopicItem from "../Topic/TopicItem";
 import TopicTab from "../Topic/TopicTab";
 import SearchBar from "../SearchBar";
+import { dataService } from "../../services/fetchData.service";
 
 const topicItemsData = [
   { id: 1, title: "文化交流: ベトナムと日本の文化を学ぶ" },
@@ -23,15 +24,20 @@ const MainSidebar = () => {
   const topicActive = location.pathname === "/topic";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTopicCreatedModal, setIsTopicCreatedModal] = useState(false);
+  const [topicItems, setTopicItems] = useState(topicItemsData);
+
+  useEffect(() => {
+    dataService.getData("http://localhost:5000/api/v1/topic/get").then((data) => setTopicItems(data.data));
+  }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredTopics = useMemo(() => {
-    if (!searchTerm.trim()) return topicItemsData;
-    return topicItemsData.filter((topic) =>
+    if (!searchTerm.trim()) return topicItems;
+    return topicItems.filter((topic) =>
       topic.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [searchTerm, topicItems]);
 
   const openSearchModal = () => setIsModalOpen(true);
   const closeSearchModal = () => setIsModalOpen(false);
@@ -70,10 +76,10 @@ const MainSidebar = () => {
           />
         </div>
 
-        <div className="overflow-y-auto 2xl:max-h-[675px] max-h-[530px] relative">
+        <div className="sidebar overflow-y-auto scrollbar-hide p-4 max-h-[calc(100vh-360px)]">
           <div className="flex flex-col justify-center pl-5 pr-3">
             {filteredTopics.map((topic) => (
-              <TopicItem key={topic.id} title={topic.title} id={topic.id} />
+              <TopicItem key={topic.id} title={topic.title} id={topic._id} />
             ))}
           </div>
         </div>
