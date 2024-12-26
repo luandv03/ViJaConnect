@@ -19,7 +19,6 @@
         "@editorjs/link": "^2.6.2",
         "@editorjs/list": "^2.0.2",
         "@editorjs/table": "^2.4.2",
-        "@hookform/resolvers": "^3.9.1",
         "@radix-ui/react-select": "^2.1.2",
         "@radix-ui/react-toast": "^1.2.4",
         "@tabler/icons-react": "^3.22.0",
@@ -41,6 +40,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.13.0",
+        "@hookform/resolvers": "^3.9.1",
         "@types/react": "^18.3.12",
         "@types/react-dom": "^18.3.1",
         "@vitejs/plugin-react": "^4.3.3",
