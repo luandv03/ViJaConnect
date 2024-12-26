@@ -93,6 +93,23 @@ class PostService {
         try {
             const posts = await Post.find({
                 title: { $regex: new RegExp(title, "i") },
+            })
+                .populate({
+                    path: "author_id",
+                    select: "avatar_link display_name",
+                    as: "author",
+                })
+                .populate({ path: "topic_id", select: "title" })
+                .lean();
+
+            // Sửa tên trường author_id thành author
+            posts.forEach((post) => {
+                if (post.author_id) {
+                    post.author = post.author_id; // Gán dữ liệu của author_id cho author
+                    post.topic = post.topic_id; // Gán dữ liệu của topic_id cho topic
+                    delete post.author_id; // Xóa trường author_id
+                    delete post.topic_id; // Xóa trường topic
+                }
             });
             return posts;
         } catch (error) {
