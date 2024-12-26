@@ -1,45 +1,19 @@
 import PostItem from "../components/Post/PostItem";
 import PostCreate from "../components/Post/PostCreate";
 import { useEffect, useState } from "react";
-import { dataService } from "../services/fetchData.service";
 import { useParams } from "react-router-dom";
+import { getPosts, getPostsByTopicId } from "../services/post.service";
 
 function Home() {
-    // const postItem = [
-    //     {
-    //         id: 1,
-    //         avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
-    //         img: "https://pds.exblog.jp/pds/1/flash/top/image/e715a6283c881b09c58c1f1157ea0dcb.jpg",
-    //         name: "ディン・ヴァン・ルアン",
-    //         date: "2024-12-20",
-    //         description: "これは、文化交流についてのトピックです。ベトナムと日本の間の文化的な違いを探ります。",
-    //     },
-    //     {
-    //         id: 2,
-    //         avatar: "https://ca.slack-edge.com/T02QFU9TCTD-U050YRP1CKD-db63e56c3a98-512",
-    //         img: "https://www.xserver.ne.jp/blog/wp-content/uploads/2020/05/how-to-write-blog-for-beginner-eyecatch.png",
-    //         name: "グエン・ザ・トゥン・ゾオン",
-    //         date: "2024-12-20",
-    //         description: "日本語学習の方法についてのトピックです。初級者向けの学習方法を共有します。",
-    //     },
-    //     {
-    //         id: 3,
-    //         avatar: "https://ca.slack-edge.com/T02QFU9TCTD-U05LS8WME6L-e9f842c7fcee-512",
-    //         img: "https://www.xserver.ne.jp/blog/wp-content/uploads/2024/09/wordpress-xwrite-post-eyecatch.png",
-    //         name: "グエン・ドゥック・フ",
-    //         date: "2024-12-20",
-    //         description: "料理体験のワークショップについてのトピックです。日越の料理を試して学びます。",
-    //     },
-    // ];
     const { topicId } = useParams();
     const [postItem, setPostItem] = useState([]);
     console.log(topicId);
     useEffect(() => {
-        if(topicId === undefined) {
-            dataService.getData("http://localhost:5000/api/v1/post/get").then((data) => setPostItem(data.data));
+        if (topicId === undefined) {
+            getPosts().then((data) => setPostItem(data));
             return;
         }
-        dataService.getData(`http://localhost:5000/api/v1/post/get/topic/${topicId}`).then((data) => setPostItem(data.data));
+        getPostsByTopicId(topicId).then((data) => setPostItem(data));
     }, [topicId]);
 
     return (
@@ -48,10 +22,15 @@ function Home() {
                 <div className="px-8 py-4">
                     <PostCreate />
                     <div>
-                        {postItem.map((item) => (
-                            <PostItem key={item._id} post={item} />
-                        ))}
+                        {Array.isArray(postItem) && postItem.length > 0 ? (
+                            postItem.map((item) => (
+                                <PostItem key={item._id} post={item} />
+                            ))
+                        ) : (
+                            <div className="text-gray-500 text-center">投稿が見つかりません</div>
+                        )}
                     </div>
+
                 </div>
             </div>
         </>

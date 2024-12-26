@@ -6,8 +6,8 @@ import {
 } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { dataService } from "../../services/fetchData.service";
 import { useParams } from "react-router-dom";
+import { getPost } from "../../services/post.service";
 
 // eslint-disable-next-line react/prop-types
 function PostDetail({ inputRef }) {
@@ -48,7 +48,7 @@ function PostDetail({ inputRef }) {
     const { postId } = useParams();
 
     useEffect(() => {
-        dataService.getData(`http://localhost:5000/api/v1/post/get/${postId}`).then((data) => setPost(data.data));
+        getPost(postId).then((data) => setPost(data));
     }, [postId]);
 
     return (
