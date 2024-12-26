@@ -1,4 +1,15 @@
+import { useState, useContext } from "react";
+
+import { AuthContext } from "../../providers/AuthProvider";
+
 function ProfileTab() {
+    const { profile } = useContext(AuthContext);
+    const [newProfile, setNewProfile] = useState(profile);
+
+    const handleChangeProfile = (e) => {
+        setNewProfile({ ...newProfile, [e.target.name]: e.target.value });
+    };
+
     return (
         <>
             <div className="flex space-x-12">
@@ -8,7 +19,9 @@ function ProfileTab() {
                         <input
                             className="w-full h-8 outline-none rounded-xl bg-alice-blue px-2"
                             type="text"
-                            value="gundam@gmail.com"
+                            name="email"
+                            value={newProfile?.email}
+                            onChange={handleChangeProfile}
                         />
                     </div>
                     <div className="w-60 flex flex-col space-y-2">
@@ -16,7 +29,9 @@ function ProfileTab() {
                         <input
                             className="w-full h-8 outline-none rounded-xl bg-alice-blue px-2"
                             type="text"
-                            value="IT"
+                            name="department"
+                            value={newProfile?.department}
+                            onChange={handleChangeProfile}
                         />
                     </div>
                 </div>
@@ -27,7 +42,9 @@ function ProfileTab() {
                         <input
                             className="w-full h-8 outline-none rounded-xl bg-alice-blue px-2"
                             type="text"
-                            value="Gundam"
+                            name="display_name"
+                            value={newProfile?.display_name}
+                            onChange={handleChangeProfile}
                         />
                     </div>
                     <div className="w-60 flex flex-col space-y-2">
@@ -35,7 +52,9 @@ function ProfileTab() {
                         <input
                             className="w-full h-8 outline-none rounded-xl bg-alice-blue px-2"
                             type="text"
-                            value="0123456789"
+                            name="phone_number"
+                            value={newProfile?.phone_number}
+                            onChange={handleChangeProfile}
                         />
                     </div>
                 </div>
@@ -46,7 +65,9 @@ function ProfileTab() {
                         <input
                             className="w-full h-8 outline-none rounded-xl bg-alice-blue px-2"
                             type="text"
-                            value="Ha Noi"
+                            name="address"
+                            value={newProfile?.address}
+                            onChange={handleChangeProfile}
                         />
                     </div>
                     <div className="w-60 flex flex-col space-y-2">
@@ -54,7 +75,9 @@ function ProfileTab() {
                         <input
                             className="w-full h-8 outline-none rounded-xl bg-alice-blue px-2"
                             type="text"
-                            value="DEV"
+                            name="company_role"
+                            value={newProfile?.company_role}
+                            onChange={handleChangeProfile}
                         />
                     </div>
                 </div>
