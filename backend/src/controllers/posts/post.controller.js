@@ -42,6 +42,20 @@ export class PostController {
         }
     }
 
+    async getPostByAuthor(req, res, next) {
+        try {
+            const { authorId } = req.params;
+            const posts = await postService.getPostByAuthor(authorId);
+            return res.json({
+                status: 200,
+                message: "get post by author successfully",
+                data: posts,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
+
     async createPost(req, res) {
         try {
             const { title, author_id, topic_id, image_link, desc } = req.body;

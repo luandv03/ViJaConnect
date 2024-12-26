@@ -79,6 +79,15 @@ class PostService {
         }
     }
 
+    async getPostByAuthor(authorId) {
+        try {
+            const posts = await Post.find({ author_id: authorId });
+            return posts;
+        } catch (error) {
+            return error;
+        }
+    }
+
     async createPost(postData) {
         const newPost = new Post(postData);
         return await newPost.save();
