@@ -1,18 +1,24 @@
 import { IconEdit, IconCheck, IconX } from "@tabler/icons-react";
-import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
-const TopicItem = ({ title, id }) => {
+
+// eslint-disable-next-line react/prop-types
+const TopicItem = ({ topic }) => {
   const location = useLocation();
-  const isActive = location.pathname === `/topic/${id}`;
+  const { profile } = useContext(AuthContext);
+  // eslint-disable-next-line react/prop-types
+  const { _id, title, author_id } = topic;
+  const isActive = location.pathname === `/topic/${_id}`;
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
 
   const handleEditClick = () => {
     if (isEditing) {
-      console.log(`Saving topic with id: ${id}, new title: ${editedTitle}`);
+
+      console.log(`Saving topic with _id: ${_id}, new title: ${editedTitle}`);
     }
     setIsEditing(!isEditing);
   };
@@ -22,11 +28,12 @@ const TopicItem = ({ title, id }) => {
     setIsEditing(false);
   };
 
+  console.log(profile._id + " " + author_id);
+
   return (
     <div
-      className={`flex flex-shrink-0 items-center p-3 mb-5 justify-between rounded-xl ${
-        isActive ? "bg-alice-blue" : ""
-      }`}
+      className={`flex flex-shrink-0 items-center p-3 mb-5 justify-between rounded-xl ${isActive ? "bg-alice-blue" : ""
+        }`}
     >
       {isEditing ? (
         <input
@@ -36,43 +43,42 @@ const TopicItem = ({ title, id }) => {
           className="w-full mr-2 p-2 border rounded-md focus:outline-none"
         />
       ) : (
-        <Link to={`topic/${id}`} className="w-full mr-2">
-          <h2>{editedTitle}</h2>
+        // eslint-disable-next-line react/prop-types
+        <Link to={`topic/${topic._id}`} className="w-full mr-2">
+          <h2 className="truncate">{editedTitle}</h2>
         </Link>
+
       )}
 
-      <div className="flex items-center space-x-2">
-        {isEditing ? (
-          <>
-            <IconCheck
+      {profile._id === author_id && (
+        <div className="flex items-center space-x-2">
+          {isEditing ? (
+            <>
+              <IconCheck
+                stroke={2}
+                size={20}
+                className="cursor-pointer hover:text-green-600"
+                onClick={handleEditClick}
+              />
+              <IconX
+                stroke={2}
+                size={20}
+                className="cursor-pointer hover:text-red-600"
+                onClick={handleCancel}
+              />
+            </>
+          ) : (
+            <IconEdit
               stroke={2}
               size={20}
-              className="cursor-pointer hover:text-green-600"
+              className="cursor-pointer hover:text-blue-600"
               onClick={handleEditClick}
             />
-            <IconX
-              stroke={2}
-              size={20}
-              className="cursor-pointer hover:text-red-600"
-              onClick={handleCancel}
-            />
-          </>
-        ) : (
-          <IconEdit
-            stroke={2}
-            size={20}
-            className="cursor-pointer hover:text-blue-600"
-            onClick={handleEditClick}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
-};
-
-TopicItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
 };
 
 export default TopicItem;

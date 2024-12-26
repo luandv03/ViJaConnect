@@ -16,24 +16,24 @@ const PostItem = ({ post }) => {
                     <div className="h-12 w-12 rounded-full bg-white">
                         <img
                             className="w-12 h-12 object-cover rounded-full"
-                            src={post.avatar}
+                            src={post.author.avatar_link}
                             alt="Anh luan dep trai"
                         />
                     </div>
                     <div className="flex flex-col justify-center">
                         <div>
-                            <span>{post.name}</span>
+                            <span>{post.author.display_name}</span>
                         </div>
                         <div>
                             <span>{post.date}</span>
                         </div>
                     </div>
                 </div>
-                <div className="mb-5">{post.description}</div>
-                <Link to="/post/123">
+                <div className="mb-5">{post.title}</div>
+                <Link to={`/post/${post._id}`}>
                     <div className="mb-5">
                         <img
-                            src={post.img}
+                            src={post.image_link}
                             alt="Post avatar"
                             className="w-full object-cover"
                         />
@@ -51,7 +51,7 @@ const PostItem = ({ post }) => {
                         ) : (
                             <IconThumbUp stroke={2} />
                         )}
-                        <span className="ml-2">ライク</span>
+                        <span className="ml-2">いいね</span>
                     </div>
                     <Link to="/post/123">
                         <div className="flex items-center cursor-pointer">
