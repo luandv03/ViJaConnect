@@ -56,6 +56,20 @@ export class PostController {
         }
     }
 
+    async getPostByTitle(req, res) {
+        try {
+            const { title } = req.query;
+            const posts = await postService.getPostByTitle(title);
+            return res.json({
+                status: 200,
+                message: "get post by title successfully",
+                data: posts,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
+
     async createPost(req, res) {
         try {
             const { title, author_id, topic_id, image_link, desc } = req.body;

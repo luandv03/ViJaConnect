@@ -32,6 +32,7 @@ class PostService {
 
     async getPostById(postId) {
         try {
+            console.log(postId);
             const post = await Post.findById(postId)
                 .populate({
                     path: "author_id",
@@ -82,6 +83,17 @@ class PostService {
     async getPostByAuthor(authorId) {
         try {
             const posts = await Post.find({ author_id: authorId });
+            return posts;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async getPostByTitle(title) {
+        try {
+            const posts = await Post.find({
+                title: { $regex: new RegExp(title, "i") },
+            });
             return posts;
         } catch (error) {
             return error;
