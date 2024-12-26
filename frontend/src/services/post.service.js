@@ -13,3 +13,33 @@ export const createPost = async (payload) => {
     throw error;
   }
 };
+
+export const getPostsByTopicId = async (topicId) => {
+  try {
+    const { data } = await axios.get(`${SERVER_DOMAIN}/api/v1/post/get/topic/${topicId}`);
+    return data.data;
+  } catch (error) {
+    console.error("Failed to get post", error);
+    throw error;
+  }
+};
+
+export const getPosts = async () => {
+  try {
+    const { data } = await axios.get(`${SERVER_DOMAIN}/api/v1/post/get`);
+    return data.data;
+  } catch (error) {
+    console.error("Failed to get post", error);
+    throw error;
+  }
+};
+
+export const getPost = async (postId) => {
+  try {
+    const { data } = await axios.get(`${SERVER_DOMAIN}/api/v1/post/get/${postId}`);
+    return data.data;
+  } catch (error) {
+    console.error("Failed to get post", error);
+    throw error;
+  }
+};
