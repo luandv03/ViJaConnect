@@ -8,15 +8,6 @@ import TopicTab from "../Topic/TopicTab";
 import SearchBar from "../SearchBar";
 import { dataService } from "../../services/fetchData.service";
 
-const topicItemsData = [
-  { id: 1, title: "文化交流: ベトナムと日本の文化を学ぶ" },
-  { id: 2, title: "日越料理体験: 食で繋がる" },
-  { id: 3, title: "日本語とベトナム語の学び合い" },
-  { id: 4, title: "留学生のリアルな体験談" },
-  { id: 5, title: "日越ビジネスの架け橋" },
-  { id: 6, title: "日越共同プロジェクトの成功事例" },
-];
-
 const MainSidebar = () => {
   const location = useLocation();
   const isActive = location.pathname === "/";
@@ -24,7 +15,7 @@ const MainSidebar = () => {
   const topicActive = location.pathname === "/topic";
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTopicCreatedModal, setIsTopicCreatedModal] = useState(false);
-  const [topicItems, setTopicItems] = useState(topicItemsData);
+  const [topicItems, setTopicItems] = useState([]);
 
   useEffect(() => {
     dataService.getData("http://localhost:5000/api/v1/topic/get").then((data) => setTopicItems(data.data));
@@ -46,7 +37,7 @@ const MainSidebar = () => {
   const closeTopicCreateModal = () => setIsTopicCreatedModal(false);
 
   return (
-    <div className="sidebar">
+    <div className="sidebar max-w-96">
       <Link to="/">
         <div className="px-4 py-3 border-b border-red-600">
           <div className={`rounded-xl flex justify-between items-center px-3 py-2 ${isActive ? "bg-alice-blue" : ""}`}>
@@ -79,7 +70,7 @@ const MainSidebar = () => {
         <div className="sidebar overflow-y-auto scrollbar-hide p-4 max-h-[calc(100vh-360px)]">
           <div className="flex flex-col justify-center pl-5 pr-3">
             {filteredTopics.map((topic) => (
-              <TopicItem key={topic.id} title={topic.title} id={topic._id} />
+              <TopicItem key={topic.id} topic={topic} />
             ))}
           </div>
         </div>
