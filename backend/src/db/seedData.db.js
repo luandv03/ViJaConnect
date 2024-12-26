@@ -6,6 +6,7 @@ import { Role } from "../models/role.model.js";
 import { User } from "../models/user.model.js";
 import { Topic } from "../models/topic.model.js";
 import { Post } from "../models/post.model.js";
+import { Event } from "../models/event.model.js";
 
 const DB_URL = process.env.DB_URL;
 
@@ -314,6 +315,139 @@ const seedRoles = async () => {
         await Post.deleteMany({});
         await Post.insertMany(posts);
         console.log("Posts seeded successfully");
+
+        const events = [
+            {
+                title: "テクノロジー展示会 2024",
+                desc: "最新の技術を紹介する展示会。",
+                location: "東京ビッグサイト",
+                date: new Date("2024-01-15T09:00:00Z"),
+                banner_link:
+                    "https://meetsvietnam.vietnamairlines.com/wp-content/uploads/2024/07/448504984_870598721767452_1562326102109704185_n.jpg",
+                author_id: "676c5ca80137d9539987bc30", // グエン・ザ・トゥン・ゾオン
+                joined_users: [
+                    "676c5ca80137d9539987bc31",
+                    "676c5ca80137d9539987bc33",
+                ],
+            },
+            {
+                title: "AIと未来のセミナー",
+                desc: "AI技術の活用について議論するセミナー。",
+                location: "大阪市立大学",
+                date: new Date("2024-02-10T14:00:00Z"),
+                banner_link:
+                    "https://d19ri4mdy82u9u.cloudfront.net/images/64abca6c03c3da4c3afee054/UJSXbBSAK1ZFltyiaC2M.jpg",
+                author_id: "676c5ca80137d9539987bc31", // ホアン・ドゥック・ザ・フン
+                joined_users: [
+                    "676c5ca80137d9539987bc30",
+                    "676c5ca80137d9539987bc34",
+                ],
+            },
+            {
+                title: "デザイン思考ワークショップ",
+                desc: "創造的な問題解決を学ぶワークショップ。",
+                location: "名古屋クリエイティブセンター",
+                date: new Date("2024-03-05T10:00:00Z"),
+                banner_link:
+                    "https://www.tsttourist.com/vnt_upload/news/09_2023/thumbs/(600x400)_TSTtourist_van_hoa_am_thuc_Nhat_Ban.jpg",
+                author_id: "676c5ca80137d9539987bc32", // ディン・ヴァン・ルアン
+                joined_users: [
+                    "676c5ca80137d9539987bc30",
+                    "676c5ca80137d9539987bc33",
+                ],
+            },
+            {
+                title: "プログラミングコンテスト",
+                desc: "若手エンジニア向けの競技プログラミングイベント。",
+                location: "福岡ハッカースペース",
+                date: new Date("2024-04-20T13:00:00Z"),
+                banner_link:
+                    "https://wkvetter.com/wp-content/uploads/41th-Hanoi-Ongakutai-Naoko-1024x1024.jpg",
+                author_id: "676c5ca80137d9539987bc33", // チュー・ディン・ヒエン
+                joined_users: [
+                    "676c5ca80137d9539987bc30",
+                    "676c5ca80137d9539987bc32",
+                ],
+            },
+            {
+                title: "ゲーム開発者会議",
+                desc: "ゲーム業界の最新トレンドを共有する会議。",
+                location: "札幌コンベンションセンター",
+                date: new Date("2024-05-25T09:30:00Z"),
+                banner_link: "https://www.oaff.jp/2018/img/report/15_c12_1.jpg",
+                author_id: "676c5ca80137d9539987bc34", // グエン・ドゥック・フ
+                joined_users: [
+                    "676c5ca80137d9539987bc31",
+                    "676c5ca80137d9539987bc32",
+                ],
+            },
+            {
+                title: "IoTワークショップ",
+                desc: "IoTデバイスの設計と実装を学ぶ。",
+                location: "横浜技術センター",
+                date: new Date("2024-06-10T15:00:00Z"),
+                banner_link: "https://i.imgur.com/Q9BQZ8h.jpg",
+                author_id: "676c5ca80137d9539987bc30",
+                joined_users: [
+                    "676c5ca80137d9539987bc31",
+                    "676c5ca80137d9539987bc34",
+                ],
+            },
+            {
+                title: "データサイエンスセミナー",
+                desc: "データ分析とAIの統合についての講義。",
+                location: "京都大学",
+                date: new Date("2024-07-08T10:00:00Z"),
+                banner_link: "https://i.imgur.com/9WEPzOA.jpg",
+                author_id: "676c5ca80137d9539987bc31",
+                joined_users: [
+                    "676c5ca80137d9539987bc32",
+                    "676c5ca80137d9539987bc33",
+                ],
+            },
+            {
+                title: "クラウドコンピューティング展",
+                desc: "クラウド技術の革新を紹介する展示会。",
+                location: "広島ITセンター",
+                date: new Date("2024-08-18T11:00:00Z"),
+                banner_link:
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQavKhWpCC7VynBSNCby5A4b0qcPn36iLOeNw&s",
+                author_id: "676c5ca80137d9539987bc32",
+                joined_users: [
+                    "676c5ca80137d9539987bc30",
+                    "676c5ca80137d9539987bc34",
+                ],
+            },
+            {
+                title: "VRとAR体験イベント",
+                desc: "最新のVR/AR技術を体験できるイベント。",
+                location: "神戸メディアホール",
+                date: new Date("2024-09-12T12:00:00Z"),
+                banner_link:
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHktETJQ6hnTu6ijNcWPkaCfpR3VjWaN1_nw&s",
+                author_id: "676c5ca80137d9539987bc33",
+                joined_users: [
+                    "676c5ca80137d9539987bc31",
+                    "676c5ca80137d9539987bc34",
+                ],
+            },
+            {
+                title: "サイバーセキュリティ会議",
+                desc: "情報セキュリティの最新動向を議論する会議。",
+                location: "長崎テクノロジーパーク",
+                date: new Date("2024-10-05T14:00:00Z"),
+                banner_link:
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_830yAuudnpnX_MFFA0WMfBrte1d9YXHGjQ&s",
+                author_id: "676c5ca80137d9539987bc34",
+                joined_users: [
+                    "676c5ca80137d9539987bc30",
+                    "676c5ca80137d9539987bc32",
+                ],
+            },
+        ];
+
+        await Event.deleteMany({});
+        await Event.insertMany(events);
     } catch (error) {
         console.error("Error seeding data:", error);
     } finally {

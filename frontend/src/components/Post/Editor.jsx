@@ -42,7 +42,7 @@ const Editor = ({ closeModal }) => {
         const fetchData = async () => {
             try {
                 const topicsData = await topicService.fetchTopics();
-                setTopics(topicsData);
+                setTopics(topicsData.data);
             } catch (error) {
                 console.error("Failed to fetch topics", error);
             }
