@@ -45,6 +45,7 @@ export default function SignIn() {
             localStorage.setItem("isAuthenticated", true);
             setIsAuthenticated(true);
             setProfile(res.data.user);
+            toast.success("ログインしました");
         } else {
             if (res.status === 404) {
                 setErrors({ password: "アカウントが存在しません" });
