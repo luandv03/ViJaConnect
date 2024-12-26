@@ -1,8 +1,32 @@
-import { IconPhotoFilled } from "@tabler/icons-react";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import { Button } from "../ui/Button";
+import { topicService } from "../../services/topic.service";
 
 // eslint-disable-next-line react/prop-types
 function TopicCreate({ closeTopicCreatedModal }) {
+    const [topic, setTopic] = useState({ title: "", desc: "" });
+
+    const handleChangeTopic = (e) => {
+        setTopic({ title: e.target.value, desc: e.target.value });
+    };
+
+    const handleCreateTopic = async () => {
+        try {
+            if (topic.title === "" || topic.desc === "") return;
+
+            const res = await topicService.createTopic(topic);
+            console.log(res);
+            if (res.status === 201) {
+                closeTopicCreatedModal();
+                toast("トピックが作成されました");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-over-layer mt-0">
             <div className="min-w-96 bg-white p-2 rounded-md space-y-2">
@@ -13,26 +37,14 @@ function TopicCreate({ closeTopicCreatedModal }) {
                             name=""
                             id=""
                             placeholder="新しいトピックを作成する"
+                            value={topic.title}
+                            onChange={(e) => handleChangeTopic(e)}
                         ></textarea>
-                    </div>
-
-                    <div className="w-full p-2">
-                        <label className="flex w-full justify-center min-h-8 items-center space-x-2 cursor-pointer">
-                            <Button className="w-full" variant="outline">
-                                <span>写真/ビデオを追加する</span>
-                                <IconPhotoFilled />
-                                <input
-                                    type="file"
-                                    className="hidden"
-                                    // onChange={(e) => handleFileUpload(e)}
-                                />
-                            </Button>
-                        </label>
                     </div>
                 </div>
 
                 <div className="flex justify-between space-x-4">
-                <Button
+                    <Button
                         className="w-1/2"
                         variant="destructive"
                         onClick={() => closeTopicCreatedModal()}
@@ -41,12 +53,13 @@ function TopicCreate({ closeTopicCreatedModal }) {
                     </Button>
                     <Button
                         className="w-1/2"
-                        onClick={() => closeTopicCreatedModal()}
+                        onClick={() => handleCreateTopic()}
                     >
                         ポスト
                     </Button>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }
