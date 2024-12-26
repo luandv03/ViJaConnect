@@ -19,6 +19,18 @@ class TopicService {
             return error;
         }
     }
+
+    async getTopicByTitle(title) {
+        try {
+            const topic = await Topic.find({
+                title: { $regex: new RegExp(title, "i") },
+            });
+
+            return topic;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export const topicService = new TopicService();

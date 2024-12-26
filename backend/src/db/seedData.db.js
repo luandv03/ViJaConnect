@@ -30,54 +30,6 @@ const seedRoles = async () => {
 
     const roles = [{ name: "Staff" }, { name: "Manager" }, { name: "Admin" }];
 
-    const topics = [
-        {
-            _id: "676c5b3cf2eccfd783d9eb69",
-            title: "技術",
-            desc: "最新の技術トレンドと革新についての議論。",
-        }, // Technology
-        {
-            _id: "676c5b3cf2eccfd783d9eb6a",
-            title: "健康",
-            desc: "健康的な生活を送るためのヒントやリソース。",
-        }, // Health
-        {
-            _id: "676c5b3cf2eccfd783d9eb6b",
-            title: "教育",
-            desc: "現代教育の方法と実践を探る。",
-        }, // Education
-        {
-            _id: "676c5b3cf2eccfd783d9eb6c",
-            title: "旅行",
-            desc: "旅行愛好家のための冒険とガイド。",
-        }, // Travel
-        {
-            _id: "676c5b3cf2eccfd783d9eb6d",
-            title: "フィットネス",
-            desc: "アクティブに過ごし、フィットネス目標を達成するためのアドバイス。",
-        }, // Fitness
-        {
-            _id: "676c5b3cf2eccfd783d9eb6e",
-            title: "金融",
-            desc: "財務管理や賢い投資について学ぶ。",
-        }, // Finance
-        {
-            _id: "676c5b3cf2eccfd783d9eb6f",
-            title: "料理",
-            desc: "食べ物愛好家のためのおいしいレシピと料理のヒント。",
-        }, // Food
-        {
-            _id: "676c5b3cf2eccfd783d9eb70",
-            title: "ミニマリズム",
-            desc: "より意味のある人生のためにシンプルさを取り入れる。",
-        }, // Minimalism
-        {
-            _id: "676c5b3cf2eccfd783d9eb71",
-            title: "AIと機械学習",
-            desc: "人工知能と機械学習の未来。",
-        }, // AI & ML
-    ];
-
     try {
         await Role.deleteMany({});
         const insertedRoles = await Role.insertMany(roles);
@@ -204,6 +156,63 @@ const seedRoles = async () => {
         await User.deleteMany({});
         await User.insertMany(users);
         console.log("Users seeded successfully");
+
+        const topics = [
+            {
+                _id: "676c5b3cf2eccfd783d9eb69",
+                title: "文化交流: ベトナムと日本の文化を学ぶ",
+                desc: "最新の技術トレンドと革新についての議論。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // Technology
+            {
+                _id: "676c5b3cf2eccfd783d9eb6a",
+                title: "日越料理体験: 食で繋がる",
+                desc: "健康的な生活を送るためのヒントやリソース。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // Health
+            {
+                _id: "676c5b3cf2eccfd783d9eb6b",
+                title: "日本語とベトナム語の学び合い",
+                desc: "現代教育の方法と実践を探る。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // Education
+            {
+                _id: "676c5b3cf2eccfd783d9eb6c",
+                title: "留学生のリアルな体験談",
+                desc: "旅行愛好家のための冒険とガイド。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // Travel
+            {
+                _id: "676c5b3cf2eccfd783d9eb6d",
+                title: "日越共同プロジェクトの成功事例",
+                desc: "アクティブに過ごし、フィットネス目標を達成するためのアドバイス。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // Fitness
+            {
+                _id: "676c5b3cf2eccfd783d9eb6e",
+                title: "金融",
+                desc: "財務管理や賢い投資について学ぶ。",
+                author_id: "676c5ca80137d9539987bc33",
+            }, // Finance
+            {
+                _id: "676c5b3cf2eccfd783d9eb6f",
+                title: "料理",
+                desc: "食べ物愛好家のためのおいしいレシピと料理のヒント。",
+                author_id: "676c5ca80137d9539987bc33",
+            }, // Food
+            {
+                _id: "676c5b3cf2eccfd783d9eb70",
+                title: "ミニマリズム",
+                desc: "より意味のある人生のためにシンプルさを取り入れる。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // Minimalism
+            {
+                _id: "676c5b3cf2eccfd783d9eb71",
+                title: "AIと機械学習",
+                desc: "人工知能と機械学習の未来。",
+                author_id: "676c5ca80137d9539987bc34",
+            }, // AI & ML
+        ];
 
         await Topic.deleteMany({});
         await Topic.insertMany(topics);
