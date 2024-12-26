@@ -4,7 +4,10 @@ import {
     IconShare3,
     IconThumbUpFilled,
 } from "@tabler/icons-react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { dataService } from "../../services/fetchData.service";
+import { useParams } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function PostDetail({ inputRef }) {
@@ -41,6 +44,13 @@ function PostDetail({ inputRef }) {
         inputRef.current.focus();
     };
 
+    const [post, setPost] = useState({});
+    const { postId } = useParams();
+
+    useEffect(() => {
+        dataService.getData(`http://localhost:5000/api/v1/post/get/${postId}`).then((data) => setPost(data.data));
+    }, [postId]);
+
     return (
         <div className="space-y-4">
             <div className="flex justify-between items-center">
@@ -48,36 +58,34 @@ function PostDetail({ inputRef }) {
                     <div>
                         <img
                             className="w-12 h-12 rounded-full object-cover"
-                            src="https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd."
-                            alt="Anh luan dep trai"
+                            src={post.author?.avatar_link}
+                            alt={post.author?.display_name}
                         />
                     </div>
                     <div>
                         <div>
-                            <span>ディン・ヴァン・ルアン</span>
+                            <span>{post.author?.display_name}</span>
                         </div>
                         <div>
-                            <span>2024-12-20</span>
+                            <span>{post.date}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div>
-                <span className="font-medium">ビジネス報連相</span>
+                <span className="font-medium">{post.title}</span>
             </div>
 
             <div>
                 <img
-                    src="https://pds.exblog.jp/pds/1/flash/top/image/e715a6283c881b09c58c1f1157ea0dcb.jpg"
-                    alt="Post avatar"
+                    src={post.image_link}
+                    alt={post.title}
                 />
             </div>
             <div>
                 <p>
-                    エキサイトブログはおかげさまで、今年20周年を迎えました！
-                    これまで支えてくださったエキサイトブロガーの皆様、ありがとうございます！！
-                    今後も皆様のブログライフを、より一層楽しく盛り上げていきたいと思います。これからもエキサイトブログをよろしくお願いいたします。
+                    {post.desc}
                 </p>
             </div>
             <div className="flex space-x-8">
