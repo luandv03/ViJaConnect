@@ -27,9 +27,7 @@ const TopicItem = ({ topic }) => {
     setEditedTitle(title);
     setIsEditing(false);
   };
-
-  console.log(profile._id + " " + author_id);
-
+  
   return (
     <div
       className={`flex flex-shrink-0 items-center p-3 mb-5 justify-between rounded-xl ${isActive ? "bg-alice-blue" : ""
