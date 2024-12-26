@@ -13,6 +13,16 @@ class TopicService extends BaseService {
             return error;
         }
     }
+
+    async fetchTopics() {
+        try {
+            const res = await this.httpClientPublic.get("/topic/get");
+
+            return res.data;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export const topicService = new TopicService();

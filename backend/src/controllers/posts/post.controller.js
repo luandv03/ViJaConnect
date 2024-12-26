@@ -44,11 +44,11 @@ export class PostController {
 
     async createPost(req, res) {
         try {
-            const { title, author_id, topic_ids, image_link, desc } = req.body;
+            const { title, author_id, topic_id, image_link, desc } = req.body;
             const newPost = await postService.createPost({
                 title,
                 author_id,
-                topic_ids,
+                topic_id,
                 image_link,
                 desc,
             });
@@ -58,6 +58,7 @@ export class PostController {
                 data: newPost,
             });
         } catch (error) {
+            console.error("Error in createPost:", error); // Log the error
             return res.status(500).json(error);
         }
     }
