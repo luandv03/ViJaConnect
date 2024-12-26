@@ -3,8 +3,12 @@ import { topicService } from "../../services/topics/topic.service.js";
 export class TopicController {
     async createTopic(req, res) {
         try {
-            const { title, desc } = req.body;
-            const newTopic = await topicService.createTopic({ title, desc });
+            const { title, desc, author_id } = req.body;
+            const newTopic = await topicService.createTopic({
+                title,
+                desc,
+                author_id,
+            });
             return res.json({
                 status: 201,
                 message: "Topic created successfully",
