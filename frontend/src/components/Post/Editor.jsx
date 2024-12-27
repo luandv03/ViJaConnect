@@ -25,7 +25,7 @@ const PostValidator = z.object({
     title: z.string().min(1, "Title is required"),
     author_id: z.string().min(1, "Author ID is required"),
     topic_id: z.any(),
-    image_link: z.string().nullable(), // Image link can be null
+    image_link: z.any().nullable(), // Image link can be null
     desc: z.any(),
 });
 
