@@ -62,6 +62,26 @@ class EventService {
         }
     }
 
+    async getEventUserJoined(userId) {
+        try {
+            const events = await Event.find({
+                joined_users: { $in: [userId] },
+            });
+            return events;
+        } catch (error) {
+            throw new Error("Error fetching events: " + error.message);
+        }
+    }
+
+    async getEventUserCreated(userId) {
+        try {
+            const events = await Event.find({ author_id: userId });
+            return events;
+        } catch (error) {
+            throw new Error("Error fetching events: " + error.message);
+        }
+    }
+
     async createEvent(eventData) {
         try {
             const newEvent = new Event(eventData);
