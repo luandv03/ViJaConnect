@@ -49,7 +49,7 @@ function CommentCreate({ comment }) {
                 <div>
                     <div className="text-sm">
                         <div>
-                            <span>{comment.author}</span>
+                            <span className="font-bold">{comment.author}</span>
                         </div>
                         <div>
                             <span>{comment.time}</span>
@@ -59,7 +59,7 @@ function CommentCreate({ comment }) {
             </div>
 
             <div className="pl-12 space-y-2">
-                <div className="p-2 bg-alice-blue rounded-md">
+                <div className="p-2 bg-alice-blue rounded-md inline-block">
                     <p>{comment.content}</p>
                 </div>
                 <div className="flex space-x-8 text-sm">

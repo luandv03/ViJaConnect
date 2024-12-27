@@ -1,12 +1,17 @@
 import { IconCloudUpload } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
+import { AuthContext } from "../providers/AuthProvider";
 import { ProfileTab, PostTab, EventTab } from "../components/Tab";
 import { EventCancelModal } from "../components/Event";
 
 function Profile() {
     const [tab, setTab] = useState(1);
     const [isEventCancelModal, setIsEventCancelModal] = useState(false);
+
+    const { profile } = useContext(AuthContext);
+
+    console.log("Profile", profile);
 
     const showEventCancelModal = () => {
         setIsEventCancelModal(true);
@@ -19,11 +24,11 @@ function Profile() {
     const tabs = [
         {
             key: 1,
-            element: <ProfileTab />,
+            element: <ProfileTab profile={profile} />,
         },
         {
             key: 2,
-            element: <PostTab />,
+            element: <PostTab profile={profile} />,
         },
         {
             key: 3,
@@ -49,7 +54,7 @@ function Profile() {
                 </label>
 
                 <div className="font-semibold">
-                    <span>Gundam</span>
+                    <span>{profile?.name}</span>
                 </div>
             </div>
             {/* tabs button*/}

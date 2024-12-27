@@ -7,6 +7,8 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { formatDate } from "../../helpers/formatDate";
 const PostItem = ({ post }) => {
     const [liked, setLiked] = useState(false);
     return (
@@ -22,10 +24,12 @@ const PostItem = ({ post }) => {
                     </div>
                     <div className="flex flex-col justify-center">
                         <div>
-                            <span>{post.author.display_name}</span>
+                            <span className="font-bold">
+                                {post.author.display_name}
+                            </span>
                         </div>
                         <div>
-                            <span>{post.date}</span>
+                            <span>{formatDate(post.date)}</span>
                         </div>
                     </div>
                 </div>
