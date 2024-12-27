@@ -73,6 +73,24 @@ export class EventController {
         }
     }
 
+    async getEventUserJoined(req, res) {
+        try {
+            const { userId } = req.params;
+            const events = await eventService.getEventUserJoined(userId);
+            return res.json({
+                status: 200,
+                message: "Get event user joined successfully",
+                data: events,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to fetch events",
+                error: error.message,
+            });
+        }
+    }
+
     async createEvent(req, res) {
         try {
             const { title, desc, location, date, banner_link, author_id } =

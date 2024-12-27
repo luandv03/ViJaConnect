@@ -1,7 +1,7 @@
 import { IconCalendarMonth, IconMapPinFilled } from "@tabler/icons-react";
+import PropTypes from "prop-types";
 
-// eslint-disable-next-line react/prop-types
-function EventTab({ showEventCancelModal }) {
+function EventTab({ profile, showEventCancelModal }) {
     return (
         <div className="space-y-4">
             <div className="space-y-4">
@@ -41,16 +41,18 @@ function EventTab({ showEventCancelModal }) {
                     </div>
 
                     <div>
-                        <button className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400">
-                            参加をやめる
-                        </button>
-
-                        {/* <button
-                            className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400"
-                            onClick={() => showEventCancelModal()}
-                        >
-                            キャンセル
-                        </button> */}
+                        {profile?.role_id?.name === "Staff" ? (
+                            <button className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400">
+                                参加をやめる
+                            </button>
+                        ) : (
+                            <button
+                                className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400"
+                                onClick={() => showEventCancelModal()}
+                            >
+                                キャンセル
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -62,9 +64,15 @@ function EventTab({ showEventCancelModal }) {
 
             <div className="space-y-4">
                 <div>
-                    <button className="p-2 bg-alice-blue flex justify-center items-center rounded-full ">
-                        作成した
-                    </button>
+                    {profile?.role_id?.name === "Staff" ? (
+                        <button className="p-2 bg-alice-blue flex justify-center items-center rounded-full ">
+                            参加した
+                        </button>
+                    ) : (
+                        <button className="p-2 bg-alice-blue flex justify-center items-center rounded-full ">
+                            作成した
+                        </button>
+                    )}
                 </div>
                 <div className="flex space-x-4 items-center ">
                     <div className="flex flex-1 flex-col p-2 bg-alice-blue rounded-xl space-y-2">
@@ -131,5 +139,13 @@ function EventTab({ showEventCancelModal }) {
         </div>
     );
 }
+EventTab.propTypes = {
+    profile: PropTypes.shape({
+        role_id: PropTypes.shape({
+            name: PropTypes.string,
+        }),
+    }),
+    showEventCancelModal: PropTypes.func.isRequired,
+};
 
 export default EventTab;
