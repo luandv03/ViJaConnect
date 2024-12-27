@@ -36,6 +36,7 @@ const buttonVariants = (options) => {
 
 const Button = React.forwardRef(
   (
+    // eslint-disable-next-line react/prop-types
     { className, children, variant, isLoading, size, ...props },
     ref
   ) => {
@@ -55,4 +56,5 @@ const Button = React.forwardRef(
 
 Button.displayName = 'Button';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { Button, buttonVariants }
