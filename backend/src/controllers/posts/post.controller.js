@@ -70,6 +70,24 @@ export class PostController {
         }
     }
 
+    async gePostByTopicAndTitle(req, res) {
+        try {
+            const { topicId } = req.params;
+            const { title } = req.query;
+            const posts = await postService.gePostByTopicAndTitle(
+                topicId,
+                title
+            );
+            return res.json({
+                status: 200,
+                message: "get post by topic and title successfully",
+                data: posts,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
+
     async createPost(req, res) {
         try {
             const { title, author_id, topic_id, image_link, desc } = req.body;
