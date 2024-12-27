@@ -42,10 +42,6 @@ const routes = [
         element: <Chat />,
     },
     {
-        path: "admin/event/:eventId",
-        element: <EventDetail />,
-    },
-    {
         path: "admin/user",
         element: <div>Admin User</div>,
     },
