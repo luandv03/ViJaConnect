@@ -6,6 +6,7 @@ const eventRoutes = Router();
 const eventController = new EventController();
 
 eventRoutes.get("/event/get", eventController.getEvents);
+eventRoutes.get("/event/get/search", eventController.getEventByTitle); // Route to search for events by title
 eventRoutes.get("/event/get/:id", eventController.getEventById); // Route for specific event
 eventRoutes.get(
     "/event/get/joined_user/:id",

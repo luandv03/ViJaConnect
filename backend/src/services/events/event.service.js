@@ -35,6 +35,17 @@ class EventService {
         } catch (error) {}
     }
 
+    async getEventByTitle(title) {
+        try {
+            const events = await Event.find({
+                title: { $regex: title, $options: "i" },
+            });
+            return events;
+        } catch (error) {
+            throw new Error("Error fetching events: " + error.message);
+        }
+    }
+
     async createEvent(eventData) {
         try {
             const newEvent = new Event(eventData);
