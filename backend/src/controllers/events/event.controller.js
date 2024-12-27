@@ -55,6 +55,24 @@ export class EventController {
         }
     }
 
+    async getEventByTitle(req, res) {
+        try {
+            const { title } = req.query;
+            const events = await eventService.getEventByTitle(title);
+            return res.json({
+                status: 200,
+                message: "Events fetched successfully",
+                data: events,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to fetch events",
+                error: error.message,
+            });
+        }
+    }
+
     async createEvent(req, res) {
         try {
             const { title, desc, location, date, banner_link, author_id } =
