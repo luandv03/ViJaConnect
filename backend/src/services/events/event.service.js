@@ -13,7 +13,22 @@ class EventService {
 
     async getEventById(eventId) {
         try {
-            const event = await Event.findById(eventId);
+            const event = await Event.findById(eventId)
+                .populate({
+                    path: "author_id",
+                    select: "avatar_link display_name",
+                    as: "author",
+                })
+                .lean();
+
+            // Sửa tên trường author_id thành author
+            if (event.author_id) {
+                event.author = event.author_id; // Gán dữ liệu của author_id cho author
+                event.topic = event.topic_id; // Gán dữ liệu của topic_id cho topic
+                delete event.author_id; // Xóa trường author_id
+                delete event.topic_id; // Xóa trường topic
+            }
+
             if (!event) {
                 throw new Error("Event not found");
             }
@@ -40,6 +55,7 @@ class EventService {
             const events = await Event.find({
                 title: { $regex: title, $options: "i" },
             });
+
             return events;
         } catch (error) {
             throw new Error("Error fetching events: " + error.message);
