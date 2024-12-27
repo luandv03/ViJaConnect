@@ -10,6 +10,8 @@ import { AuthContext } from "../providers/AuthProvider";
 export default function LayoutApp() {
     const { isAuthenticated } = useContext(AuthContext);
 
+    console.log("isAuthenticated", isAuthenticated);
+
     return (
         <div>
             {/* <div className="w-full bg-red-400 h-20">Header</div> */}

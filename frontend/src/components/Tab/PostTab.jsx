@@ -1,33 +1,72 @@
 import { IconTrash } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-function PostTab() {
+import { formatDate } from "../../helpers/formatDate";
+
+import { getPostByAuthor } from "../../services/post.service";
+
+function PostTab({ profile }) {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        const handleGetPosts = async () => {
+            try {
+                const res = await getPostByAuthor(profile?._id);
+                setPosts(res);
+            } catch (error) {
+                console.error("Failed to get posts", error);
+            }
+        };
+
+        handleGetPosts();
+    }, [profile?._id]);
+
     return (
         <div className="space-y-4">
-            {[1, 2, 3].map((key) => (
-                <div className="p-4 flex items-center space-x-4" key={key}>
-                    <div className="flex-1 bg-alice-blue rounded-xl p-4">
-                        <div>
-                            <span>2024-11-25</span>
+            {posts.length > 0 &&
+                posts?.map((post, key) => (
+                    <div className="p-4 flex items-center space-x-4" key={key}>
+                        <div className="bg-alice-blue p-5 rounded-lg mb-5">
+                            <div className="flex space-x-5 mb-4">
+                                <div className="flex flex-col justify-center">
+                                    <div>
+                                        <span className="font-medium">
+                                            {formatDate(post?.date)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mb-5 font-bold text-blue-400">
+                                {post?.title}
+                            </div>
+                            <Link to={`/post/${post?._id}`}>
+                                <div className="mb-5">
+                                    <img
+                                        src={post?.image_link}
+                                        alt="Post avatar"
+                                        className="w-full object-cover"
+                                    />
+                                </div>
+                            </Link>
                         </div>
 
                         <div>
-                            <span>
-                                エキサイトブログはおかげさまで、今年20周年を迎えました！
-                                これまで支えてくださったエキサイトブロガーの皆様、ありがとうございます！！
-                                今後も皆様のブログライフを、より一層楽しく盛り上げていきたいと思います。これからもエキサイトブログをよろしくお願いいたします。
-                            </span>
+                            <button className="w-9 h-9 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400">
+                                <IconTrash />
+                            </button>
                         </div>
                     </div>
-
-                    <div>
-                        <button className="w-9 h-9 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400">
-                            <IconTrash />
-                        </button>
-                    </div>
-                </div>
-            ))}
+                ))}
         </div>
     );
 }
+
+PostTab.propTypes = {
+    profile: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+    }).isRequired,
+};
 
 export default PostTab;

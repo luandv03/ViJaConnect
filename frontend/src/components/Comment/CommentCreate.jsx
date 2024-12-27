@@ -1,19 +1,22 @@
 import { IconSend2 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import { AuthContext } from "../../providers/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
 function CommentCreate({ handleAddComment, inputRef }) {
     const [commentValue, setCommentValue] = useState("");
+    const { profile } = useContext(AuthContext);
 
     const sendComment = () => {
         if (!commentValue.trim().length) return;
 
         handleAddComment({
-            id: `${Math.floor(Math.random() * 100)}`,
-            author: "ディン・ヴァン・ルアン",
+            id: profile?._id,
+            author: profile?.display_name,
             content: commentValue,
             time: "1分前",
-            avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
+            avatar: profile?.avatar_link,
         });
 
         setCommentValue("");
@@ -25,7 +28,7 @@ function CommentCreate({ handleAddComment, inputRef }) {
                 <div>
                     <img
                         className="w-10 h-10 object-cover rounded-full"
-                        src="https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd."
+                        src={profile?.avatar_link}
                         alt="Anh luan dep trai"
                     />
                 </div>

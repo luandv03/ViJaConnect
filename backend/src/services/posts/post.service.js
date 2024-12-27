@@ -32,7 +32,6 @@ class PostService {
 
     async getPostById(postId) {
         try {
-            console.log(postId);
             const post = await Post.findById(postId)
                 .populate({
                     path: "author_id",

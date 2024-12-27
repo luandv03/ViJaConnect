@@ -1,9 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
-import { AuthContext } from "../../providers/AuthProvider";
-
-function ProfileTab() {
-    const { profile } = useContext(AuthContext);
+// eslint-disable-next-line react/prop-types
+function ProfileTab({ profile }) {
     const [newProfile, setNewProfile] = useState(profile);
 
     const handleChangeProfile = (e) => {
