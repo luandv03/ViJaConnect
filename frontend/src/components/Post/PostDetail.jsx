@@ -7,7 +7,9 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { getPost } from "../../services/post.service";
+import { formatDate } from "../../helpers/formatDate";
 
 // eslint-disable-next-line react/prop-types
 function PostDetail({ inputRef }) {
@@ -64,29 +66,26 @@ function PostDetail({ inputRef }) {
                     </div>
                     <div>
                         <div>
-                            <span>{post.author?.display_name}</span>
+                            <span className="text-lg font-bold">
+                                {post.author?.display_name}
+                            </span>
                         </div>
                         <div>
-                            <span>{post.date}</span>
+                            <span>{formatDate(post.date)}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div>
-                <span className="font-medium">{post.title}</span>
+                <span className="font-bold text-blue-400">{post.title}</span>
             </div>
 
             <div>
-                <img
-                    src={post.image_link}
-                    alt={post.title}
-                />
+                <img src={post.image_link} alt={post.title} />
             </div>
             <div>
-                <p>
-                    {post.desc}
-                </p>
+                <p>{post.desc}</p>
             </div>
             <div className="flex space-x-8">
                 <div
