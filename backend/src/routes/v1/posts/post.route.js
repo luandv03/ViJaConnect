@@ -10,7 +10,7 @@ postRoutes.get("/post/get/search", postController.getPostByTitle);
 postRoutes.get("/post/get/:postId", postController.getPostById);
 postRoutes.get(
     "/post/get/topic/:topicId/search",
-    postController.getPostByTopicId
+    postController.gePostByTopicAndTitle
 );
 postRoutes.get("/post/get/topic/:topicId", postController.getPostByTopicId);
 postRoutes.get("/post/get/author/:authorId", postController.getPostByAuthor);

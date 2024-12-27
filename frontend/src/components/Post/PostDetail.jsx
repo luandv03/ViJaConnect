@@ -71,7 +71,11 @@ function PostDetail({ inputRef }) {
                             </span>
                         </div>
                         <div>
-                            <span>{formatDate(post.date)}</span>
+                            <span>
+                                {post.date
+                                    ? formatDate(post.date)
+                                    : "日付が不明です"}
+                            </span>
                         </div>
                     </div>
                 </div>

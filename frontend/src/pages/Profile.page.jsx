@@ -32,7 +32,7 @@ function Profile() {
         },
         {
             key: 3,
-            element: <EventTab showEventCancelModal={showEventCancelModal} />,
+            element: <EventTab profile={profile} showEventCancelModal={showEventCancelModal} />,
         },
     ];
 
