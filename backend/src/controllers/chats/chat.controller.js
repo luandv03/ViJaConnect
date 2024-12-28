@@ -5,8 +5,7 @@ export class ChatController {
     // Get Chat By Id
     async getChatById(req, res) {
         try {
-            const { chatId } = req.params;
-            const { userId } = req.body; // ID của người dùng hiện tại
+            const { chatId, userId } = req.params;
 
             const chat = await chatService.getChatById(chatId, userId);
 
@@ -24,15 +23,32 @@ export class ChatController {
         }
     }
 
+    async getChatByUserId(req, res) {
+        try {
+            const { userId } = req.params;
+
+            const chat = await chatService.getChatByUserId(userId);
+
+            return res.json({
+                status: 200,
+                message: "Chat fetched by user successfully",
+                data: chat,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to fetch chat",
+                error: error.message,
+            });
+        }
+    }
+
     // Get All Messages By Chat Id
     async getMessagesByChatId(req, res) {
         try {
-            const { chatId, userId } = req.params;
+            const { chatId } = req.params;
 
-            const messages = await chatService.getMessagesByChatId(
-                chatId,
-                userId
-            );
+            const messages = await chatService.getMessagesByChatId(chatId);
 
             return res.json({
                 status: 200,

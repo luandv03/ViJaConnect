@@ -38,7 +38,7 @@ const routes = [
         element: <Profile />,
     },
     {
-        path: "chat",
+        path: "chat/:chatId?",
         element: <Chat />,
     },
     {
