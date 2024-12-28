@@ -18,4 +18,10 @@ chatRoutes.post("/chat/create-group", chatController.createGroupChat);
 // Get User Contacts
 chatRoutes.get("/chat/contact/all/:userId", chatController.getUserContacts);
 
+// get users not in group chat
+chatRoutes.get(
+    "/chat/group/:chatId/users-not-in-group",
+    chatController.getUsersNotInGroupChat
+);
+
 export default chatRoutes;

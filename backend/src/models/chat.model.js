@@ -7,12 +7,16 @@ const chatSchema = new mongoose.Schema(
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
+                ref: "user",
             },
         ],
-        latestMessage: { type: mongoose.Schema.Types.ObjectId, ref: "Message" },
-        groupAdmin: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        avatar: { type: String, default: "https://t.ly/YjTlg" }, // Link ảnh nhóm
+        latestMessage: { type: mongoose.Schema.Types.ObjectId, ref: "message" },
+        groupAdmin: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+        avatar: {
+            type: String,
+            default:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3fvRATLApWGN3kNsceiuLDW62rnXgwtbL8A&s",
+        },
     },
     {
         timestamps: true,

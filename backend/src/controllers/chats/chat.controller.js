@@ -6,17 +6,14 @@ export class ChatController {
     async getChatById(req, res) {
         try {
             const { chatId } = req.params;
-            const { userId } = req.query; // ID của người dùng hiện tại
+            const { userId } = req.body; // ID của người dùng hiện tại
 
-            const messages = await chatService.getMessagesByChatId(
-                chatId,
-                userId
-            );
+            const chat = await chatService.getChatById(chatId, userId);
 
             return res.json({
                 status: 200,
                 message: "Chat fetched successfully",
-                data: messages,
+                data: chat,
             });
         } catch (error) {
             return res.status(500).json({
@@ -118,6 +115,27 @@ export class ChatController {
             return res.status(500).json({
                 status: 500,
                 message: "Failed to create group chat",
+                error: error.message,
+            });
+        }
+    }
+
+    // get users not in group chat
+    async getUsersNotInGroupChat(req, res) {
+        try {
+            const { chatId } = req.params;
+
+            const users = await chatService.getUsersNotInGroupChat(chatId);
+
+            return res.json({
+                status: 200,
+                message: "Users Search fetched successfully",
+                data: users,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to fetch users",
                 error: error.message,
             });
         }

@@ -7,6 +7,8 @@ import { User } from "../models/user.model.js";
 import { Topic } from "../models/topic.model.js";
 import { Post } from "../models/post.model.js";
 import { Event } from "../models/event.model.js";
+import { Chat } from "../models/chat.model.js";
+import { Message } from "../models/message.model.js";
 
 const DB_URL = process.env.DB_URL;
 
@@ -448,6 +450,162 @@ const seedRoles = async () => {
 
         await Event.deleteMany({});
         await Event.insertMany(events);
+
+        const chats = [
+            {
+                _id: "64cfcff00137d9539987bc00",
+                chatName: "エンジニアの会話",
+                isGroupChat: true,
+                users: [
+                    "676c5ca80137d9539987bc30",
+                    "676c5ca80137d9539987bc31",
+                    "676c5ca80137d9539987bc32",
+                ],
+                latestMessage: null,
+                groupAdmin: "676c5ca80137d9539987bc30",
+                avatar: "https://example.com/group-chat-avatar1.png",
+            },
+            {
+                _id: "64cfcff00137d9539987bc01",
+                chatName: "プログラミング初心者",
+                isGroupChat: true,
+                users: ["676c5ca80137d9539987bc33", "676c5ca80137d9539987bc34"],
+                latestMessage: null,
+                groupAdmin: "676c5ca80137d9539987bc33",
+                avatar: "https://example.com/group-chat-avatar2.png",
+            },
+            {
+                _id: "64cfcff00137d9539987bc02",
+                chatName: "ダイレクトメッセージ",
+                isGroupChat: false,
+                users: ["676c5ca80137d9539987bc30", "676c5ca80137d9539987bc31"],
+                latestMessage: null,
+                avatar: "https://example.com/direct-chat-avatar1.png",
+            },
+            {
+                _id: "64cfcff00137d9539987bc03",
+                chatName: "テストプロジェクト",
+                isGroupChat: true,
+                users: [
+                    "676c5ca80137d9539987bc32",
+                    "676c5ca80137d9539987bc34",
+                    "676c5ca80137d9539987bc33",
+                ],
+                latestMessage: null,
+                groupAdmin: "676c5ca80137d9539987bc34",
+                avatar: "https://example.com/group-chat-avatar3.png",
+            },
+            {
+                _id: "64cfcff00137d9539987bc04",
+                chatName: "日常の話",
+                isGroupChat: false,
+                users: ["676c5ca80137d9539987bc30", "676c5ca80137d9539987bc34"],
+                latestMessage: null,
+                avatar: "https://example.com/direct-chat-avatar2.png",
+            },
+        ];
+
+        await Chat.deleteMany({});
+        await Chat.insertMany(chats);
+        console.log("Chats seeded successfully");
+
+        const messages = [
+            {
+                sender: "676c5ca80137d9539987bc30",
+                content: "こんにちは！元気ですか？", // Xin chào! Bạn khỏe không?
+                chat: "64cfcff00137d9539987bc00",
+            },
+            {
+                sender: "676c5ca80137d9539987bc31",
+                content: "はい、元気です。あなたは？", // Vâng, tôi khỏe. Còn bạn?
+                chat: "64cfcff00137d9539987bc00",
+            },
+            {
+                sender: "676c5ca80137d9539987bc32",
+                content: "このプロジェクトの進捗はどうですか？", // Tiến độ dự án này thế nào?
+                chat: "64cfcff00137d9539987bc00",
+            },
+            {
+                sender: "676c5ca80137d9539987bc33",
+                content: "順調に進んでいます。", // Tiến triển tốt.
+                chat: "64cfcff00137d9539987bc01",
+            },
+            {
+                sender: "676c5ca80137d9539987bc34",
+                content: "新しいアイデアがありますか？", // Có ý tưởng mới nào không?
+                chat: "64cfcff00137d9539987bc01",
+            },
+            {
+                sender: "676c5ca80137d9539987bc30",
+                content: "そうですね、いくつか考えています。", // Đúng vậy, tôi có vài ý tưởng.
+                chat: "64cfcff00137d9539987bc02",
+            },
+            {
+                sender: "676c5ca80137d9539987bc31",
+                content: "コードレビューは終わりましたか？", // Bạn đã xong code review chưa?
+                chat: "64cfcff00137d9539987bc02",
+            },
+            {
+                sender: "676c5ca80137d9539987bc32",
+                content: "いいえ、まだです。", // Chưa, vẫn chưa.
+                chat: "64cfcff00137d9539987bc03",
+            },
+            {
+                sender: "676c5ca80137d9539987bc33",
+                content: "締め切りまでに間に合いますか？", // Có kịp deadline không?
+                chat: "64cfcff00137d9539987bc03",
+            },
+            {
+                sender: "676c5ca80137d9539987bc34",
+                content: "がんばります！", // Tôi sẽ cố gắng!
+                chat: "64cfcff00137d9539987bc04",
+            },
+            // Tiếp tục thêm...
+        ];
+
+        // Phần dưới thêm 90 message nữa
+        for (let i = 20; i <= 109; i++) {
+            const randomChat = [
+                "64cfcff00137d9539987bc00",
+                "64cfcff00137d9539987bc01",
+                "64cfcff00137d9539987bc02",
+                "64cfcff00137d9539987bc03",
+                "64cfcff00137d9539987bc04",
+            ];
+            const randomUser = [
+                "676c5ca80137d9539987bc30",
+                "676c5ca80137d9539987bc31",
+                "676c5ca80137d9539987bc32",
+                "676c5ca80137d9539987bc33",
+                "676c5ca80137d9539987bc34",
+            ];
+            const randomContent = [
+                "了解しました！", // Đã hiểu!
+                "それは良いアイデアですね。", // Đó là một ý tưởng hay.
+                "また明日話しましょう。", // Hãy nói chuyện vào ngày mai.
+                "新しいタスクがありますか？", // Có nhiệm vụ mới nào không?
+                "少し手伝ってもらえますか？", // Bạn có thể giúp tôi một chút không?
+                "どのように進めたらいいですか？", // Tôi nên tiếp tục như thế nào?
+                "ドキュメントを確認しましたか？", // Bạn đã kiểm tra tài liệu chưa?
+                "すぐに取り掛かります。", // Tôi sẽ bắt đầu ngay.
+                "コードにバグがありました。", // Có lỗi trong code.
+                "解決策を見つけました！", // Tôi đã tìm ra giải pháp!
+            ];
+            messages.push({
+                sender: randomUser[
+                    Math.floor(Math.random() * randomUser.length)
+                ],
+                content:
+                    randomContent[
+                        Math.floor(Math.random() * randomContent.length)
+                    ],
+                chat: randomChat[Math.floor(Math.random() * randomChat.length)],
+            });
+        }
+
+        await Message.deleteMany({});
+        await Message.insertMany(messages);
+        console.log("Messages seeded successfully");
     } catch (error) {
         console.error("Error seeding data:", error);
     } finally {
