@@ -1,5 +1,6 @@
 import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import { eventService } from "../../services/event.service";
 
@@ -12,6 +13,7 @@ function EventCancelModal({ closeEventCancelModal, eventId }) {
 
         if (res.status === 200) {
             closeEventCancelModal();
+            toast.success("イベントをキャンセルしました");
         }
     };
 

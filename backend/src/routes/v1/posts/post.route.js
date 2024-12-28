@@ -15,5 +15,6 @@ postRoutes.get(
 postRoutes.get("/post/get/topic/:topicId", postController.getPostByTopicId);
 postRoutes.get("/post/get/author/:authorId", postController.getPostByAuthor);
 postRoutes.post("/post/create", postController.createPost);
+postRoutes.delete("/post/delete/:postId", postController.deletePost);
 
 export default postRoutes;

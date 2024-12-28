@@ -2,13 +2,28 @@ import { IconTrash } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 
 import { formatDate } from "../../helpers/formatDate";
 
-import { getPostByAuthor } from "../../services/post.service";
+import { getPostByAuthor, deletePost } from "../../services/post.service";
 
 function PostTab({ profile }) {
     const [posts, setPosts] = useState([]);
+
+    const handleDeletePost = async (postId) => {
+        try {
+            const res = await deletePost(postId);
+
+            if (res.status === 200) {
+                setPosts(posts.filter((post) => post._id !== postId));
+
+                toast.success("ポストを削除しました");
+            }
+        } catch (error) {
+            console.error("Failed to delete post", error);
+        }
+    };
 
     useEffect(() => {
         const handleGetPosts = async () => {
@@ -53,7 +68,10 @@ function PostTab({ profile }) {
                         </div>
 
                         <div>
-                            <button className="w-9 h-9 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400">
+                            <button
+                                className="w-9 h-9 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400"
+                                onClick={() => handleDeletePost(post?._id)}
+                            >
                                 <IconTrash />
                             </button>
                         </div>
