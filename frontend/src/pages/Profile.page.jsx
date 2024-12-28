@@ -8,12 +8,14 @@ import { EventCancelModal } from "../components/Event";
 function Profile() {
     const [tab, setTab] = useState(1);
     const [isEventCancelModal, setIsEventCancelModal] = useState(false);
+    const [eventId, setEventId] = useState("123");
 
     const { profile } = useContext(AuthContext);
 
     console.log("Profile", profile);
 
-    const showEventCancelModal = () => {
+    const showEventCancelModal = (eventId) => {
+        setEventId(eventId);
         setIsEventCancelModal(true);
     };
 
@@ -32,7 +34,12 @@ function Profile() {
         },
         {
             key: 3,
-            element: <EventTab profile={profile} showEventCancelModal={showEventCancelModal} />,
+            element: (
+                <EventTab
+                    profile={profile}
+                    showEventCancelModal={showEventCancelModal}
+                />
+            ),
         },
     ];
 
@@ -99,6 +106,7 @@ function Profile() {
             {isEventCancelModal ? (
                 <EventCancelModal
                     closeEventCancelModal={closeEventCancelModal}
+                    eventId={eventId}
                 />
             ) : (
                 ""

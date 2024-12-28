@@ -7,6 +7,8 @@ const eventSchema = new mongoose.Schema(
         location: { type: String },
         date: { type: Date, required: true },
         banner_link: { type: String },
+        status: { type: String, default: "active" },
+        reasonCancel: { type: String },
         author_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, // Thêm thuộc tính author_id
         joined_users: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }], // Thêm thuộc tính joined_users
     },

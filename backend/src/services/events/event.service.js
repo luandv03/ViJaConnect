@@ -4,7 +4,7 @@ import { Event } from "../../models/event.model.js";
 class EventService {
     async getEvents() {
         try {
-            const events = await Event.find({});
+            const events = await Event.find({ status: "active" });
             return events;
         } catch (error) {
             throw new Error("Error fetching events: " + error.message);
@@ -79,6 +79,51 @@ class EventService {
             return events;
         } catch (error) {
             throw new Error("Error fetching events: " + error.message);
+        }
+    }
+
+    async leaveEvent(eventId, userId) {
+        try {
+            const event = await Event.findById(eventId);
+            if (!event) {
+                throw new Error("Event not found");
+            }
+            event.joined_users = event.joined_users.filter(
+                (user) => user.toString() !== userId
+            );
+            await event.save();
+            return event;
+        } catch (error) {
+            throw new Error("Error leaving event: " + error.message);
+        }
+    }
+
+    async joinEvent(eventId, userId) {
+        try {
+            const event = await Event.findById(eventId);
+            if (!event) {
+                throw new Error("Event not found");
+            }
+            event.joined_users.push(userId);
+            await event.save();
+            return event;
+        } catch (error) {
+            throw new Error("Error joining event: " + error.message);
+        }
+    }
+
+    async cancelEvent(eventId, reasonCancel) {
+        try {
+            const event = await Event.findById(eventId);
+            if (!event) {
+                throw new Error("Event not found");
+            }
+            event.status = "inactive";
+            event.reasonCancel = reasonCancel;
+            await event.save();
+            return event;
+        } catch (error) {
+            throw new Error("Error cancelling event: " + error.message);
         }
     }
 

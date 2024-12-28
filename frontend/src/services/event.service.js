@@ -59,6 +59,45 @@ class EventService extends BaseService {
             return error;
         }
     }
+
+    async joinEvent(eventId, userId) {
+        try {
+            const res = await this.httpClientPublic.put(
+                `/event/join/${eventId}/${userId}`
+            );
+
+            return res.data;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async leaveEvent(eventId, userId) {
+        try {
+            const res = await this.httpClientPublic.put(
+                `/event/leave/${eventId}/${userId}`
+            );
+
+            return res.data;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async cancelEvent(eventId, reasonCancel) {
+        try {
+            const res = await this.httpClientPublic.put(
+                `/event/cancel/${eventId}`,
+                {
+                    reasonCancel,
+                }
+            );
+
+            return res.data;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export const eventService = new EventService();

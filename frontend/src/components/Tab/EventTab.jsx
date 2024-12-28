@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 import { eventService } from "../../services/event.service";
+import { formatDate } from "../../helpers/formatDate";
 
 function compareDateTime(inputDate) {
     const currentDate = new Date(); // 🌟 Lấy thời gian hiện tại
@@ -13,8 +14,10 @@ function compareDateTime(inputDate) {
     const targetTimestamp = Math.floor(targetDate.getTime() / 60000); // 🌟 Đổi ra phút
 
     if (currentTimestamp <= targetTimestamp) {
+        console.log("new");
         return "new"; // 🔵 Trùng thời gian đến phút
     } else if (targetTimestamp < currentTimestamp) {
+        console.log("past");
         return "past"; // 🔴 Quá khứ
     }
 }
@@ -24,16 +27,39 @@ function EventTab({ profile, showEventCancelModal }) {
 
     const handleGetEvents = async () => {
         if (profile?.role_id?.name == "Staff") {
-            const res = await eventService.fetchEventsUserJoined(profile._id);
+            const res = await eventService.fetchEventsUserJoined(profile?._id);
+            console.log(res.data);
             setEvents(res.data);
         } else {
-            const res = await eventService.fetchEventsUserCreated(profile._id);
+            const res = await eventService.fetchEventsUserCreated(profile?._id);
             setEvents(res.data);
         }
     };
 
+    const handleLeaveEvent = async (eventId) => {
+        const res = await eventService.leaveEvent(eventId, profile?._id);
+
+        if (res.status === 200) {
+            setEvents((prevEvents) =>
+                prevEvents.filter((event) => event._id !== eventId)
+            );
+        }
+    };
+
+    // const handleCancelEvent = async (eventId) => {
+    //     const res = await eventService.cancelEvent(eventId);
+
+    //     if (res.status === 200) {
+    //         setEvents((prevEvents) =>
+    //             prevEvents.filter((event) => event._id !== eventId)
+    //         );
+    //     }
+    // };
+
     useEffect(() => {
         handleGetEvents();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -45,64 +71,85 @@ function EventTab({ profile, showEventCancelModal }) {
                     </button>
                 </div>
                 {events.length > 0 ? (
-                    events
-                        .filter(
-                            (event) => compareDateTime(event.date) === "new"
-                        )
-                        .map((event) => (
-                            <div
-                                key={event._id}
-                                className="flex space-x-4 items-center"
-                            >
-                                <div className="flex flex-1 flex-col p-2 bg-alice-blue rounded-xl space-y-2">
-                                    <div className="flex space-x-2">
-                                        <div className="w-6 text-center">
-                                            <span>{event?.title}</span>
+                    events.filter(
+                        (event) =>
+                            compareDateTime(event.date) == "new" &&
+                            event.status == "active"
+                    ).length > 0 ? (
+                        events
+                            .filter(
+                                (event) =>
+                                    compareDateTime(event.date) == "new" &&
+                                    event.status == "active"
+                            )
+                            .map((event) => (
+                                <div
+                                    key={event._id}
+                                    className="flex space-x-4 items-center"
+                                >
+                                    <div className="flex flex-1 flex-col p-2 bg-alice-blue rounded-xl space-y-2">
+                                        <div className="flex space-x-2">
+                                            <div className="text-center">
+                                                <span>{event?.title}</span>
+                                            </div>
+                                            {/* <div>
+                                                <span>{event?.title}</span>
+                                            </div> */}
                                         </div>
-                                        <div>
-                                            <span>セミナー</span>
+
+                                        <div className="flex space-x-2">
+                                            <div>
+                                                <IconCalendarMonth />
+                                            </div>
+                                            <div>
+                                                <span>
+                                                    {event?.date
+                                                        ? formatDate(
+                                                              event?.date
+                                                          )
+                                                        : "日付が不明です"}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex space-x-2">
+                                            <div>
+                                                <IconMapPinFilled />
+                                            </div>
+                                            <div>
+                                                <span>{event?.location}</span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex space-x-2">
-                                        <div>
-                                            <IconCalendarMonth />
-                                        </div>
-                                        <div>
-                                            <span>
-                                                月曜日、2024-11-25 15:00
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex space-x-2">
-                                        <div>
-                                            <IconMapPinFilled />
-                                        </div>
-                                        <div>
-                                            <span>Ha Noi</span>
-                                        </div>
+                                    <div>
+                                        {profile?.role_id?.name === "Staff" ? (
+                                            <button
+                                                className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400"
+                                                onClick={() =>
+                                                    handleLeaveEvent(event._id)
+                                                }
+                                            >
+                                                参加をやめる
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400"
+                                                onClick={() =>
+                                                    showEventCancelModal(
+                                                        event?._id
+                                                    )
+                                                }
+                                            >
+                                                キャンセル
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
-
-                                <div>
-                                    {profile?.role_id?.name === "Staff" ? (
-                                        <button className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400">
-                                            参加をやめる
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="p-2 bg-alice-blue flex justify-center items-center rounded-full hover:bg-gray-400"
-                                            onClick={() =>
-                                                showEventCancelModal()
-                                            }
-                                        >
-                                            キャンセル
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        ))
+                            ))
+                    ) : (
+                        <div>イベントがありません</div>
+                    )
                 ) : (
                     <div>イベントがありません</div>
                 )}
@@ -125,73 +172,72 @@ function EventTab({ profile, showEventCancelModal }) {
                         </button>
                     )}
                 </div>
-                <div className="flex space-x-4 items-center ">
-                    <div className="flex flex-1 flex-col p-2 bg-alice-blue rounded-xl space-y-2">
-                        <div className="flex space-x-2">
-                            <div className="text-center">
-                                <span>Machine Learning</span>
-                            </div>
-                            <div>
-                                <span>セミナー</span>
-                            </div>
-                        </div>
+                {events.length > 0 ? (
+                    events.filter(
+                        (event) =>
+                            compareDateTime(event.date) === "past" ||
+                            event.status == "inactive"
+                    ).length > 0 ? (
+                        events
+                            .filter(
+                                (event) =>
+                                    compareDateTime(event.date) === "past" ||
+                                    event.status == "inactive"
+                            )
+                            .map((event) => (
+                                <div
+                                    key={event?._id}
+                                    className="flex space-x-4 items-center "
+                                >
+                                    <div className="flex flex-1 flex-col p-2 bg-alice-blue rounded-xl space-y-2">
+                                        <div className="flex space-x-2">
+                                            <div className="text-center">
+                                                <span>{event?.title}</span>
+                                            </div>
+                                            {/* <div>
+                                                <span>{event?.title}</span>
+                                            </div> */}
+                                        </div>
 
-                        <div className="flex space-x-2">
-                            <div>
-                                <IconCalendarMonth />
-                            </div>
-                            <div>
-                                <span>水曜日、2021-11-26 12:00</span>
-                            </div>
-                        </div>
+                                        <div className="flex space-x-2">
+                                            <div>
+                                                <IconCalendarMonth />
+                                            </div>
+                                            <div>
+                                                <span>
+                                                    {event?.date
+                                                        ? formatDate(
+                                                              event?.date
+                                                          )
+                                                        : "日付が不明です"}
+                                                </span>
+                                            </div>
+                                        </div>
 
-                        <div className="flex space-x-2">
-                            <div>
-                                <IconMapPinFilled />
-                            </div>
-                            <div>
-                                <span>Ha Noi</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex space-x-4 items-center">
-                    <div className="flex flex-1 flex-col p-2 bg-alice-blue rounded-xl space-y-2">
-                        <div className="flex space-x-2">
-                            <div className="text-center">
-                                <span>Go Japan</span>
-                            </div>
-                            <div>
-                                <span>ワークショップ</span>
-                            </div>
-                        </div>
-
-                        <div className="flex space-x-2">
-                            <div>
-                                <IconCalendarMonth />
-                            </div>
-                            <div>
-                                <span>金曜日、2021-11-29 12:00</span>
-                            </div>
-                        </div>
-
-                        <div className="flex space-x-2">
-                            <div>
-                                <IconMapPinFilled />
-                            </div>
-                            <div>
-                                <span>Ha Noi</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        <div className="flex space-x-2">
+                                            <div>
+                                                <IconMapPinFilled />
+                                            </div>
+                                            <div>
+                                                <span>{event?.location}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                    ) : (
+                        <div>イベントがありません</div>
+                    )
+                ) : (
+                    <div>イベントがありません</div>
+                )}
             </div>
         </div>
     );
 }
 EventTab.propTypes = {
     profile: PropTypes.shape({
+        _id: PropTypes.string,
         role_id: PropTypes.shape({
             name: PropTypes.string,
         }),
