@@ -16,7 +16,7 @@ export const uploadImage = async (file) => {
         },
       }
     );
-
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || "Failed to upload image");
