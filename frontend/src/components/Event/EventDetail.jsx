@@ -38,10 +38,21 @@ const EventDetail = () => {
 
     const [event, setEvent] = useState({});
 
-    useEffect(() => {
-        eventService.fetchEventById(eventId).then((data) => setEvent(data.data));
-    }, [eventId]);
 
+    useEffect(() => {
+        if (eventId) {
+            eventService.fetchEventById(eventId).then((data) => {
+                setEvent(data.data);
+
+                // Kiểm tra xem người dùng đã tham gia chưa
+                const joined = data.data.joined_users.some(
+                    (joined_id) => joined_id === profile._id
+                );
+                setIsJoined(joined); // Cập nhật trạng thái isJoined
+            });
+        }
+    }, [eventId, profile._id]);
+    
     if (!event || Object.keys(event).length === 0) {
         return <div>イベントデータを読み込んでいます...</div>;
     }
@@ -321,7 +332,7 @@ const EventDetail = () => {
             )}
 
             {profile.role_id.name === "Staff" && (
-                <div className="px-10">
+                <div className="px-10 mb-4">
                     <div className="flex justify-between items-center space-x-4">
                         <button
                             onClick={handleLike}
