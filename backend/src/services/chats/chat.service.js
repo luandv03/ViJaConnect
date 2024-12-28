@@ -23,8 +23,6 @@ class ChatService {
                 .populate("users", "name email avatar_link") // Populate thông tin user
                 .populate("latestMessage");
 
-            console.log(chat);
-
             if (!chat) {
                 return res.status(404).json({ message: "Chat not found" });
             }
@@ -54,6 +52,25 @@ class ChatService {
                 latestMessage: chat.latestMessage,
                 avatar, // Avatar đã xử lý
             };
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async getChatByUserId(userId) {
+        try {
+            // Validate userId
+            if (!mongoose.Types.ObjectId.isValid(userId)) {
+                return res.status(400).json({ message: "Invalid userId" });
+            }
+
+            // Lấy danh sách chat có sự tham gia của user
+            const chats = await Chat.find({ users: userId })
+                .populate("users", "name email avatar_link")
+                .populate("latestMessage")
+                .sort({ "latestMessage.createdAt": -1 });
+
+            return chats;
         } catch (error) {
             console.error(error);
         }
@@ -198,11 +215,28 @@ class ChatService {
                 return res.status(404).json({ message: "Admin not found" });
             }
 
+            const fakeAvatar = [
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsbvYmsy3S5mLR977mNfoXJraS_YTMu_8Q9A&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCQjcifT1rFo2HaLWTVwwuSXX1L7gqFbAUOw&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBbm2pa8GeS4ePCaHqoBAkyqCZ4E4y4P9vsQ&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa5omhlpFbVmT3XpX7IrcVXfxTcKwk-F5FvQ&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjkEkny2ArthGwyBxg2OMY-aA0mgdWqSll4A&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmD_pc_8k4-TECvwV711LwPWGJ0SN34d6Smw&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw9Wm-vAFT9ME9T547Brf4A5fNLPhSz6Xe0A&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCNzor1ujsOefKEwvmn_ZagCNWirp1TuqPfw&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLHGn1IwJDD8ElS3Lm8kbABKleBTNIrT2h5w&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC3EPnM9--FnFTnbIAxg-KBwbPMv-_cDlKJQ&s",
+            ];
+
+            const randomAvatar =
+                fakeAvatar[Math.floor(Math.random() * fakeAvatar.length)];
+
             // Tạo nhóm chat mới
             const groupChat = await Chat.create({
                 chatName,
                 isGroupChat: true,
                 users: [userId, ...users], // Thêm admin vào đầu danh sách users
+                avatar: randomAvatar,
                 groupAdmin: userId,
             });
 
