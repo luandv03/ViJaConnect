@@ -74,3 +74,15 @@ export const deletePost = async (postId) => {
         throw error;
     }
 };
+
+export const searchPostsByTopicIdAndTitle = async (topicId, title) => {
+    try {
+        const { data } = await axios.get(
+            `${SERVER_DOMAIN}/api/v1/post/get/topic/${topicId}/search?title=${title}`
+        );
+        return data.data;
+    } catch (error) {
+        console.error("Failed to search post", error);
+        throw error;
+    }
+};
