@@ -45,7 +45,7 @@ const seedRoles = async () => {
                 email: "duong.gt@vijaconnect.com",
                 phone_number: "0912345678",
                 password: "luandeptrai",
-                display_name: "Duong Gio Tai",
+                display_name: "グエン・ザ・トゥン・ゾオン",
                 department: "IT",
                 address: "123 Main St",
                 company_role: "Developer",
@@ -87,11 +87,11 @@ const seedRoles = async () => {
             },
             {
                 _id: "676c5ca80137d9539987bc32",
-                name: "ディン・ヴァン・ルアン",
-                email: "luan.dv@vijaconnect.com",
+                name: "管理者",
+                email: "admin@vijaconnect.com",
                 phone_number: "0867888888",
                 password: "luandeptrai",
-                display_name: "ディン・ヴァン・ルアン",
+                display_name: "管理者",
                 department: "IT",
                 address: "123 Main St",
                 company_role: "Developer",
@@ -120,7 +120,7 @@ const seedRoles = async () => {
                 company_role: "Developer",
                 avatar_link:
                     "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
-                role_id: insertedRoles[2]._id,
+                role_id: insertedRoles[0]._id,
                 shared_posts: [],
                 liked_posts: [],
                 settings: {
@@ -143,7 +143,7 @@ const seedRoles = async () => {
                 company_role: "Developer",
                 avatar_link:
                     "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-                role_id: insertedRoles[2]._id,
+                role_id: insertedRoles[0]._id,
                 shared_posts: [],
                 liked_posts: [],
                 settings: {
@@ -165,8 +165,8 @@ const seedRoles = async () => {
                 address: "456 Elm St",
                 company_role: "Tester",
                 avatar_link:
-                    "https://schooler.sun-asterisk.com/storage/images/avatar/student/72ae1b56a443f.",
-                role_id: insertedRoles[1]._id,
+                    "https://schooler.sun-asterisk.com/storage/images/avatar/student/630e08f3c6416.",
+                role_id: insertedRoles[0]._id,
                 shared_posts: [],
                 liked_posts: [],
                 settings: {
@@ -189,7 +189,7 @@ const seedRoles = async () => {
                 company_role: "HR Manager",
                 avatar_link:
                     "https://schooler.sun-asterisk.com/storage/images/avatar/student/64a7e2cfcab63.",
-                role_id: insertedRoles[2]._id,
+                role_id: insertedRoles[0]._id,
                 shared_posts: [],
                 liked_posts: [],
                 settings: {
@@ -212,7 +212,7 @@ const seedRoles = async () => {
                 company_role: "Accountant",
                 avatar_link:
                     "https://schooler.sun-asterisk.com/storage/images/avatar/student/6162e78d13086.",
-                role_id: insertedRoles[2]._id,
+                role_id: insertedRoles[0]._id,
                 shared_posts: [],
                 liked_posts: [],
                 settings: {
@@ -248,17 +248,17 @@ const seedRoles = async () => {
             },
             {
                 _id: "676c5ca80137d9539987bc39",
-                name: "カ・ミン・バオ",
-                email: "bao.km@vijaconnect.com",
+                name: "ディン・ヴァン・ルアン",
+                email: "luan.dv@vijaconnect.com",
                 phone_number: "0951234567",
                 password: "luandeptrai",
-                display_name: "カ・ミン・バオ",
+                display_name: "ディン・ヴァン・ルアン",
                 department: "Marketing",
                 address: "456 Maple St",
                 company_role: "SEO Specialist",
                 avatar_link:
                     "https://schooler.sun-asterisk.com/storage/images/avatar/student/63083b4681ab9.",
-                role_id: insertedRoles[2]._id,
+                role_id: insertedRoles[1]._id,
                 shared_posts: [],
                 liked_posts: [],
                 settings: {
