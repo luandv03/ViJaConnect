@@ -37,7 +37,7 @@ class ChatService extends BaseService {
 
     async sendMessage(chatId, senderId, content) {
         try {
-            const res = await this.httpClientPrivate.post(
+            const res = await this.httpClientPublic.post(
                 `/chat/${chatId}/send`,
                 {
                     senderId,
@@ -71,6 +71,33 @@ class ChatService extends BaseService {
                 userId,
                 users,
             });
+
+            return res.data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async getUsersNotInGroupChat(chatId, username) {
+        try {
+            const res = await this.httpClientPublic.get(
+                `/chat/group/${chatId}/users-not-in-group?username=${username}`
+            );
+
+            return res.data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async addUserIntoGroupChat(chatId, users) {
+        try {
+            const res = await this.httpClientPublic.post(
+                `/chat/group/${chatId}/add-user`,
+                {
+                    users,
+                }
+            );
 
             return res.data;
         } catch (error) {

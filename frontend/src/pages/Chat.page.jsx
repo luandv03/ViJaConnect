@@ -1,187 +1,10 @@
 import { IconUserPlus, IconDots, IconSend2, IconX } from "@tabler/icons-react";
 import { useState, useRef, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { chatService } from "../services/chat.service";
 import { AuthContext } from "../providers/AuthProvider";
-
-const MESSAGES = [
-    {
-        _id: 1,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
-        sender: "hien",
-        content:
-            "みなさん、もうすぐ年末ですね。今年の忘年会について話し合いませんか？",
-    },
-    {
-        _id: 2,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content:
-            "そうですね。今年もたくさん頑張りましたし、みんなで楽しい時間を過ごしたいですね。",
-    },
-    {
-        _id: 200,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content:
-            "はい！場所はどうしますか？去年は居酒屋でしたが、今年はちょっと変えてみませんか？",
-    },
-    {
-        _id: 3,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
-        sender: "kien",
-        content:
-            "いいですね。ホテルのバンケットルームとかどうでしょう？少しフォーマルな感じで。",
-    },
-    {
-        _id: 4,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
-        sender: "duong",
-        content:
-            "フォーマルもいいですが、コストが気になりますね。会社の予算を確認しないといけませんね。",
-    },
-    {
-        _id: 5,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
-        sender: "luan",
-        content:
-            "それなら、オフィスでカジュアルなパーティーをするのはどうですか？ケータリングを頼んで。",
-    },
-    {
-        _id: 1,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
-        sender: "hien",
-        content:
-            "それもいいですね！みんなが参加しやすくなりますし、準備も簡単です。",
-    },
-    {
-        _id: 2,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content:
-            "じゃあ、まずアンケートを取って、どちらがいいかみんなに聞いてみましょう。",
-    },
-    {
-        _id: 3,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
-        sender: "kien",
-        content: "了解です！アンケートフォームは私が作りますね。",
-    },
-    {
-        _id: 4,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
-        sender: "duong",
-        content: "よろしくお願いします！では、来週までに結果をまとめましょう。",
-    },
-    {
-        _id: 5,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
-        sender: "luan",
-        content: "了解です！",
-    },
-    {
-        _id: 2,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content:
-            "アンケートは食事についても聞いたほうがいいですね。みんなが好きなものを提供できればいいと思います。",
-    },
-    {
-        _id: 1,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
-        sender: "hien",
-        content:
-            "そうですね！和食だけじゃなくて、洋食や中華も候補に入れたらどうですか？",
-    },
-    {
-        _id: 2,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content:
-            "いいアイデアですね！飲み物も重要なので、アルコールの有無についても確認したほうがいいですね。",
-    },
-    {
-        _id: 200,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content: "確かに。最近はお酒を飲まない人も増えていますからね。",
-    },
-    {
-        _id: 3,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
-        sender: "kien",
-        content:
-            "それと、ゲームやプレゼント交換など、何かアクティビティを入れたほうがいいと思います！",
-    },
-    {
-        _id: 4,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
-        sender: "duong",
-        content: "プレゼント交換は面白いですね。でも、予算はどうしますか？",
-    },
-    {
-        _id: 5,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
-        sender: "luan",
-        content: "一人千円くらいでどうですか？負担にならない程度に。",
-    },
-    {
-        _id: 1,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
-        sender: "hien",
-        content: "それなら良さそうですね！企画リストに追加しましょう。",
-    },
-    {
-        _id: 2,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
-        sender: "phu",
-        content:
-            "あと、日時についてもアンケートで確認しましょう。忙しい時期なので全員の都合を考えたいですね。",
-    },
-    {
-        _id: 3,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6.",
-        sender: "kien",
-        content: "了解です。フォームに質問を追加しておきます。",
-    },
-    {
-        _id: 4,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64.",
-        sender: "duong",
-        content:
-            "みなさん、いいアイデアありがとうございました！良い忘年会になりそうですね。",
-    },
-    {
-        _id: 5,
-        avatar_link:
-            "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd.",
-        sender: "luan",
-        content: "こちらこそ、楽しみですね！",
-    },
-];
 
 const CHAT = {
     _id: "",
@@ -198,6 +21,10 @@ function ChatPage() {
     const [value, setValue] = useState("");
     const messagesEndRef = useRef(null);
     const [isGroupChatModal, setIsGroupChatModal] = useState(false);
+    const [searchValue, setSearchValue] = useState("");
+    const [userResultSearch, setUserResultSearch] = useState([]);
+    const [userAddedList, setUserAddedList] = useState([]);
+
     const { profile } = useContext(AuthContext);
     const { chatId } = useParams();
 
@@ -207,6 +34,9 @@ function ChatPage() {
 
     const closeGroupChatModal = () => {
         setIsGroupChatModal(false);
+        setSearchValue("");
+        setUserResultSearch([]);
+        setUserAddedList([]);
     };
 
     const handleGetChat = async () => {
@@ -229,6 +59,50 @@ function ChatPage() {
         }
     };
 
+    const handleSearchUserInGroup = async () => {
+        if (!chatId) return;
+
+        const res = await chatService.getUsersNotInGroupChat(
+            chatId,
+            searchValue
+        );
+
+        if (res.status === 200) {
+            setUserResultSearch(res.data);
+        }
+    };
+
+    const handleAddUserToGroup = async (userAdded) => {
+        setUserResultSearch((prev) =>
+            prev.filter((user) => user._id !== userAdded._id)
+        );
+
+        setUserAddedList((prev) => [...prev, userAdded]);
+    };
+
+    const handleRemoveUserFromGroup = async (userRemoved) => {
+        setUserAddedList((prev) =>
+            prev.filter((user) => user._id !== userRemoved._id)
+        );
+
+        handleSearchUserInGroup();
+    };
+
+    // call API
+    const handleAddUserIntoGroupChat = async () => {
+        if (!chatId || userAddedList.length === 0)
+            return toast.warning("ユーザーを選んでください。");
+
+        const users = userAddedList.map((user) => user._id);
+
+        const res = await chatService.addUserIntoGroupChat(chatId, users);
+
+        if (res.status === 200) {
+            toast.success("メンバーを追加しました。");
+            closeGroupChatModal();
+        }
+    };
+
     const handleSendMessage = () => {
         if (!value) return;
 
@@ -242,8 +116,13 @@ function ChatPage() {
             content: value,
         };
 
+        const res = chatService.sendMessage(chatId, profile?._id, value);
         setMessages([...messages, newMessage]);
         setValue("");
+
+        if (res.status === 201) {
+            toast.success("メッセージを送信しました。");
+        }
     };
 
     useEffect(() => {
@@ -255,6 +134,11 @@ function ChatPage() {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
+
+    useEffect(() => {
+        handleSearchUserInGroup();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchValue]);
 
     return (
         <>
@@ -397,51 +281,84 @@ function ChatPage() {
                     {/* Modal add member into group */}
                     {isGroupChatModal ? (
                         <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center bg-over-layer mt-0">
-                            <div className="min-w-96 bg-white p-2 rounded-xl space-y-4">
+                            <div className="min-w-96 max-w-2xl bg-white p-2 rounded-xl space-y-4">
                                 <div
                                     className="flex justify-end cursor-pointer"
                                     onClick={() => closeGroupChatModal()}
                                 >
                                     <IconX />
                                 </div>
-                                <div className="bg-none rounded-3xl flex items-center">
-                                    <div className="bg-alice-blue h-8 p-1 rounded-3xl space-x-2 flex items-center">
-                                        <span>Luan Dinh</span>
+                                <div className="bg-none rounded-3xl flex items-center flex-wrap max-h-32 overflow-y-auto custom-scrollbar">
+                                    {userAddedList.length > 0 &&
+                                        userAddedList.map((user) => (
+                                            <div
+                                                key={user?._id}
+                                                className="bg-alice-blue h-8 p-1 rounded-3xl space-x-2 flex items-center m-1"
+                                            >
+                                                <span>{user?.name}</span>
 
-                                        <span className="cursor-pointer bg-black rounded-full text-white">
-                                            <IconX size={16} />
-                                        </span>
-                                    </div>
+                                                <span
+                                                    className="cursor-pointer bg-black rounded-full text-white"
+                                                    onClick={() =>
+                                                        handleRemoveUserFromGroup(
+                                                            user
+                                                        )
+                                                    }
+                                                >
+                                                    <IconX size={16} />
+                                                </span>
+                                            </div>
+                                        ))}
                                     <div className="p-2">
-                                        <input className="bg-none p-x-8 outline-none resize-none"></input>
+                                        <input
+                                            className="bg-none p-x-8 outline-none resize-none"
+                                            value={searchValue}
+                                            onChange={(e) =>
+                                                setSearchValue(e.target.value)
+                                            }
+                                            placeholder="ユーザーを検索"
+                                        ></input>
                                     </div>
                                 </div>
                                 <div>
                                     <div className="border-b-2 border-alice-blue"></div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <div className="flex w-full items-center">
-                                        <button className="w-full min-h-8 bg-alice-blue  p-2 rounded-3xl ">
-                                            <span>Dinh Van Luan</span>
-                                        </button>
-                                    </div>
-                                    <div className="flex w-full ">
-                                        <button className="w-full min-h-8 bg-alice-blue  p-2 rounded-3xl">
-                                            <span>Chu Dinh Hien</span>
-                                        </button>
-                                    </div>
-                                    <div className="flex w-full ">
-                                        <button className="w-full min-h-8 bg-alice-blue  p-2 rounded-3xl">
-                                            <span>Nguyen Duc Phu</span>
-                                        </button>
-                                    </div>
+                                <div className="space-y-2 max-h-64 overflow-y-auto custom-scrollbar">
+                                    {userResultSearch.length > 0 ? (
+                                        userResultSearch.map((user) => (
+                                            <div
+                                                key={user?._id}
+                                                className="flex items-center space-x-2 hover:bg-blue-100 cursor-pointer p-1"
+                                                onClick={() =>
+                                                    handleAddUserToGroup(user)
+                                                }
+                                            >
+                                                <div>
+                                                    <img
+                                                        src={user?.avatar_link}
+                                                        alt=""
+                                                        className="w-8 h-8 object-cover rounded-full"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <span>{user?.name}</span>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="text-center">
+                                            <span>ユーザーがありません。</span>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="flex w-full ">
                                     <button
                                         className="w-full min-h-8 bg-gray-400 hover:opacity-70 p-2 rounded-3xl"
-                                        onClick={() => closeGroupChatModal()}
+                                        onClick={() =>
+                                            handleAddUserIntoGroupChat()
+                                        }
                                     >
                                         <span>メンバーを追加</span>
                                     </button>

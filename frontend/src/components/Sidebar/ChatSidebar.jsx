@@ -56,8 +56,6 @@ const ChatSidebar = () => {
 
     const { chatId } = useParams();
 
-    console.log("Chat ID:", chatId);
-
     const handleGetContacts = async () => {
         try {
             if (!profile?._id) return;
