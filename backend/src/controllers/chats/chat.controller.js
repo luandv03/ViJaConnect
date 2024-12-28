@@ -140,8 +140,12 @@ export class ChatController {
     async getUsersNotInGroupChat(req, res) {
         try {
             const { chatId } = req.params;
+            const { username } = req.query;
 
-            const users = await chatService.getUsersNotInGroupChat(chatId);
+            const users = await chatService.getUsersNotInGroupChat(
+                chatId,
+                username
+            );
 
             return res.json({
                 status: 200,
@@ -152,6 +156,28 @@ export class ChatController {
             return res.status(500).json({
                 status: 500,
                 message: "Failed to fetch users",
+                error: error.message,
+            });
+        }
+    }
+
+    // Add User To Group Chat
+    async addUserIntoGroupChat(req, res) {
+        try {
+            const { chatId } = req.params;
+            const { users } = req.body;
+
+            const chat = await chatService.addUserIntoGroupChat(chatId, users);
+
+            return res.json({
+                status: 200,
+                message: "User added to group chat successfully",
+                data: chat,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to add user to group chat",
                 error: error.message,
             });
         }

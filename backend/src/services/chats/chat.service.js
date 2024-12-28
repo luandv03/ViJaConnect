@@ -254,25 +254,52 @@ class ChatService {
     }
 
     // get users not in group chat
-    async getUsersNotInGroupChat(chatId) {
+    async getUsersNotInGroupChat(chatId, username) {
         try {
             // Validate input
             if (!mongoose.Types.ObjectId.isValid(chatId)) {
-                return res.status(400).json({ message: "Invalid chatId" });
+                throw new Error("Invalid chatId");
             }
 
             // Lấy thông tin nhóm chat
             const chat = await Chat.findById(chatId);
             if (!chat) {
-                return res.status(404).json({ message: "Chat not found" });
+                throw new Error("Chat not found");
             }
 
-            // Lấy danh sách users không thuộc nhóm chat
+            // Lấy danh sách users không thuộc nhóm chat và search theo username
             const users = await User.find({
                 _id: { $nin: chat.users },
+                name: { $regex: username, $options: "i" }, // Search by username (case-insensitive)
             }).select("name email avatar_link");
 
             return users;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async addUserIntoGroupChat(chatId, users) {
+        try {
+            // Validate input
+            if (!mongoose.Types.ObjectId.isValid(chatId) || !users) {
+                return res
+                    .status(400)
+                    .json({ message: "Invalid chatId or users" });
+            }
+
+            // Thêm users vào nhóm chat
+            await Chat.findByIdAndUpdate(chatId, {
+                $push: { users },
+            });
+
+            // Populate thông tin nhóm chat và users
+            const populatedChat = await Chat.findById(chatId).populate(
+                "users",
+                "name email avatar_link"
+            );
+
+            return populatedChat;
         } catch (error) {
             console.error(error);
         }

@@ -25,4 +25,10 @@ chatRoutes.get(
     chatController.getUsersNotInGroupChat
 );
 
+// add users into group chat
+chatRoutes.post(
+    "/chat/group/:chatId/add-user",
+    chatController.addUserIntoGroupChat
+);
+
 export default chatRoutes;
