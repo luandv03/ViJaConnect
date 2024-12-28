@@ -73,6 +73,39 @@ class EventService extends BaseService {
       return error;
     }
   }
+
+  async createEvent({ author_id, title, desc, location, date, banner_link }) {
+    try {
+      const res = await this.httpClientPublic.post("/event/create", {
+        author_id: author_id,
+        title: title,
+        desc: desc,
+        location: location,
+        date: date,
+        banner_link: banner_link,
+      });
+
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async updateEvent(eventId, { title, desc, location, date, banner_link }) {
+    try {
+      const res = await this.httpClientPublic.put(`/event/edit/${eventId}`, {
+        title: title,
+        desc: desc,
+        location: location,
+        date: date,
+        banner_link: banner_link,
+      });
+
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export const eventService = new EventService();
