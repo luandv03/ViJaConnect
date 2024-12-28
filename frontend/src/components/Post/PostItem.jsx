@@ -9,8 +9,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { formatDate } from "../../helpers/formatDate";
+import { highlightText } from "../../helpers/highlight";
 const PostItem = ({ post }) => {
     const [liked, setLiked] = useState(false);
+    const queryParams = new URLSearchParams(location.search);
+    const query = queryParams.get("query");
     return (
         <>
             <div className="bg-alice-blue p-5 rounded-lg mb-5">
@@ -33,7 +36,13 @@ const PostItem = ({ post }) => {
                         </div>
                     </div>
                 </div>
-                <div className="mb-5">{post.title}</div>
+                <div className="mb-5">
+                    <h3
+                        dangerouslySetInnerHTML={{
+                            __html: highlightText(post.title, query),
+                        }}
+                    />
+                </div>
                 <Link to={`/post/${post._id}`}>
                     <div className="mb-5">
                         <img
@@ -45,9 +54,8 @@ const PostItem = ({ post }) => {
                 </Link>
                 <div className="flex items-center justify-between">
                     <div
-                        className={`flex items-center cursor-pointer ${
-                            liked ? "text-blue-400" : "hover:text-blue-400"
-                        }`}
+                        className={`flex items-center cursor-pointer ${liked ? "text-blue-400" : "hover:text-blue-400"
+                            }`}
                         onClick={() => setLiked(!liked)}
                     >
                         {liked ? (

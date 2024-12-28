@@ -1,19 +1,41 @@
 import PostItem from "../components/Post/PostItem";
 import PostCreate from "../components/Post/PostCreate";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPosts, getPostsByTopicId } from "../services/post.service";
+import { useParams, useLocation } from "react-router-dom";
+import { getPosts, getPostsByTopicId, searchPostsByTopicIdAndTitle } from "../services/post.service";
 
 function Home() {
-    const { topicId } = useParams();
+    const { topicId } = useParams(); // Lấy topicId từ URL
+    const location = useLocation(); // Lấy query parameters từ URL
     const [postItem, setPostItem] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        if (topicId === undefined) {
-            getPosts().then((data) => setPostItem(data));
-            return;
+        const queryParams = new URLSearchParams(location.search); // Lấy query parameters
+        const query = queryParams.get("query"); // Lấy giá trị của param "query"
+        setLoading(true);
+
+        // Xử lý API call dựa trên trạng thái
+        if (query) {
+            // Nếu có param "query", gọi API tìm kiếm
+            searchPostsByTopicIdAndTitle(topicId, query)
+                .then((data) => setPostItem(data))
+                .catch((err) => console.error("Error searching posts:", err))
+                .finally(() => setLoading(false));
+        } else if (topicId === undefined) {
+            // Nếu không có topicId, lấy tất cả posts
+            getPosts()
+                .then((data) => setPostItem(data))
+                .catch((err) => console.error("Error fetching posts:", err))
+                .finally(() => setLoading(false));
+        } else {
+            // Nếu có topicId, lấy posts theo topicId
+            getPostsByTopicId(topicId)
+                .then((data) => setPostItem(data))
+                .catch((err) => console.error("Error fetching posts by topicId:", err))
+                .finally(() => setLoading(false));
         }
-        getPostsByTopicId(topicId).then((data) => setPostItem(data));
-    }, [topicId]);
+    }, [topicId, location.search]);
 
     return (
         <>
@@ -21,7 +43,9 @@ function Home() {
                 <div className="px-8 py-4">
                     <PostCreate setPostItem={setPostItem} />
                     <div>
-                        {Array.isArray(postItem) && postItem.length > 0 ? (
+                        {loading ? (
+                            <div className="text-gray-500 text-center">読み込み中...</div>
+                        ) : Array.isArray(postItem) && postItem.length > 0 ? (
                             postItem.map((item) => (
                                 <PostItem key={item._id} post={item} />
                             ))
