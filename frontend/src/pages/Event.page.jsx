@@ -10,8 +10,7 @@ const Event = () => {
     useEffect(() => {
         eventService.fetchEvents().then((data) => setEvents(data.data));
     }, []);
-    console.log(profile.role_id.name);
-
+    
     return (
         <>
             <div>
