@@ -34,8 +34,9 @@ const ActionMenu = () => {
             <div className="flex justify-between items-center space-x-6">
                 <Link
                     to="/chat"
-                    className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${isChat ? "text-blue-500" : ""
-                        }`}
+                    className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${
+                        isChat ? "text-blue-500" : ""
+                    }`}
                 >
                     <IconBrandMessenger stroke={2} />
                 </Link>
@@ -46,7 +47,10 @@ const ActionMenu = () => {
                         className="relative"
                     >
                         {showNotification ? (
-                            <IconBellFilled stroke={2} className="text-blue-500" />
+                            <IconBellFilled
+                                stroke={2}
+                                className="text-blue-500"
+                            />
                         ) : (
                             <IconBell stroke={2} />
                         )}
@@ -61,7 +65,10 @@ const ActionMenu = () => {
                 <Link to="/setting">
                     <IconSettings stroke={2} />
                 </Link>
-                <IconDiamondsFilled className="text-teal-500" onClick={() => setIsModalOpen(true)} />
+                <IconDiamondsFilled
+                    className="text-teal-500"
+                    onClick={() => setIsModalOpen(true)}
+                />
                 {isAuthenticated ? (
                     <>
                         <Link
@@ -77,16 +84,19 @@ const ActionMenu = () => {
                             onClick={() => handleLogout()}
                             className="bg-blue-500 text-white px-4 py-2 rounded-full"
                         >
-                            Logout
+                            ログアウト
                         </button>
                     </>
                 ) : (
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-full">
-                        Sign In
+                    <button className="min-w-28 bg-blue-500 text-white px-4 py-2 rounded-full">
+                        ログイン
                     </button>
                 )}
             </div>
-            <BadgeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <BadgeModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </>
     );
 };
