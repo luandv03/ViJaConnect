@@ -142,7 +142,7 @@ const seedRoles = async () => {
                 address: "123 Main St",
                 company_role: "Developer",
                 avatar_link:
-                    "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b.",
+                    "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123.",
                 role_id: insertedRoles[2]._id,
                 shared_posts: [],
                 liked_posts: [],
@@ -463,7 +463,6 @@ const seedRoles = async () => {
                 ],
                 latestMessage: null,
                 groupAdmin: "676c5ca80137d9539987bc30",
-                avatar: "https://example.com/group-chat-avatar1.png",
             },
             {
                 _id: "64cfcff00137d9539987bc01",
@@ -472,7 +471,6 @@ const seedRoles = async () => {
                 users: ["676c5ca80137d9539987bc33", "676c5ca80137d9539987bc34"],
                 latestMessage: null,
                 groupAdmin: "676c5ca80137d9539987bc33",
-                avatar: "https://example.com/group-chat-avatar2.png",
             },
             {
                 _id: "64cfcff00137d9539987bc02",
@@ -480,7 +478,6 @@ const seedRoles = async () => {
                 isGroupChat: false,
                 users: ["676c5ca80137d9539987bc30", "676c5ca80137d9539987bc31"],
                 latestMessage: null,
-                avatar: "https://example.com/direct-chat-avatar1.png",
             },
             {
                 _id: "64cfcff00137d9539987bc03",
@@ -493,7 +490,6 @@ const seedRoles = async () => {
                 ],
                 latestMessage: null,
                 groupAdmin: "676c5ca80137d9539987bc34",
-                avatar: "https://example.com/group-chat-avatar3.png",
             },
             {
                 _id: "64cfcff00137d9539987bc04",
@@ -501,7 +497,6 @@ const seedRoles = async () => {
                 isGroupChat: false,
                 users: ["676c5ca80137d9539987bc30", "676c5ca80137d9539987bc34"],
                 latestMessage: null,
-                avatar: "https://example.com/direct-chat-avatar2.png",
             },
         ];
 

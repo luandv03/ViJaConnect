@@ -7,9 +7,9 @@ const Sidebar = () => {
     const location = useLocation();
 
     // Hiển thị Sidebar phù hợp dựa trên URL
-    if (location.pathname === "/chat") {
+    if (location.pathname.includes("/chat")) {
         return <ChatSidebar />;
-    } else if(location.pathname.includes("/event/")) {
+    } else if (location.pathname.includes("/event/")) {
         return <EventSidebar />;
     }
 

@@ -5,11 +5,12 @@ import { ChatController } from "../../../controllers/chats/chat.controller.js";
 const chatRoutes = Router();
 const chatController = new ChatController();
 
-chatRoutes.get("/chat/:chatId", chatController.getChatById);
-chatRoutes.get(
-    "/chat/:chatId/messages/:userId",
-    chatController.getMessagesByChatId
-);
+chatRoutes.get("/chat/:chatId/user/:userId", chatController.getChatById);
+
+// get chats by user id
+chatRoutes.get("/chat/user/:userId", chatController.getChatByUserId);
+
+chatRoutes.get("/chat/:chatId/messages", chatController.getMessagesByChatId);
 chatRoutes.post("/chat/:chatId/send", chatController.sendMessage);
 
 // Create Chat Group
