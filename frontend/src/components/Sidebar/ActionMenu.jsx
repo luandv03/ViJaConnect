@@ -14,6 +14,12 @@ import { AuthContext } from "../../providers/AuthProvider";
 import BadgeModal from "../Modal";
 
 const ActionMenu = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const location = useLocation();
     const isChat = location.pathname === "/chat";
@@ -31,7 +37,7 @@ const ActionMenu = () => {
 
     return (
         <>
-            <div className="flex justify-between items-center space-x-6">
+            <div className="flex justify-between items-center space-x-6 relative">
                 <Link
                     to="/chat"
                     className={`hover:scale-110 hover:text-blue-500 transition-transform duration-300 ease-in-out ${
@@ -71,21 +77,38 @@ const ActionMenu = () => {
                 />
                 {isAuthenticated ? (
                     <>
-                        <Link
-                            to="/profile"
-                            className="rounded-full bg-slate-400 h-10 w-10 overflow-hidden"
+                        <div
+                            onClick={toggleDropdown}
+                            className="cursor-pointer rounded-full bg-slate-400 h-10 w-10 overflow-hidden"
                         >
                             <img
                                 src={profile.avatar_link}
                                 className="w-full h-full object-cover"
                             />
-                        </Link>
-                        <button
-                            onClick={() => handleLogout()}
-                            className="bg-blue-500 text-white px-4 py-2 rounded-full"
-                        >
-                            ログアウト
-                        </button>
+                        </div>
+                        {isDropdownOpen && (
+                            <div
+                                className="absolute top-12 right-0 w-48 bg-white rounded-md shadow-lg z-50"
+                                onMouseLeave={() => setIsDropdownOpen(false)}
+                            >
+                                <Link
+                                    to="/profile"
+                                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                    onClick={() => setIsDropdownOpen(false)}
+                                >
+                                    プロフィール
+                                </Link>
+                                <button
+                                    onClick={() => {
+                                        handleLogout();
+                                        setIsDropdownOpen(false);
+                                    }}
+                                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+                                >
+                                    ログアウト
+                                </button>
+                            </div>
+                        )}
                     </>
                 ) : (
                     <button className="min-w-28 bg-blue-500 text-white px-4 py-2 rounded-full">
