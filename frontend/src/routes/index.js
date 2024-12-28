@@ -7,6 +7,7 @@ const PostDetailPage = React.lazy(() => import("../pages/PostDetailPage.page"));
 const Profile = React.lazy(() => import("../pages/Profile.page"));
 const Event = React.lazy(() => import("../pages/Event.page"));
 const Chat = React.lazy(() => import("../pages/Chat.page"));
+const UserManagement = React.lazy(() => import("../pages/UserManagement.page"));
 
 const routes = [
     {
@@ -40,6 +41,10 @@ const routes = [
     {
         path: "chat/:chatId?",
         element: <Chat />,
+    },
+    {
+        path: "admin",
+        element: <UserManagement />,
     },
     {
         path: "admin/user",

@@ -8,7 +8,7 @@ import SignIn from "./SignIn.page";
 import { AuthContext } from "../providers/AuthProvider";
 
 export default function LayoutApp() {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, profile } = useContext(AuthContext);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -22,7 +22,7 @@ export default function LayoutApp() {
         <>
             <div>
                 {/* <div className="w-full bg-red-400 h-20">Header</div> */}
-                <Header />
+                <Header profile={profile} />
                 <div className="flex">
                     <div className="fixed min-w-96 border-r border-gray-200 top-16">
                         <Sidebar />
