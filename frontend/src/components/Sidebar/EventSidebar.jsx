@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
-import { eventService } from "../../services/event.service";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useEvent } from "../../providers/EventProvider";
 
 const EventSidebar = () => {
-  // const participants = [
-  //   { id: 1, name: "ゾオンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/66fe0da9a5d64." },
-  //   { id: 2, name: "フさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64ae1c4903123." },
-  //   { id: 3, name: "キエンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f8fc2d728e6." },
-  //   { id: 4, name: "ヒエンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/630839279e38b." },
-  //   { id: 5, name: "ルアンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6741fcdd6cafd." },
-  //   { id: 6, name: "バオさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/63083b4681ab9." },
-  //   { id: 7, name: "フンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f9bac0669c9." },
-  //   { id: 8, name: "フォンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/64a7e2cfcab63." },
-  //   { id: 9, name: "リンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/650967d7d8681." },
-  //   { id: 10, name: "ヒエウさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/6162e78d13086." },
-  //   { id: 11, name: "ホアンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/62f49aa5a9a37." },
-  //   { id: 12, name: "チョンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/630e08f3c6416." },
-  //   { id: 13, name: "キエンさん", avatar: "https://schooler.sun-asterisk.com/storage/images/avatar/student/63083934373e1." },
-  // ];
+  const { participants, refreshParticipants } = useEvent();
   const { eventId } = useParams();
-  const [participants, setParticipants] = useState([]);
   useEffect(() => {
-    eventService.fetchUserJoinEvent(eventId).then((data) => setParticipants(data.data));
-  },[eventId])
+    refreshParticipants(eventId);
+}, [eventId, refreshParticipants]);
 
   return (
     <div className="bg-gray-200 min-h-screen p-4">

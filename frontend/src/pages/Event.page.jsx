@@ -7,15 +7,30 @@ import { AuthContext } from "../providers/AuthProvider";
 const Event = () => {
     const { profile } = useContext(AuthContext);
     const [events, setEvents] = useState([]);
+
+    // Hàm refreshEvents để làm mới danh sách sự kiện
+    const refreshEvents = async () => {
+        try {
+            const data = await eventService.fetchEvents();
+            setEvents(data.data);
+        } catch (error) {
+            console.error("Error fetching events:", error);
+        }
+    };
+
+    // Gọi refreshEvents khi component được mount
     useEffect(() => {
-        eventService.fetchEvents().then((data) => setEvents(data.data));
+        refreshEvents();
     }, []);
-    
+
     return (
         <>
             <div>
                 <div className="px-8 py-4">
-                    {profile.role_id.name == 'Admin' || profile.role_id.name == 'Manager' && <EventCreate />}
+                    {/* Chỉ hiển thị EventCreate nếu user là Admin hoặc Manager */}
+                    {(profile.role_id.name === 'Admin' || profile.role_id.name === 'Manager') && (
+                        <EventCreate refreshEvents={refreshEvents} />
+                    )}
                     <div>
                         {events.map((item) => (
                             <Link key={item._id} to={`/event/${item._id}`}>

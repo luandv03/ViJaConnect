@@ -8,16 +8,21 @@ import {
     IconThumbUpFilled,
     IconUser,
 } from "@tabler/icons-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { eventService } from "../../services/event.service";
 import { formatDate } from "../../helpers/formatDate";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Button } from "../ui/Button";
+import { uploadImage } from "../../services/upload.service";
+import { useEvent } from "../../providers/EventProvider";
+import { toast } from "react-toastify";
 
 const EventDetail = () => {
+    const navigate = useNavigate();
     const { eventId } = useParams();
     const { profile } = useContext(AuthContext);
+    const { refreshParticipants } = useEvent();
 
     // State for Like and Join
     const [isLiked, setIsLiked] = useState(false);
@@ -30,7 +35,6 @@ const EventDetail = () => {
 
     // Handlers
     const handleLike = () => setIsLiked((prev) => !prev);
-    const handleJoin = () => setIsJoined((prev) => !prev);
 
     const [event, setEvent] = useState({});
 
@@ -47,17 +51,112 @@ const EventDetail = () => {
         setIsModalOpen(true);
     };
 
-    const confirmCancel = () => {
+    const confirmCancel = async () => {
         if (cancelReason.trim() === "") {
-            alert("理由を入力してください"); // Yêu cầu nhập lý do
+            alert("理由を入力してください");
             return;
         }
-        alert(`キャンセルが確認されました。理由: ${cancelReason}`);
-        setIsModalOpen(false); // Đóng modal
+    
+        try {
+            await eventService.cancelEvent(eventId, cancelReason);
+            toast.done("イベントがキャンセルされました！");
+            setIsModalOpen(false);
+            navigate("/event"); // Điều hướng về danh sách sự kiện
+        } catch (error) {
+            console.error("イベントのキャンセルに失敗しました:", error);
+            alert("キャンセル中にエラーが発生しました。");
+        }
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+
+    const handleSaveEvent = async () => {
+        try {
+            const updatedEvent = {
+                title: event.title,
+                desc: event.desc,
+                location: event.location,
+                date: event.date,
+                banner_link: event.banner_link,
+            };
+
+            const response = await eventService.updateEvent(eventId, updatedEvent);
+            toast.success("イベントが正常に更新されました！");
+            setEvent(response.data); // Cập nhật state với dữ liệu mới
+
+            setIsEditing(false); // Kết thúc chế độ chỉnh sửa
+        } catch (error) {
+            toast.error("イベントを更新中にエラーが発生しました。");
+            console.error(error);
+        }
+    };
+
+    const handleFileUpload = async (file, setEvent, event) => {
+        try {
+            if (!file) return;
+
+            // Hiển thị trạng thái "đang upload" (có thể thêm loader nếu cần)
+            toast.info("画像をアップロード中...");
+
+            // Sử dụng FileReader để preview ảnh trước
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setEvent({
+                    ...event,
+                    banner_link: reader.result, // Lưu ảnh preview (base64)
+                });
+            };
+            reader.readAsDataURL(file);
+
+            // Thực hiện upload ảnh lên server
+            const uploadedImage = await uploadImage(file); // Gọi service upload
+
+            // Cập nhật URL ảnh từ server vào state
+            setEvent({
+                ...event,
+                banner_link: uploadedImage.data.url,
+            });
+
+            alert("画像が正常にアップロードされました！");
+        } catch (error) {
+            console.error("画像のアップロード中にエラーが発生しました:", error);
+            alert("画像のアップロードに失敗しました。");
+        }
+    };
+
+    const joinEvent = async (eventId, userId) => {
+        try {
+            await eventService.joinEvent(eventId, userId);
+            toast.success("イベントに参加しました");
+            setIsJoined(true); // Cập nhật trạng thái
+            refreshParticipants(eventId);
+        } catch (error) {
+            console.error("参加中にエラーが発生しました:", error);
+            alert("参加できませんでした。もう一度お試しください。");
+        }
+    };
+    
+    // Hàm rời khỏi sự kiện
+    const leaveEvent = async (eventId, userId) => {
+        try {
+            await eventService.leaveEvent(eventId, userId);
+            toast.error("イベントから退会しました");
+            setIsJoined(false); // Cập nhật trạng thái
+            refreshParticipants(eventId);
+        } catch (error) {
+            console.error("退会中にエラーが発生しました:", error);
+            alert("退会できませんでした。もう一度お試しください。");
+        }
+    };
+
+    const handleJoinOrLeaveEvent = async () => {
+        if (isJoined) {
+            await leaveEvent(event._id, profile._id);
+        } else {
+            await joinEvent(event._id, profile._id);
+        }
     };
 
     return (
@@ -163,16 +262,7 @@ const EventDetail = () => {
                                 className="absolute inset-0 opacity-0 cursor-pointer"
                                 onChange={(e) => {
                                     const file = e.target.files[0];
-                                    if (file) {
-                                        const reader = new FileReader();
-                                        reader.onloadend = () => {
-                                            setEvent({
-                                                ...event,
-                                                banner_link: reader.result, // Lưu URL ảnh base64 vào state
-                                            });
-                                        };
-                                        reader.readAsDataURL(file);
-                                    }
+                                    handleFileUpload(file, setEvent, event); // Gọi hàm đã tách ra
                                 }}
                             />
                         </div>
@@ -201,23 +291,26 @@ const EventDetail = () => {
                 )}
             </div>
 
-            {profile.role_id.name == 'Admin' && (
-                <div className="px-10">
-                    <Button type="submit">
-                        ポスト
-                    </Button>
+            {profile.role_id.name === "Admin" && (
+                <div className="px-10 mb-2">
+                    <Button type="submit" className="mr-2" onClick={handleEdit}>イベント情報を編集</Button>
                     <button className="bg-red-600 text-white py-2 px-4 rounded-lg">
                         キャンセル
                     </button>
                 </div>
             )}
 
-            {profile.role_id.name == 'Manager' ? (
+            {profile.role_id.name === "Manager" && (
                 <div className="px-10 flex mb-2">
                     {isEditing && (
-                        <button type="submit" className="bg-blue-600 py-2 px-4 rounded-lg mr-2">
+                        <button
+                            type="submit"
+                            className="bg-blue-600 py-2 px-4 rounded-lg mr-2"
+                            onClick={handleSaveEvent}
+                        >
                             セープ
-                        </button>)}
+                        </button>
+                    )}
                     <button
                         className="bg-red-600 text-white py-2 px-4 rounded-lg"
                         onClick={isEditing ? handleEdit : handleCancel}
@@ -225,7 +318,9 @@ const EventDetail = () => {
                         {isEditing ? "編集を終了" : "キャンセル"}
                     </button>
                 </div>
-            ) : (
+            )}
+
+            {profile.role_id.name === "Staff" && (
                 <div className="px-10">
                     <div className="flex justify-between items-center space-x-4">
                         <button
@@ -234,11 +329,7 @@ const EventDetail = () => {
                                 }`}
                         >
                             {isLiked ? (
-                                <IconThumbUpFilled
-                                    stroke={2}
-                                    size={18}
-                                    fill="blue"
-                                />
+                                <IconThumbUpFilled stroke={2} size={18} fill="blue" />
                             ) : (
                                 <IconThumbUp stroke={2} size={18} />
                             )}
@@ -246,17 +337,16 @@ const EventDetail = () => {
                         </button>
 
                         <button
-                            onClick={handleJoin}
+                            onClick={handleJoinOrLeaveEvent}
                             className={`py-2 px-4 flex items-center rounded-2xl border transition ${isJoined ? "bg-green-100 text-green-600" : ""
                                 }`}
                         >
                             <IconCheck
                                 stroke={2}
                                 size={18}
-                                className={`${isJoined ? "text-green-600" : ""
-                                    }`}
+                                className={isJoined ? "text-green-600" : ""}
                             />
-                            <span className="ml-2">参考</span>
+                            <span className="ml-2">{isJoined ? "退会" : "参加"}</span>
                         </button>
 
                         <div className="py-2 px-4 flex items-center rounded-2xl border">
@@ -266,24 +356,30 @@ const EventDetail = () => {
                     </div>
                 </div>
             )}
+
+
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg relative w-96">
+                    <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl w-[400px] relative">
                         {/* Nút đóng modal */}
                         <button
-                            className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                            className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition"
                             onClick={closeModal}
                         >
                             ✕
                         </button>
 
-                        {/* Tiêu đề và input */}
-                        <div className="mb-4">
-                            <input
-                                type="text"
-                                className="w-full py-2 px-3 rounded-lg bg-gray-600 text-white placeholder-gray-400"
-                                placeholder="理由を入力してください"
+                        {/* Tiêu đề */}
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+                            キャンセル理由を入力
+                        </h3>
+
+                        {/* Input */}
+                        <div className="mb-6">
+                            <textarea
+                                className="w-full h-32 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50 placeholder-gray-400 text-gray-800 resize-none"
+                                placeholder="理由を入力してください..."
                                 value={cancelReason}
                                 onChange={(e) => setCancelReason(e.target.value)}
                             />
@@ -291,14 +387,15 @@ const EventDetail = () => {
 
                         {/* Nút xác nhận */}
                         <button
-                            className="w-full py-2 bg-black text-white rounded-lg hover:bg-gray-700"
+                            className="w-full py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition"
                             onClick={confirmCancel}
                         >
-                            キャンセルを確認
+                            確認
                         </button>
                     </div>
                 </div>
             )}
+
         </>
     );
 };
