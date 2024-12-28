@@ -619,62 +619,10 @@ const seedRoles = async () => {
         await Chat.insertMany(chats);
         console.log("Chats seeded successfully");
 
-        const messages = [
-            {
-                sender: "676c5ca80137d9539987bc30",
-                content: "こんにちは！元気ですか？", // Xin chào! Bạn khỏe không?
-                chat: "64cfcff00137d9539987bc00",
-            },
-            {
-                sender: "676c5ca80137d9539987bc31",
-                content: "はい、元気です。あなたは？", // Vâng, tôi khỏe. Còn bạn?
-                chat: "64cfcff00137d9539987bc00",
-            },
-            {
-                sender: "676c5ca80137d9539987bc32",
-                content: "このプロジェクトの進捗はどうですか？", // Tiến độ dự án này thế nào?
-                chat: "64cfcff00137d9539987bc00",
-            },
-            {
-                sender: "676c5ca80137d9539987bc33",
-                content: "順調に進んでいます。", // Tiến triển tốt.
-                chat: "64cfcff00137d9539987bc01",
-            },
-            {
-                sender: "676c5ca80137d9539987bc34",
-                content: "新しいアイデアがありますか？", // Có ý tưởng mới nào không?
-                chat: "64cfcff00137d9539987bc01",
-            },
-            {
-                sender: "676c5ca80137d9539987bc30",
-                content: "そうですね、いくつか考えています。", // Đúng vậy, tôi có vài ý tưởng.
-                chat: "64cfcff00137d9539987bc02",
-            },
-            {
-                sender: "676c5ca80137d9539987bc31",
-                content: "コードレビューは終わりましたか？", // Bạn đã xong code review chưa?
-                chat: "64cfcff00137d9539987bc02",
-            },
-            {
-                sender: "676c5ca80137d9539987bc32",
-                content: "いいえ、まだです。", // Chưa, vẫn chưa.
-                chat: "64cfcff00137d9539987bc03",
-            },
-            {
-                sender: "676c5ca80137d9539987bc33",
-                content: "締め切りまでに間に合いますか？", // Có kịp deadline không?
-                chat: "64cfcff00137d9539987bc03",
-            },
-            {
-                sender: "676c5ca80137d9539987bc34",
-                content: "がんばります！", // Tôi sẽ cố gắng!
-                chat: "64cfcff00137d9539987bc04",
-            },
-            // Tiếp tục thêm...
-        ];
+        const messages = [];
 
         // Phần dưới thêm 90 message nữa
-        for (let i = 20; i <= 109; i++) {
+        for (let i = 0; i <= 100; i++) {
             const randomChat = [
                 "64cfcff00137d9539987bc00",
                 "64cfcff00137d9539987bc01",
@@ -688,8 +636,23 @@ const seedRoles = async () => {
                 "676c5ca80137d9539987bc32",
                 "676c5ca80137d9539987bc33",
                 "676c5ca80137d9539987bc34",
+                "676c5ca80137d9539987bc35",
+                "676c5ca80137d9539987bc36",
+                "676c5ca80137d9539987bc37",
+                "676c5ca80137d9539987bc38",
+                "676c5ca80137d9539987bc39",
             ];
             const randomContent = [
+                "こんにちは！元気ですか？", // Xin chào! Bạn khỏe không?
+                "はい、元気です。あなたは？",
+                "このプロジェクトの進捗はどうですか？",
+                "順調に進んでいます。",
+                "新しいアイデアがありますか？",
+                "そうですね、いくつか考えています。",
+                "コードレビューは終わりましたか？",
+                "いいえ、まだです。",
+                "締め切りまでに間に合いますか？",
+                "がんばります！",
                 "了解しました！", // Đã hiểu!
                 "それは良いアイデアですね。", // Đó là một ý tưởng hay.
                 "また明日話しましょう。", // Hãy nói chuyện vào ngày mai.
@@ -701,15 +664,27 @@ const seedRoles = async () => {
                 "コードにバグがありました。", // Có lỗi trong code.
                 "解決策を見つけました！", // Tôi đã tìm ra giải pháp!
             ];
+            const chat =
+                randomChat[Math.floor(Math.random() * randomChat.length)];
+
+            const findChat = chats.find((i) => i?._id === chat);
+            let sender;
+
+            while (1) {
+                sender =
+                    randomUser[Math.floor(Math.random() * randomUser.length)];
+                if (findChat.users.includes(sender)) {
+                    break;
+                }
+            }
+
             messages.push({
-                sender: randomUser[
-                    Math.floor(Math.random() * randomUser.length)
-                ],
+                sender: sender,
                 content:
                     randomContent[
                         Math.floor(Math.random() * randomContent.length)
                     ],
-                chat: randomChat[Math.floor(Math.random() * randomChat.length)],
+                chat: chat,
             });
         }
 
