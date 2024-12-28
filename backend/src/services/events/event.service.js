@@ -144,10 +144,28 @@ class EventService {
                 eventData,
                 { new: true }
             );
+
+            console.log(updatedEvent);
+
             if (!updatedEvent) {
                 throw new Error("Event not found or failed to update");
             }
-            return updatedEvent;
+
+            console.log(updatedEvent);
+
+            const event = await Event.findById(eventId)
+                .populate({
+                    path: "author_id",
+                    select: "avatar_link display_name",
+                })
+                .lean();
+
+            if (event) {
+                event.author = event.author_id;
+                delete event.author_id;
+            }
+
+            return event;
         } catch (error) {
             throw new Error("Error updating event: " + error.message);
         }
