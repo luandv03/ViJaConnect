@@ -12,8 +12,6 @@ function Profile() {
 
     const { profile } = useContext(AuthContext);
 
-    console.log("Profile", profile);
-
     const showEventCancelModal = (eventId) => {
         setEventId(eventId);
         setIsEventCancelModal(true);

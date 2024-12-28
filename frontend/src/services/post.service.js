@@ -62,3 +62,15 @@ export const getPostByAuthor = async (authorId) => {
         throw error;
     }
 };
+
+export const deletePost = async (postId) => {
+    try {
+        const { data } = await axios.delete(
+            `${SERVER_DOMAIN}/api/v1/post/delete/${postId}`
+        );
+        return data;
+    } catch (error) {
+        console.error("Failed to delete post", error);
+        throw error;
+    }
+};

@@ -108,4 +108,18 @@ export class PostController {
             return res.status(500).json(error);
         }
     }
+
+    async deletePost(req, res) {
+        try {
+            const { postId } = req.params;
+            const deletedPost = await postService.deletePost(postId);
+            return res.json({
+                status: 200,
+                message: "Post deleted successfully",
+                data: deletedPost,
+            });
+        } catch (error) {
+            return res.json(error).status(500);
+        }
+    }
 }

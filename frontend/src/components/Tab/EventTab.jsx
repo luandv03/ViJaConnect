@@ -46,16 +46,6 @@ function EventTab({ profile, showEventCancelModal }) {
         }
     };
 
-    // const handleCancelEvent = async (eventId) => {
-    //     const res = await eventService.cancelEvent(eventId);
-
-    //     if (res.status === 200) {
-    //         setEvents((prevEvents) =>
-    //             prevEvents.filter((event) => event._id !== eventId)
-    //         );
-    //     }
-    // };
-
     useEffect(() => {
         handleGetEvents();
 
