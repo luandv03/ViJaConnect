@@ -109,6 +109,63 @@ export class EventController {
         }
     }
 
+    async joinEvent(req, res) {
+        try {
+            const { eventId, userId } = req.params;
+            const event = await eventService.joinEvent(eventId, userId);
+            return res.json({
+                status: 200,
+                message: "Joined event successfully",
+                data: event,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to join event",
+                error: error.message,
+            });
+        }
+    }
+
+    async leaveEvent(req, res) {
+        try {
+            const { eventId, userId } = req.params;
+            const event = await eventService.leaveEvent(eventId, userId);
+            return res.json({
+                status: 200,
+                message: "Left event successfully",
+                data: event,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to leave event",
+                error: error.message,
+            });
+        }
+    }
+
+    async cancelEvent(req, res) {
+        try {
+            const { reasonCancel } = req.body;
+            const { id } = req.params;
+
+            console.log(id, reasonCancel);
+            const event = await eventService.cancelEvent(id, reasonCancel);
+            return res.json({
+                status: 200,
+                message: "Event cancelled successfully",
+                data: event,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: "Failed to cancel event",
+                error: error.message,
+            });
+        }
+    }
+
     async createEvent(req, res) {
         try {
             const { title, desc, location, date, banner_link, author_id } =

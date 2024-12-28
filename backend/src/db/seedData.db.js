@@ -321,7 +321,7 @@ const seedRoles = async () => {
                 title: "テクノロジー展示会 2024",
                 desc: "最新の技術を紹介する展示会。",
                 location: "東京ビッグサイト",
-                date: new Date("2024-01-15T09:00:00Z"),
+                date: new Date("2025-01-15T09:00:00Z"),
                 banner_link:
                     "https://meetsvietnam.vietnamairlines.com/wp-content/uploads/2024/07/448504984_870598721767452_1562326102109704185_n.jpg",
                 author_id: "676c5ca80137d9539987bc30", // グエン・ザ・トゥン・ゾオン
@@ -334,7 +334,7 @@ const seedRoles = async () => {
                 title: "AIと未来のセミナー",
                 desc: "AI技術の活用について議論するセミナー。",
                 location: "大阪市立大学",
-                date: new Date("2024-02-10T14:00:00Z"),
+                date: new Date("2025-01-10T14:00:00Z"),
                 banner_link:
                     "https://d19ri4mdy82u9u.cloudfront.net/images/64abca6c03c3da4c3afee054/UJSXbBSAK1ZFltyiaC2M.jpg",
                 author_id: "676c5ca80137d9539987bc31", // ホアン・ドゥック・ザ・フン
@@ -347,7 +347,7 @@ const seedRoles = async () => {
                 title: "デザイン思考ワークショップ",
                 desc: "創造的な問題解決を学ぶワークショップ。",
                 location: "名古屋クリエイティブセンター",
-                date: new Date("2024-03-05T10:00:00Z"),
+                date: new Date("2025-01-05T10:00:00Z"),
                 banner_link:
                     "https://www.tsttourist.com/vnt_upload/news/09_2023/thumbs/(600x400)_TSTtourist_van_hoa_am_thuc_Nhat_Ban.jpg",
                 author_id: "676c5ca80137d9539987bc32", // ディン・ヴァン・ルアン
@@ -360,7 +360,7 @@ const seedRoles = async () => {
                 title: "プログラミングコンテスト",
                 desc: "若手エンジニア向けの競技プログラミングイベント。",
                 location: "福岡ハッカースペース",
-                date: new Date("2024-04-20T13:00:00Z"),
+                date: new Date("2024-01-20T13:00:00Z"),
                 banner_link:
                     "https://wkvetter.com/wp-content/uploads/41th-Hanoi-Ongakutai-Naoko-1024x1024.jpg",
                 author_id: "676c5ca80137d9539987bc33", // チュー・ディン・ヒエン
@@ -373,7 +373,7 @@ const seedRoles = async () => {
                 title: "ゲーム開発者会議",
                 desc: "ゲーム業界の最新トレンドを共有する会議。",
                 location: "札幌コンベンションセンター",
-                date: new Date("2024-05-25T09:30:00Z"),
+                date: new Date("2024-01-25T09:30:00Z"),
                 banner_link: "https://www.oaff.jp/2018/img/report/15_c12_1.jpg",
                 author_id: "676c5ca80137d9539987bc34", // グエン・ドゥック・フ
                 joined_users: [

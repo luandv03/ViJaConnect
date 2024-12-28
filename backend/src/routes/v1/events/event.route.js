@@ -25,6 +25,15 @@ eventRoutes.get(
     eventController.getEventUserCreated
 );
 
+// join event
+eventRoutes.put("/event/join/:eventId/:userId", eventController.joinEvent);
+
+// leave event
+eventRoutes.put("/event/leave/:eventId/:userId", eventController.leaveEvent);
+
+// cancel event
+eventRoutes.put("/event/cancel/:id", eventController.cancelEvent);
+
 eventRoutes.post("/event/create", eventController.createEvent); // Route to create a new event
 eventRoutes.put("/event/edit/:id", eventController.updateEvent); // Route to update an event by ID
 eventRoutes.delete("/event/delete/:id", eventController.deleteEvent); // Route to delete an event by ID

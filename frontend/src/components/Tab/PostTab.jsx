@@ -25,7 +25,7 @@ function PostTab({ profile }) {
 
     return (
         <div className="space-y-4">
-            {posts.length > 0 &&
+            {posts.length > 0 ? (
                 posts?.map((post, key) => (
                     <div className="p-4 flex items-center space-x-4" key={key}>
                         <div className="bg-alice-blue p-5 rounded-lg mb-5">
@@ -58,7 +58,10 @@ function PostTab({ profile }) {
                             </button>
                         </div>
                     </div>
-                ))}
+                ))
+            ) : (
+                <div>ポストがありません</div>
+            )}
         </div>
     );
 }
