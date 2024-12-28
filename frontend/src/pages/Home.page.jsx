@@ -7,7 +7,6 @@ import { getPosts, getPostsByTopicId } from "../services/post.service";
 function Home() {
     const { topicId } = useParams();
     const [postItem, setPostItem] = useState([]);
-    console.log(topicId);
     useEffect(() => {
         if (topicId === undefined) {
             getPosts().then((data) => setPostItem(data));
@@ -20,17 +19,18 @@ function Home() {
         <>
             <div>
                 <div className="px-8 py-4">
-                    <PostCreate />
+                    <PostCreate setPostItem={setPostItem} />
                     <div>
                         {Array.isArray(postItem) && postItem.length > 0 ? (
                             postItem.map((item) => (
                                 <PostItem key={item._id} post={item} />
                             ))
                         ) : (
-                            <div className="text-gray-500 text-center">投稿が見つかりません</div>
+                            <div className="text-gray-500 text-center">
+                                投稿が見つかりません
+                            </div>
                         )}
                     </div>
-
                 </div>
             </div>
         </>

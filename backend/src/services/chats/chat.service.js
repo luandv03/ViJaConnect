@@ -23,6 +23,8 @@ class ChatService {
                 .populate("users", "name email avatar_link") // Populate thông tin user
                 .populate("latestMessage");
 
+            console.log(chat);
+
             if (!chat) {
                 return res.status(404).json({ message: "Chat not found" });
             }
@@ -123,39 +125,56 @@ class ChatService {
     // Get All Contacts By UserId
     async getUserContacts(userId) {
         try {
-            // Validate userId
+            // 🆔 Validate userId
             if (!mongoose.Types.ObjectId.isValid(userId)) {
-                return res.status(400).json({ message: "Invalid userId" });
+                throw new Error("Invalid userId");
             }
 
-            // Aggregation pipeline
-            const contacts = await User.aggregate([
-                { $match: { _id: mongoose.Types.ObjectId(userId) } }, // Tìm user theo ID
-                { $unwind: "$contacts" }, // Bóc tách từng contact
+            // 🔍 Tìm các cuộc chat có sự tham gia của user
+            const chats = await Chat.aggregate([
+                {
+                    $match: {
+                        users: { $in: [new mongoose.Types.ObjectId(userId)] },
+                    },
+                },
+                { $unwind: "$users" }, // Tách từng user trong danh sách users
+                {
+                    $match: {
+                        users: { $ne: new mongoose.Types.ObjectId(userId) }, // Loại bỏ chính user đó
+                    },
+                },
                 {
                     $lookup: {
-                        from: "users", // Collection User
-                        localField: "contacts", // Mảng contact reference
-                        foreignField: "_id", // Khóa chính trong User
-                        as: "contactDetails", // Gộp thông tin contact vào đây
+                        from: "users", // Liên kết với collection User
+                        localField: "users",
+                        foreignField: "_id",
+                        as: "contactDetails",
                     },
                 },
-                { $unwind: "$contactDetails" }, // Bóc tách thông tin từng contact
-                { $sort: { "contactDetails.createdAt": -1 } }, // Sắp xếp theo thời gian giảm dần
                 {
-                    $project: {
-                        _id: 0, // Ẩn _id của kết quả
-                        name: "$contactDetails.name",
-                        email: "$contactDetails.email",
-                        phone_number: "$contactDetails.phone_number",
-                        createdAt: "$contactDetails.createdAt",
+                    $unwind: {
+                        path: "$contactDetails",
+                        preserveNullAndEmptyArrays: false,
                     },
                 },
+                {
+                    $group: {
+                        _id: "$contactDetails._id", // Loại bỏ trùng lặp contacts
+                        name: { $first: "$contactDetails.name" },
+                        email: { $first: "$contactDetails.email" },
+                        phone_number: {
+                            $first: "$contactDetails.phone_number",
+                        },
+                        createdAt: { $first: "$contactDetails.createdAt" },
+                    },
+                },
+                { $sort: { createdAt: -1 } }, // Sắp xếp theo thời gian gần nhất
             ]);
 
-            return contacts; // Trả kết quả
+            return chats; // 📋 Trả về danh sách contact
         } catch (error) {
             console.error(error);
+            throw new Error("Error fetching contacts");
         }
     }
 
@@ -195,6 +214,31 @@ class ChatService {
 
             // Trả về thông tin nhóm chat
             return populatedChat;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // get users not in group chat
+    async getUsersNotInGroupChat(chatId) {
+        try {
+            // Validate input
+            if (!mongoose.Types.ObjectId.isValid(chatId)) {
+                return res.status(400).json({ message: "Invalid chatId" });
+            }
+
+            // Lấy thông tin nhóm chat
+            const chat = await Chat.findById(chatId);
+            if (!chat) {
+                return res.status(404).json({ message: "Chat not found" });
+            }
+
+            // Lấy danh sách users không thuộc nhóm chat
+            const users = await User.find({
+                _id: { $nin: chat.users },
+            }).select("name email avatar_link");
+
+            return users;
         } catch (error) {
             console.error(error);
         }
