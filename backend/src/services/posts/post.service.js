@@ -12,6 +12,7 @@ class PostService {
                     as: "author",
                 })
                 .populate({ path: "topic_id", select: "title" })
+                .sort({ createdAt: -1 })
                 .lean();
 
             // Sửa tên trường author_id thành author
@@ -61,6 +62,7 @@ class PostService {
                     select: "avatar_link display_name",
                 })
                 .populate({ path: "topic_id", select: "title" })
+                .sort({ createdAt: -1 })
                 .lean();
 
             // Sửa tên trường author_id thành author
@@ -81,7 +83,9 @@ class PostService {
 
     async getPostByAuthor(authorId) {
         try {
-            const posts = await Post.find({ author_id: authorId });
+            const posts = await Post.find({ author_id: authorId }).sort({
+                createdAt: -1,
+            });
             return posts;
         } catch (error) {
             return error;
@@ -99,6 +103,7 @@ class PostService {
                     as: "author",
                 })
                 .populate({ path: "topic_id", select: "title" })
+                .sort({ createdAt: -1 })
                 .lean();
 
             // Sửa tên trường author_id thành author
@@ -128,6 +133,7 @@ class PostService {
                     as: "author",
                 })
                 .populate({ path: "topic_id", select: "title" })
+                .sort({ createdAt: -1 })
                 .lean();
 
             // Sửa tên trường author_id thành author
@@ -146,8 +152,32 @@ class PostService {
     }
 
     async createPost(postData) {
-        const newPost = new Post(postData);
-        return await newPost.save();
+        try {
+            const newPost = new Post(postData);
+
+            const savedPost = await newPost.save();
+
+            // Populate the author_id and topic_id fields
+            const populatedPost = await Post.findById(savedPost._id)
+                .populate({
+                    path: "author_id",
+                    select: "avatar_link display_name",
+                    as: "author",
+                })
+                .populate({ path: "topic_id", select: "title" })
+                .lean();
+
+            if (populatedPost.author_id) {
+                populatedPost.author = populatedPost.author_id; // Gán dữ liệu của author_id cho author
+                populatedPost.topic = populatedPost.topic_id; // Gán dữ liệu của topic_id cho topic
+                delete populatedPost.author_id; // Xóa trường author_id
+                delete populatedPost.topic_id; // Xóa trường topic
+            }
+
+            return populatedPost;
+        } catch (error) {
+            return error;
+        }
     }
 
     async deletePost(postId) {

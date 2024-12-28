@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef, useState, useContext } from "react";
 import TextareaAutosize from "react-textarea-autosize";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+
 import { Button } from "../ui/Button";
-// import EditorJS from "@editorjs/editorjs";
 import {
     Select,
     SelectTrigger,
@@ -11,11 +16,6 @@ import {
     SelectGroup,
     SelectLabel,
 } from "../ui/Select";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "../../hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
 import { topicService } from "../../services/topic.service";
 import { createPost as createPostService } from "../../services/post.service";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -30,7 +30,7 @@ const PostValidator = z.object({
 });
 
 // eslint-disable-next-line react/prop-types
-const Editor = ({ closeModal }) => {
+const Editor = ({ setPostItem, closeModal }) => {
     const editorRef = useRef(null);
     const titleInputRef = useRef(null);
     const [isMounted, setIsMounted] = useState(false);
@@ -77,17 +77,15 @@ const Editor = ({ closeModal }) => {
             return await createPostService(payload);
         },
         onError: () => {
-            return toast({
-                title: "Something went wrong.",
-                description: "Your post was not published. Please try again.",
-                variant: "destructive",
-            });
+            return toast("ポストの作成に失敗しました。", { icon: "error" });
         },
-        onSuccess: () => {
+        onSuccess: (res) => {
+            console.log("Post created:", res);
+            if (res.status === 201) {
+                setPostItem((prev) => [res.data, ...prev]);
+            }
             closeModal();
-            return toast({
-                description: "Your post has been published.",
-            });
+            return toast("ポストが作成されました。", { icon: "success" });
         },
     });
 
