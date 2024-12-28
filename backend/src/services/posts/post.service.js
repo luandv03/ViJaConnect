@@ -149,6 +149,18 @@ class PostService {
         const newPost = new Post(postData);
         return await newPost.save();
     }
+
+    async deletePost(postId) {
+        try {
+            const deletedEPost = await Post.findByIdAndDelete(postId);
+            if (!deletedEPost) {
+                throw new Error("Post not found or failed to delete");
+            }
+            return deletedEPost;
+        } catch (error) {
+            throw new Error("Error deleting post: " + error.message);
+        }
+    }
 }
 
 export const postService = new PostService();
