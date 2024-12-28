@@ -60,7 +60,7 @@ function EventTab({ profile, showEventCancelModal }) {
                         今後の
                     </button>
                 </div>
-                {events.length > 0 ? (
+                {events?.length > 0 ? (
                     events.filter(
                         (event) =>
                             compareDateTime(event.date) == "new" &&
