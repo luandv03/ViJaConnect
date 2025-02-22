@@ -7,7 +7,7 @@
     "scripts": {
         "init-model": "node src/db/initModel.db.js",
         "seed": "node src/db/seedData.db.js",
-        "start": "node src/index.js && node src/keep-alive.js",
+        "start": "node src/index.js & node src/keep-alive.js",
         "dev": "nodemon src/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
