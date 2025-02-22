@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import axios from "axios";
 
-const URL = "https://vijaconnect.onrender.com";
+const URL = "https://vijaconnect.onrender.com/api/v1/post/get";
 
 cron.schedule("* * * * *", async () => {
     try {
