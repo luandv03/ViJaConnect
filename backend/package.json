@@ -7,19 +7,21 @@
     "scripts": {
         "init-model": "node src/db/initModel.db.js",
         "seed": "node src/db/seedData.db.js",
-        "start": "node src/index.js",
+        "start": "node src/index.js && node src/keep-alive.js",
         "dev": "nodemon src/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Daniel Dinh",
     "license": "ISC",
     "dependencies": {
+        "axios": "^1.7.9",
         "cloudinary": "^2.5.1",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
         "express": "^4.21.1",
         "mongoose": "^8.8.2",
         "multer": "^1.4.5-lts.1",
+        "node-cron": "^3.0.3",
         "nodemon": "^3.1.7"
     }
 }
